@@ -35,10 +35,10 @@ import pFunc from "@/assets/product-functional.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vida na Praia Leve — Leve uma vida mais leve" },
+      { title: "Vida na Praia Leve - Leve uma vida mais leve" },
       { name: "description", content: "Refeições saudáveis congeladas, sucos detox, snacks funcionais e kits para transformar sua rotina. Praticidade premium com sabor de casa." },
-      { property: "og:title", content: "Vida na Praia Leve — Leve uma vida mais leve" },
-      { property: "og:description", content: "Alimentação saudável, prática e deliciosa. Refeições, kits e assinaturas entregues em casa." },
+      { property: "og:title", content: "Vida na Praia Leve - Leve uma vida mais leve" },
+      { property: "og:description", content: "Refeições saudáveis congeladas, sucos detox, snacks funcionais e kits para transformar sua rotina. Praticidade premium com sabor de casa." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
