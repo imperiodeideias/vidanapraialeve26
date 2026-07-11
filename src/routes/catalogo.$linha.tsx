@@ -139,7 +139,7 @@ function LinhaPage() {
           </div>
 
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {linha.produtos.map((p) => (
+            {linha.produtos.map((p: Produto) => (
               <article key={p.slug} className="card-lift group bg-card rounded-3xl overflow-hidden shadow-sm flex flex-col">
                 <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
                   <img
@@ -176,7 +176,7 @@ function LinhaPage() {
 
                   {p.tags && p.tags.length > 0 && (
                     <div className="mt-5 flex flex-wrap gap-2">
-                      {p.tags.map((t) => (
+                      {p.tags.map((t: string) => (
                         <span key={t} className="text-[10px] font-sub uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border border-[color:var(--sage)]/40 text-[color:var(--sage)]">
                           {t}
                         </span>
