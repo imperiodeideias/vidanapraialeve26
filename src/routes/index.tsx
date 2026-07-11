@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
@@ -47,13 +47,13 @@ export const Route = createFileRoute("/")({
 });
 
 const linhas = [
-  { tag: "Dia a Dia", title: "Refeições equilibradas", desc: "Pratos completos para toda a semana, do café ao jantar.", img: pDaily, color: "sage" },
-  { tag: "Performance", title: "Mais proteína, mais energia", desc: "Nutrição precisa para quem treina e busca resultados.", img: pPerf, color: "petrol" },
-  { tag: "Bem-estar", title: "Low carb, vegano, sem glúten", desc: "Opções funcionais para cada estilo de vida.", img: pWell, color: "sage" },
-  { tag: "Premium", title: "Peixes & receitas especiais", desc: "Ingredientes selecionados para momentos únicos.", img: pPrem, color: "deep" },
-  { tag: "Lanches Inteligentes", title: "Empadas, pães de queijo, pizza fit", desc: "Praticidade saborosa para qualquer hora do dia.", img: pSnack, color: "coral" },
-  { tag: "Momento Leve", title: "Brownies & sobremesas funcionais", desc: "Doces com propósito, sem culpa.", img: pDess, color: "coral" },
-  { tag: "Funcionais", title: "Sucos, chás & mix nuts", desc: "Bebidas e snacks que trabalham por você.", img: pFunc, color: "sage" },
+  { slug: "caseirinhos", tag: "Dia a Dia", title: "Refeições equilibradas", desc: "Pratos completos para toda a semana, do café ao jantar.", img: pDaily, color: "sage" },
+  { slug: "maromba", tag: "Performance", title: "Mais proteína, mais energia", desc: "Nutrição precisa para quem treina e busca resultados.", img: pPerf, color: "petrol" },
+  { slug: "veggie", tag: "Bem-estar", title: "Low carb, vegano, sem glúten", desc: "Opções funcionais para cada estilo de vida.", img: pWell, color: "sage" },
+  { slug: "peixes", tag: "Premium", title: "Peixes & receitas especiais", desc: "Ingredientes selecionados para momentos únicos.", img: pPrem, color: "deep" },
+  { slug: "salgados", tag: "Lanches Inteligentes", title: "Empadas, pães de queijo, pizza fit", desc: "Praticidade saborosa para qualquer hora do dia.", img: pSnack, color: "coral" },
+  { slug: "doces", tag: "Momento Leve", title: "Brownies & sobremesas funcionais", desc: "Doces com propósito, sem culpa.", img: pDess, color: "coral" },
+  { slug: "sucos", tag: "Funcionais", title: "Sucos, chás & mix nuts", desc: "Bebidas e snacks que trabalham por você.", img: pFunc, color: "sage" },
 ];
 
 const diferenciais = [
@@ -264,7 +264,7 @@ function Index() {
                 Um cardápio para <span className="font-script text-[color:var(--coral)]">cada momento</span> da sua vida.
               </h2>
             </div>
-            <a href="#pedir" className="btn-ghost self-start md:self-end text-foreground">Ver catálogo completo <ChevronRight className="size-4" /></a>
+            <Link to="/catalogo" className="btn-ghost self-start md:self-end text-foreground">Ver catálogo completo <ChevronRight className="size-4" /></Link>
           </div>
 
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -292,9 +292,9 @@ function Index() {
                 <div className="p-7">
                   <h3 className="text-2xl leading-tight">{l.title}</h3>
                   <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
-                  <a href="#pedir" className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
+                  <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
                     Explorar <ArrowRight className="size-3.5" />
-                  </a>
+                  </Link>
                 </div>
               </article>
             ))}

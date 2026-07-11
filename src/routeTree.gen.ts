@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CatalogoIndexRouteImport } from './routes/catalogo.index'
+import { Route as CatalogoLinhaRouteImport } from './routes/catalogo.$linha'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogoIndexRoute = CatalogoIndexRouteImport.update({
+  id: '/catalogo/',
+  path: '/catalogo/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogoLinhaRoute = CatalogoLinhaRouteImport.update({
+  id: '/catalogo/$linha',
+  path: '/catalogo/$linha',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/catalogo/$linha': typeof CatalogoLinhaRoute
+  '/catalogo/': typeof CatalogoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/catalogo/$linha': typeof CatalogoLinhaRoute
+  '/catalogo': typeof CatalogoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/catalogo/$linha': typeof CatalogoLinhaRoute
+  '/catalogo/': typeof CatalogoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/catalogo/$linha' | '/catalogo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/catalogo/$linha' | '/catalogo'
+  id: '__root__' | '/' | '/catalogo/$linha' | '/catalogo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CatalogoLinhaRoute: typeof CatalogoLinhaRoute
+  CatalogoIndexRoute: typeof CatalogoIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +68,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogo/': {
+      id: '/catalogo/'
+      path: '/catalogo'
+      fullPath: '/catalogo/'
+      preLoaderRoute: typeof CatalogoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalogo/$linha': {
+      id: '/catalogo/$linha'
+      path: '/catalogo/$linha'
+      fullPath: '/catalogo/$linha'
+      preLoaderRoute: typeof CatalogoLinhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CatalogoLinhaRoute: CatalogoLinhaRoute,
+  CatalogoIndexRoute: CatalogoIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
