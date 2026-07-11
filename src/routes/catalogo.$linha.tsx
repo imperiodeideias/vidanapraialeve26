@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, Flame, Beef } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
-import { getLinha, linhas } from "@/data/catalogo";
+import { getLinha, linhas, type Produto } from "@/data/catalogo";
 
 export const Route = createFileRoute("/catalogo/$linha")({
   loader: ({ params }) => {
