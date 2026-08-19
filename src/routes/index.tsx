@@ -105,6 +105,8 @@ const depoimentos = [
 function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [filtro, setFiltro] = useState("todos");
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
