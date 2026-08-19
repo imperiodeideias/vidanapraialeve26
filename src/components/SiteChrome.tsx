@@ -6,9 +6,13 @@ import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
 
 type Props = { children: ReactNode; transparentUntilScroll?: boolean };
 
-const navItems = [
-  { l: "Início", to: "/" as const },
-  { l: "Catálogo", to: "/catalogo" as const },
+type NavItem =
+  | { l: string; to: "/" | "/catalogo"; href?: undefined }
+  | { l: string; href: string; to?: undefined };
+
+const navItems: NavItem[] = [
+  { l: "Início", to: "/" },
+  { l: "Catálogo", to: "/catalogo" },
   { l: "Sobre", href: "/#sobre" },
   { l: "Kits", href: "/#kits" },
   { l: "Assinaturas", href: "/#assinaturas" },
