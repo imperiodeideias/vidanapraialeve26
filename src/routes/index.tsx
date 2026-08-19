@@ -21,9 +21,9 @@ import {
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
 import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
 import logoLfwAsset from "@/assets/logo-lfw.png.asset.json";
-import heroImg from "@/assets/hero-beach-food.jpg";
 import aboutImg from "@/assets/about-family.jpg";
 import beachImg from "@/assets/beach-banner.jpg";
+import { linhas as catalogoLinhas } from "@/data/catalogo";
 import pDaily from "@/assets/produtos/coxa-arroz-grega.jpg";
 import pPerf from "@/assets/produtos/frango-cubos.jpg";
 import pWell from "@/assets/produtos/feijoada-vegana.jpg";
@@ -31,6 +31,17 @@ import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
 import pSnack from "@/assets/produtos/coxinha-fit.jpg";
 import pDess from "@/assets/produtos/brownie-fit.jpg";
 import pFunc from "@/assets/produtos/suco-blue-majik.jpg";
+
+const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
+
+const sabores = catalogoLinhas.flatMap((l) =>
+  l.produtos.slice(0, 2).map((p) => ({ ...p, linhaSlug: l.slug, linhaNome: l.nome })),
+);
+const saboresFiltros = [
+  { slug: "todos", nome: "Todos" },
+  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.nome })),
+];
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
