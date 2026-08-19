@@ -20,3 +20,7 @@ O link do Google Drive não é acessível por aqui. Se quiser usar aquelas fotos
 - Extração com `pdfimages`/PIL: para cada página, selecionar o objeto de imagem de maior área e descartar logos, selos e ícones por limite mínimo de tamanho.
 - Reprocessamento com PIL: crop centrado, resize com Lanczos, export JPG progressivo (qualidade ~85).
 - `src/data/catalogo.ts`: atualizar apenas as extensões dos imports que mudarem de `.png` para `.jpg` e os campos `cover` das linhas.
+
+## Correção pendente de build
+
+`src/components/SiteChrome.tsx` está com erro de tipagem no menu (as linhas 47 e 79, nos `<Link to={n.to}>`): o TypeScript entende que `n.to` pode ser `undefined` porque a lista `navItems` mistura itens com rota interna e itens com âncora. A correção é declarar um tipo explícito para a lista (`{ l, to }` ou `{ l, href }`), o que remove os dois erros sem mudar o comportamento do menu. Isso entra junto com o trabalho de imagens.
