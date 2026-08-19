@@ -393,7 +393,77 @@ function Index() {
         </div>
       </section>
 
+      {/* SABORES */}
+      <section id="sabores" className="py-24 md:py-32">
+        <div className="container-x">
+          <div className="max-w-2xl">
+            <span className="eyebrow">Cardápio por linha</span>
+            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+              Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
+            </h2>
+            <p className="mt-6 text-foreground/65 font-light text-lg">
+              Uma amostra do catálogo completo. Filtre pelo momento que combina com você.
+            </p>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-2.5">
+            {saboresFiltros.map((f) => (
+              <button
+                key={f.slug}
+                onClick={() => setFiltro(f.slug)}
+                className={`rounded-full px-4 py-2 font-sub text-[11px] uppercase tracking-[0.18em] transition-colors ${
+                  filtro === f.slug
+                    ? "bg-[color:var(--petrol)] text-[color:var(--offwhite)]"
+                    : "bg-[color:var(--sand)]/60 text-foreground/70 hover:bg-[color:var(--sand)]"
+                }`}
+              >
+                {f.nome}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {sabores
+              .filter((p) => filtro === "todos" || p.linhaSlug === filtro)
+              .map((p) => (
+                <Link
+                  key={p.slug}
+                  to="/catalogo/$linha"
+                  params={{ linha: p.linhaSlug }}
+                  className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={p.img}
+                      alt={p.nome}
+                      loading="lazy"
+                      width={1000}
+                      height={750}
+                      className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{p.linhaNome}</span>
+                    <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
+                    {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
+                    <span className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-[11px] text-[color:var(--petrol)]">
+                      Ver detalhes <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+          </div>
+
+          <div className="mt-14 flex justify-center">
+            <Link to="/catalogo" className="btn-ghost text-foreground">
+              Ver os {totalProdutos} produtos <ChevronRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* DIFERENCIAIS */}
+
       <section className="py-24 md:py-32">
         <div className="container-x">
           <div className="max-w-2xl mb-16">
