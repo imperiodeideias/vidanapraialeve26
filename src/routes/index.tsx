@@ -46,10 +46,11 @@ const saboresFiltros = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vida na Praia Leve - Leve uma vida mais leve" },
-      { name: "description", content: "Refeições saudáveis congeladas, sucos detox, snacks funcionais e kits para transformar sua rotina. Praticidade premium com sabor de casa." },
-      { property: "og:title", content: "Vida na Praia Leve - Leve uma vida mais leve" },
-      { property: "og:description", content: "Refeições saudáveis congeladas, sucos detox, snacks funcionais e kits para transformar sua rotina. Praticidade premium com sabor de casa." },
+      { title: "Vida na Praia Leve - Alimentação leve em Peruíbe" },
+      { name: "description", content: "Refeições congeladas, sucos prensados, lanches e doces em Peruíbe. Praticidade, sabor e bem-estar para deixar sua rotina mais leve." },
+      { property: "og:title", content: "Vida na Praia Leve - Alimentação leve em Peruíbe" },
+      { property: "og:description", content: "Refeições congeladas, sucos prensados, lanches e doces em Peruíbe. Praticidade, sabor e bem-estar para deixar sua rotina mais leve." },
+
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
