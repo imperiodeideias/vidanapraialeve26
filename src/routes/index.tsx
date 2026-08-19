@@ -291,7 +291,8 @@ function Index() {
             <div className="relative">
               <img
                 src={aboutImg}
-                alt="Família em torno de uma mesa saudável"
+                alt="Cozinha em Peruíbe preparando refeições frescas em potes"
+
                 loading="lazy"
                 width={1408}
                 height={1600}
