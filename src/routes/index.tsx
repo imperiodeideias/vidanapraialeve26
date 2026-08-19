@@ -361,15 +361,19 @@ function Index() {
                   <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
                     {l.tag}
                   </span>
+                  <span className="absolute top-5 right-6 font-display text-3xl text-white/70">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                 </div>
                 <div className="p-7">
                   <h3 className="text-2xl leading-tight">{l.title}</h3>
                   <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
                   <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
-                    Explorar <ArrowRight className="size-3.5" />
+                    Explorar <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </article>
+
             ))}
 
             {/* Em breve card */}
