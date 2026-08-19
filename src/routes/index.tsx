@@ -164,7 +164,7 @@ function Index() {
             <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {[["Sobre","#sobre"],["Linhas","#linhas"],["Kits","#kits"],["Assinaturas","#assinaturas"],["Como funciona","#como"],["Blog","#blog"]].map(([l,h])=>(
+            {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Kits","#kits"],["Assinaturas","#assinaturas"],["Como funciona","#como"]].map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <a href="#pedir" onClick={()=>setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
@@ -173,41 +173,92 @@ function Index() {
       )}
 
       {/* HERO */}
-      <section id="top" className="relative min-h-[100svh] w-full overflow-hidden">
-        <img
-          src={heroImg}
-          alt="Mesa saudável à beira-mar"
-          className="absolute inset-0 h-full w-full object-cover scale-105"
-          width={1920}
-          height={1280}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--deep)]/55 via-[color:var(--deep)]/25 to-[color:var(--deep)]/70" />
-        <div className="relative z-10 container-x flex min-h-[100svh] flex-col justify-end pb-20 pt-40 text-[color:var(--offwhite)]">
-          <div className="max-w-3xl animate-fade-up">
-            <span className="eyebrow !text-[color:var(--sand)]">Vida · Leveza · Sabor</span>
-            <h1 className="mt-6 text-5xl leading-[1.05] sm:text-6xl md:text-7xl lg:text-[88px]">
-              Leve uma vida
+      <section id="top" className="relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
+        <div className="pointer-events-none absolute -top-40 -right-32 size-[560px] rounded-full bg-[color:var(--sage)]/20 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 -left-32 size-[420px] rounded-full bg-[color:var(--coral)]/10 blur-3xl" />
+        <div className="relative container-x grid items-center gap-16 lg:grid-cols-12 lg:gap-10">
+          {/* Texto */}
+          <div className="lg:col-span-6 animate-fade-up">
+            <span className="inline-flex items-center gap-2.5 font-sub uppercase tracking-[0.25em] text-[11px] text-[color:var(--petrol)]">
+              <span className="size-2 rounded-full bg-[color:var(--coral)]" /> Alimentação leve em Peruíbe
+            </span>
+            <h1 className="mt-6 text-5xl leading-[1.02] sm:text-6xl lg:text-[76px]">
+              Sua rotina mais leve começa
               <br />
-              <span className="font-script text-[color:var(--coral)] text-6xl sm:text-7xl md:text-8xl lg:text-[110px] leading-none">mais leve</span>
+              <span className="font-script text-[color:var(--coral)] text-6xl sm:text-7xl lg:text-[92px] leading-none">pelo prato.</span>
             </h1>
-            <p className="mt-8 max-w-xl font-light text-lg text-white/85">
-              Alimentação saudável, prática e deliciosa para transformar sua rotina — do dia a dia à praia, do treino ao momento em família.
+            <p className="mt-8 max-w-xl font-light text-lg text-foreground/70 leading-relaxed">
+              Refeições, sucos, lanches e doces escolhidos para quem quer praticidade, sabor e bem-estar — sem transformar a alimentação em uma obrigação.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a href="#linhas" className="btn-primary bg-[color:var(--coral)] shadow-[0_20px_50px_-15px_rgba(230,126,95,0.6)] hover:!bg-[color:var(--coral)]">
-                Conheça nossos produtos <ArrowRight className="size-4" />
+            <div className="mt-10 flex flex-wrap items-center gap-6">
+              <a href="#sabores" className="btn-primary bg-[color:var(--coral)] shadow-[0_20px_50px_-18px_rgba(230,126,95,0.7)] hover:!bg-[color:var(--coral)]">
+                Explorar sabores <ArrowRight className="size-4" />
               </a>
-              <a href="#pedir" className="btn-ghost text-white border-white/40 hover:bg-white/10">
-                Quero pedir
+              <a
+                href="https://www.instagram.com/vidanapraialeve/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 border-b border-foreground/25 pb-1 font-sub text-sm text-foreground/80 hover:text-[color:var(--coral)] hover:border-[color:var(--coral)] transition-colors"
+              >
+                <Instagram className="size-4" /> @vidanapraialeve
               </a>
             </div>
+            <dl className="mt-14 grid grid-cols-3 gap-6 border-t border-border pt-8 max-w-xl">
+              {[
+                { k: String(totalProdutos), v: "opções nos catálogos atuais" },
+                { k: "Local", v: "atendimento em Peruíbe" },
+                { k: "Leve", v: "na rotina e na escolha" },
+              ].map((s) => (
+                <div key={s.v}>
+                  <dt className="font-display text-2xl md:text-3xl text-[color:var(--petrol)]">{s.k}</dt>
+                  <dd className="mt-2 text-xs md:text-sm text-foreground/60 font-light leading-snug">{s.v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-          <div className="mt-16 flex items-center gap-6 text-xs uppercase tracking-[0.3em] text-white/70 font-sub">
-            <span className="h-px w-16 bg-white/40" />
-            Role para descobrir
+
+          {/* Colagem */}
+          <div className="lg:col-span-6 relative animate-fade-up" style={{ animationDelay: "120ms" }}>
+            <div className="relative mx-auto aspect-square w-full max-w-[520px]">
+              <div className="absolute inset-x-6 top-0 bottom-24 rounded-full bg-[color:var(--sage)]/25" />
+              <img
+                src={pDaily}
+                alt="Coxa e sobrecoxa com arroz à grega, refeição da linha Dia a Dia"
+                width={900}
+                height={900}
+                className="blob-a absolute left-[14%] top-[4%] w-[74%] aspect-square object-cover shadow-[0_40px_80px_-30px_rgba(6,30,38,0.45)] ring-8 ring-background"
+              />
+              <img
+                src={pFunc}
+                alt="Suco funcional prensado a frio"
+                loading="lazy"
+                width={520}
+                height={520}
+                className="blob-b animate-floaty absolute left-0 bottom-[6%] w-[38%] aspect-square object-cover bg-[color:var(--coral)]/25 shadow-xl ring-8 ring-background"
+              />
+              <img
+                src={pPrem}
+                alt="Salmão ao molho de maracujá da linha Premium"
+                loading="lazy"
+                width={520}
+                height={520}
+                className="absolute right-0 bottom-0 w-[36%] aspect-square rounded-full object-cover shadow-xl ring-8 ring-background"
+              />
+              <div className="spin-slow absolute -left-2 top-[6%] size-24 md:size-28 rounded-full bg-[color:var(--sand)] hidden sm:block" />
+              <span className="absolute left-[1.25rem] top-[calc(6%+1.6rem)] w-20 md:w-24 text-center font-sub uppercase tracking-[0.18em] text-[9px] leading-[1.6] text-[color:var(--deep)]/80 hidden sm:block">
+                curadoria<br />prazer + praticidade
+              </span>
+              <div className="absolute right-[2%] top-[14%] rounded-2xl bg-card shadow-[0_20px_45px_-20px_rgba(6,30,38,0.45)] px-4 py-3 flex items-center gap-2.5">
+                <span className="size-2 rounded-full bg-[color:var(--coral)]" />
+                <p className="text-xs md:text-[13px] leading-tight font-sub">
+                  Comida de verdade<br />para a vida real
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* MARQUEE VALUES */}
       <section className="bg-[color:var(--deep)] text-[color:var(--offwhite)] py-6 overflow-hidden">
