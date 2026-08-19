@@ -24,13 +24,13 @@ import logoLfwAsset from "@/assets/logo-lfw.png.asset.json";
 import heroImg from "@/assets/hero-beach-food.jpg";
 import aboutImg from "@/assets/about-family.jpg";
 import beachImg from "@/assets/beach-banner.jpg";
-import pDaily from "@/assets/product-daily.jpg";
-import pPerf from "@/assets/product-performance.jpg";
-import pWell from "@/assets/product-wellness.jpg";
-import pPrem from "@/assets/product-premium.jpg";
-import pSnack from "@/assets/product-snacks.jpg";
-import pDess from "@/assets/product-desserts.jpg";
-import pFunc from "@/assets/product-functional.jpg";
+import pDaily from "@/assets/produtos/coxa-arroz-grega.jpg";
+import pPerf from "@/assets/produtos/frango-cubos.jpg";
+import pWell from "@/assets/produtos/feijoada-vegana.jpg";
+import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
+import pSnack from "@/assets/produtos/coxinha-fit.jpg";
+import pDess from "@/assets/produtos/brownie-fit.jpg";
+import pFunc from "@/assets/produtos/suco-blue-majik.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({

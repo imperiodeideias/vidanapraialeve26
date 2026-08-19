@@ -6,9 +6,13 @@ import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
 
 type Props = { children: ReactNode; transparentUntilScroll?: boolean };
 
-const navItems = [
-  { l: "Início", to: "/" as const },
-  { l: "Catálogo", to: "/catalogo" as const },
+type NavItem =
+  | { l: string; to: "/" | "/catalogo"; href?: undefined }
+  | { l: string; href: string; to?: undefined };
+
+const navItems: NavItem[] = [
+  { l: "Início", to: "/" },
+  { l: "Catálogo", to: "/catalogo" },
   { l: "Sobre", href: "/#sobre" },
   { l: "Kits", href: "/#kits" },
   { l: "Assinaturas", href: "/#assinaturas" },
@@ -43,7 +47,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
           </Link>
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
             {navItems.map((n) =>
-              "to" in n ? (
+              n.to !== undefined ? (
                 <Link key={n.l} to={n.to} className={`transition-colors hover:text-accent ${textLight ? "text-white/90" : "text-foreground/80"}`}>
                   {n.l}
                 </Link>
@@ -75,7 +79,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
             {navItems.map((n) =>
-              "to" in n ? (
+              n.to !== undefined ? (
                 <Link key={n.l} to={n.to} onClick={() => setMenuOpen(false)}>{n.l}</Link>
               ) : (
                 <a key={n.l} href={n.href} onClick={() => setMenuOpen(false)}>{n.l}</a>

@@ -6,58 +6,51 @@ import panquecaFrango from "@/assets/produtos/panqueca-frango.jpg";
 import tilapiaAssada from "@/assets/produtos/tilapia-assada.jpg";
 import escondidinhoCarne from "@/assets/produtos/escondidinho-carne.jpg";
 import salmaoMaracuja from "@/assets/produtos/salmao-maracuja.jpg";
-import escondidinhoFrango from "@/assets/produtos/escondidinho-frango.png";
-import frangoCurry from "@/assets/produtos/frango-curry.png";
-import fricasseFrango from "@/assets/produtos/fricasse-frango.png";
-import frangoCubos from "@/assets/produtos/frango-cubos.png";
-import patinhoMoido from "@/assets/produtos/patinho-moido.png";
-import sopaFrango from "@/assets/produtos/sopa-frango.png";
-import sopaDetox from "@/assets/produtos/sopa-detox.png";
-import feijoadaVegana from "@/assets/produtos/feijoada-vegana.png";
-import galinhadaLight from "@/assets/produtos/galinhada-light.png";
-import feijoadaLight from "@/assets/produtos/feijoada-light.png";
-import tilapiaCrosta from "@/assets/produtos/tilapia-crosta.png";
-import moquecaCacao from "@/assets/produtos/moqueca-cacao.png";
-import canjaFit from "@/assets/produtos/canja-fit.png";
-import sopaCabotia from "@/assets/produtos/sopa-cabotia.png";
-import sopaLowcarb from "@/assets/produtos/sopa-lowcarb.png";
-import carneDesfiada from "@/assets/produtos/carne-desfiada.png";
-import nhoqueMandioquinha from "@/assets/produtos/nhoque-mandioquinha.png";
-import boloCarne from "@/assets/produtos/bolo-carne.png";
-import estrogonofeFrango from "@/assets/produtos/estrogonofe-frango.png";
-import nhoqueAbobora from "@/assets/produtos/nhoque-abobora.png";
+import escondidinhoFrango from "@/assets/produtos/escondidinho-frango.jpg";
+import frangoCurry from "@/assets/produtos/frango-curry.jpg";
+import fricasseFrango from "@/assets/produtos/fricasse-frango.jpg";
+import frangoCubos from "@/assets/produtos/frango-cubos.jpg";
+import patinhoMoido from "@/assets/produtos/patinho-moido.jpg";
+import sopaFrango from "@/assets/produtos/sopa-frango.jpg";
+import sopaDetox from "@/assets/produtos/sopa-detox.jpg";
+import feijoadaVegana from "@/assets/produtos/feijoada-vegana.jpg";
+import galinhadaLight from "@/assets/produtos/galinhada-light.jpg";
+import feijoadaLight from "@/assets/produtos/feijoada-light.jpg";
+import tilapiaCrosta from "@/assets/produtos/tilapia-crosta.jpg";
+import moquecaCacao from "@/assets/produtos/moqueca-cacao.jpg";
+import canjaFit from "@/assets/produtos/canja-fit.jpg";
+import sopaCabotia from "@/assets/produtos/sopa-cabotia.jpg";
+import sopaLowcarb from "@/assets/produtos/sopa-lowcarb.jpg";
+import carneDesfiada from "@/assets/produtos/carne-desfiada.jpg";
+import nhoqueMandioquinha from "@/assets/produtos/nhoque-mandioquinha.jpg";
+import boloCarne from "@/assets/produtos/bolo-carne.jpg";
+import estrogonofeFrango from "@/assets/produtos/estrogonofe-frango.jpg";
+import nhoqueAbobora from "@/assets/produtos/nhoque-abobora.jpg";
 import crepiocaPeru from "@/assets/produtos/crepioca-peru.jpg";
 import coxinhaFit from "@/assets/produtos/coxinha-fit.jpg";
-import tortaLowcarb from "@/assets/produtos/torta-lowcarb.png";
-import crepiocaFrango from "@/assets/produtos/crepioca-frango.png";
-import empadaFrango from "@/assets/produtos/empada-frango.png";
-import empadaPalmito from "@/assets/produtos/empada-palmito.png";
-import paoQueijoFit from "@/assets/produtos/pao-queijo-fit.png";
-import pizzaFrango from "@/assets/produtos/pizza-frango.png";
-import pizzaMarguerita from "@/assets/produtos/pizza-marguerita.png";
-import brownieFit from "@/assets/produtos/brownie-fit.png";
-import brigadeiroCremoso from "@/assets/produtos/brigadeiro-cremoso.png";
-import beijinhoFit from "@/assets/produtos/beijinho-fit.png";
+import tortaLowcarb from "@/assets/produtos/torta-lowcarb.jpg";
+import crepiocaFrango from "@/assets/produtos/crepioca-frango.jpg";
+import empadaFrango from "@/assets/produtos/empada-frango.jpg";
+import empadaPalmito from "@/assets/produtos/empada-palmito.jpg";
+import paoQueijoFit from "@/assets/produtos/pao-queijo-fit.jpg";
+import pizzaFrango from "@/assets/produtos/pizza-frango.jpg";
+import pizzaMarguerita from "@/assets/produtos/pizza-marguerita.jpg";
+import brownieFit from "@/assets/produtos/brownie-fit.jpg";
+import brigadeiroCremoso from "@/assets/produtos/brigadeiro-cremoso.jpg";
+import beijinhoFit from "@/assets/produtos/beijinho-fit.jpg";
 import mousseLimao from "@/assets/produtos/mousse-limao.jpg";
-import mixNuts from "@/assets/produtos/mix-nuts.png";
-import sucoMelancia from "@/assets/produtos/suco-melancia.png";
-import sucoMaca from "@/assets/produtos/suco-maca.png";
-import sucoAbacaxi from "@/assets/produtos/suco-abacaxi.png";
-import sucoBlueMajik from "@/assets/produtos/suco-blue-majik.png";
-import sucoSuperGreen from "@/assets/produtos/suco-super-green.png";
-import sucoDesintox from "@/assets/produtos/suco-desintox.png";
-import sucoRelax from "@/assets/produtos/suco-relax.png";
-import sucoImuno from "@/assets/produtos/suco-imuno.png";
-import sucoVitalmax from "@/assets/produtos/suco-vitalmax.png";
-import sucoSucha from "@/assets/produtos/suco-sucha.png";
+import mixNuts from "@/assets/produtos/mix-nuts.jpg";
+import sucoMelancia from "@/assets/produtos/suco-melancia.jpg";
+import sucoMaca from "@/assets/produtos/suco-maca.jpg";
+import sucoAbacaxi from "@/assets/produtos/suco-abacaxi.jpg";
+import sucoBlueMajik from "@/assets/produtos/suco-blue-majik.jpg";
+import sucoSuperGreen from "@/assets/produtos/suco-super-green.jpg";
+import sucoDesintox from "@/assets/produtos/suco-desintox.jpg";
+import sucoRelax from "@/assets/produtos/suco-relax.jpg";
+import sucoImuno from "@/assets/produtos/suco-imuno.jpg";
+import sucoVitalmax from "@/assets/produtos/suco-vitalmax.jpg";
+import sucoSucha from "@/assets/produtos/suco-sucha.jpg";
 
-import pDaily from "@/assets/product-daily.jpg";
-import pPerf from "@/assets/product-performance.jpg";
-import pWell from "@/assets/product-wellness.jpg";
-import pPrem from "@/assets/product-premium.jpg";
-import pSnack from "@/assets/product-snacks.jpg";
-import pDess from "@/assets/product-desserts.jpg";
-import pFunc from "@/assets/product-functional.jpg";
 
 export type Produto = {
   slug: string;
@@ -89,7 +82,7 @@ export const linhas: Linha[] = [
     eyebrow: "Dia a Dia",
     headline: "Comida de casa, feita com carinho.",
     descricao: "Nossa linha mais amada. Pratos completos com arroz, feijão, proteína e legumes — o almoço de domingo, todos os dias.",
-    cover: pDaily,
+    cover: coxaArrozGrega,
     cor: "sage",
     produtos: [
       { slug: "coxa-sobrecoxa-arroz-grega", nome: "Coxa e Sobrecoxa", subtitulo: "com arroz à grega", img: coxaArrozGrega, peso: "300g", kcal: 182, proteina: 11, descricao: "Coxa e sobrecoxa desossada com arroz à grega, batata, cenoura e ervilha.", tags: ["Sem glúten"] },
@@ -104,7 +97,7 @@ export const linhas: Linha[] = [
     eyebrow: "Performance & Rotina",
     headline: "Frango do jeito que você ama.",
     descricao: "Receitas variadas com frango — do curry ao escondidinho — para dias saborosos e proteicos.",
-    cover: pPerf,
+    cover: parmegianaFrango,
     cor: "petrol",
     produtos: [
       { slug: "parmegiana-de-frango", nome: "Parmegiana de Frango", subtitulo: "com purê de batata", img: parmegianaFrango, peso: "300g", kcal: 87, proteina: 12, descricao: "Filé de frango empanado sem glúten com molho de tomate, mussarela sem lactose e purê de batata." },
@@ -120,7 +113,7 @@ export const linhas: Linha[] = [
     eyebrow: "Robustez & Sabor",
     headline: "Carne bovina em receitas equilibradas.",
     descricao: "Pratos completos com patinho e cortes magros, para saciar sem pesar.",
-    cover: pPrem,
+    cover: escondidinhoCarne,
     cor: "deep",
     produtos: [
       { slug: "escondidinho-de-carne", nome: "Escondidinho de Carne", subtitulo: "com purê de abóbora cabotiá", img: escondidinhoCarne, peso: "300g", kcal: 97, proteina: 8.5, descricao: "Acém desfiado com temperos brasileiros e purê cremoso de abóbora cabotiá.", tags: ["Sem glúten"] },
@@ -134,7 +127,7 @@ export const linhas: Linha[] = [
     eyebrow: "Conforto Leve",
     headline: "Massas artesanais, sem culpa.",
     descricao: "Nhoques, panquecas e pastas sem glúten com molhos autorais.",
-    cover: pPerf,
+    cover: nhoqueAbobora,
     cor: "coral",
     produtos: [
       { slug: "nhoque-abobora-cabotia", nome: "Nhoque de Abóbora Cabotiá", subtitulo: "ao sugo com patinho moído", img: nhoqueAbobora, peso: "300g", kcal: 104, proteina: 4.5, descricao: "Nhoque de abóbora cabotiá com sugo natural e patinho moído.", tags: ["Sem glúten"] },
@@ -148,7 +141,7 @@ export const linhas: Linha[] = [
     eyebrow: "Premium",
     headline: "Peixes nobres, do mar ao seu prato.",
     descricao: "Tilápia, salmão e cação em receitas leves e sofisticadas.",
-    cover: pPrem,
+    cover: salmaoMaracuja,
     cor: "petrol",
     produtos: [
       { slug: "tilapia-assada", nome: "Tilápia Assada", subtitulo: "com legumes e arroz integral", img: tilapiaAssada, peso: "300g", kcal: 121, proteina: 9.5, descricao: "Filé de tilápia assado com abobrinha, berinjela, cenoura e arroz integral." },
@@ -163,7 +156,7 @@ export const linhas: Linha[] = [
     eyebrow: "Performance",
     headline: "Mais proteína, mais resultado.",
     descricao: "Pratos com alto valor proteico para quem treina e busca performance.",
-    cover: pPerf,
+    cover: frangoCubos,
     cor: "petrol",
     produtos: [
       { slug: "frango-em-cubos-batata-doce", nome: "Frango em Cubos", subtitulo: "com purê de batata doce", img: frangoCubos, peso: "300g", kcal: 196, proteina: 26, descricao: "Peito de frango em cubos com purê cremoso de batata doce. Alto valor proteico.", tags: ["High protein", "Sem glúten"] },
@@ -176,7 +169,7 @@ export const linhas: Linha[] = [
     eyebrow: "Bem-estar",
     headline: "Colo em forma de sopa.",
     descricao: "Sopas nutritivas e reconfortantes, do detox ao alto proteico.",
-    cover: pWell,
+    cover: sopaFrango,
     cor: "sage",
     produtos: [
       { slug: "sopa-de-frango-alho-poro", nome: "Sopa de Frango", subtitulo: "com alho poró", img: sopaFrango, peso: "300g", kcal: 101, proteina: 8.1, descricao: "Sopa cremosa de frango com batata e alho poró. Sem glúten.", tags: ["Sem glúten"] },
@@ -192,7 +185,7 @@ export const linhas: Linha[] = [
     eyebrow: "Bem-estar",
     headline: "100% vegetal, 100% sabor.",
     descricao: "Opções veganas ricas em proteína vegetal e fibras.",
-    cover: pWell,
+    cover: feijoadaVegana,
     cor: "sage",
     produtos: [
       { slug: "feijoada-vegana", nome: "Feijoada Vegana", subtitulo: "arroz integral, couve e farofa", img: feijoadaVegana, peso: "300g", kcal: 129, proteina: 6.3, descricao: "Feijoada vegana com linguiça vegetal, feijão preto, arroz integral, couve e farofa de mandioca.", tags: ["Vegano"] },
@@ -204,7 +197,7 @@ export const linhas: Linha[] = [
     eyebrow: "Lanches Inteligentes",
     headline: "Beliscar sem sair da linha.",
     descricao: "Crepiocas, empadas, pães de queijo e pizzas fit — pra qualquer hora do dia.",
-    cover: pSnack,
+    cover: coxinhaFit,
     cor: "coral",
     produtos: [
       { slug: "torta-low-carb", nome: "Torta Low Carb", img: tortaLowcarb, peso: "200g", kcal: 226, proteina: 34, descricao: "Torta de frango e couve flor com farinha de amêndoas. Zero glúten, zero lactose.", tags: ["Low carb", "Sem glúten"] },
@@ -224,7 +217,7 @@ export const linhas: Linha[] = [
     eyebrow: "Sobremesas Funcionais",
     headline: "Doce com propósito.",
     descricao: "Sobremesas sem açúcar refinado, sem lactose e sem culpa.",
-    cover: pDess,
+    cover: brownieFit,
     cor: "coral",
     produtos: [
       { slug: "brownie-fit", nome: "Brownie Fit", img: brownieFit, peso: "80g", kcal: 210, proteina: 7, descricao: "Brownie de cacau puro com chocolate 70%, farinha de aveia e óleo de coco.", tags: ["Sem açúcar"] },
@@ -239,7 +232,7 @@ export const linhas: Linha[] = [
     eyebrow: "Funcionais",
     headline: "Prensados a frio, cheios de vida.",
     descricao: "Sucos naturais prensados a frio e funcionais para cada momento.",
-    cover: pFunc,
+    cover: sucoBlueMajik,
     cor: "sage",
     produtos: [
       { slug: "suco-melancia", nome: "Suco de Melancia", subtitulo: "prensado a frio", img: sucoMelancia, peso: "300ml", kcal: 100, descricao: "Melancia prensada a frio. Hidratação e frescor em cada gole.", tags: ["Prensado a frio"] },
@@ -260,7 +253,7 @@ export const linhas: Linha[] = [
     eyebrow: "Funcionais",
     headline: "Snacks que trabalham por você.",
     descricao: "Mix de castanhas e sementes selecionadas para lanches inteligentes.",
-    cover: pFunc,
+    cover: mixNuts,
     cor: "sage",
     produtos: [
       { slug: "mix-de-nuts", nome: "Mix de Nuts", img: mixNuts, peso: "30g", kcal: 187, proteina: 5.9, descricao: "Sementes de girassol, amendoim, semente de abóbora, castanha do pará e castanha de caju." },
