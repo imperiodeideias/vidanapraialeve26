@@ -107,27 +107,37 @@ function Index() {
       {/* NAV */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background/85 backdrop-blur-xl border-b border-border/60" : "bg-transparent"
+          scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border/60 shadow-[0_10px_30px_-25px_rgba(6,30,38,0.6)]" : "bg-background"
         }`}
       >
-        <div className="container-x flex items-center justify-between py-4">
+        <div className="bg-[color:var(--deep)] text-[color:var(--offwhite)]">
+          <div className="container-x flex items-center justify-center gap-3 py-2 text-[10px] sm:text-[11px] font-sub uppercase tracking-[0.25em]">
+            <span className="text-white/80">Um jeito mais leve de comer bem, em Peruíbe</span>
+            <span className="hidden sm:inline text-[color:var(--coral)]">•</span>
+            <a
+              href="https://www.instagram.com/vidanapraialeve/"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 text-[color:var(--sand)] hover:text-[color:var(--coral)] transition-colors"
+            >
+              <Instagram className="size-3" /> @vidanapraialeve
+            </a>
+          </div>
+        </div>
+        <div className="container-x flex items-center justify-between py-3.5">
           <a href="#top" className="flex items-center gap-3">
-            <img src={scrolled ? logoAsset.url : logoLightAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
+            <img src={logoAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
           </a>
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
             {[
               ["Sobre", "#sobre"],
               ["Linhas", "#linhas"],
+              ["Sabores", "#sabores"],
               ["Kits", "#kits"],
               ["Assinaturas", "#assinaturas"],
               ["Como funciona", "#como"],
-              ["Blog", "#blog"],
             ].map(([l, h]) => (
-              <a
-                key={h}
-                href={h}
-                className={`transition-colors hover:text-accent ${scrolled ? "text-foreground/80" : "text-white/90"}`}
-              >
+              <a key={h} href={h} className="text-foreground/80 transition-colors hover:text-accent">
                 {l}
               </a>
             ))}
@@ -136,7 +146,7 @@ function Index() {
             <a href="#pedir" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
           </div>
           <button
-            className={`lg:hidden ${scrolled ? "text-foreground" : "text-white"}`}
+            className="lg:hidden text-foreground"
             onClick={() => setMenuOpen(true)}
             aria-label="Abrir menu"
           >
@@ -144,6 +154,7 @@ function Index() {
           </button>
         </div>
       </header>
+
 
       {/* Mobile menu */}
       {menuOpen && (
