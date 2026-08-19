@@ -207,3 +207,22 @@
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+/* Máscaras orgânicas e selo giratório do hero */
+@utility blob-a {
+  border-radius: 58% 42% 45% 55% / 52% 48% 52% 48%;
+}
+@utility blob-b {
+  border-radius: 46% 54% 60% 40% / 44% 58% 42% 56%;
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@utility spin-slow {
+  animation: spinSlow 22s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spin-slow, .animate-floaty, .marquee { animation: none !important; }
+}
+
