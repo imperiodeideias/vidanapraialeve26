@@ -115,7 +115,7 @@
     font-weight: 400;
     letter-spacing: -0.02em;
   }
-  .font-script { font-family: var(--font-script); font-weight: 400; }
+  .font-script { font-family: var(--font-display); font-weight: 700; }
   .font-sub { font-family: var(--font-sub); }
 }
 
