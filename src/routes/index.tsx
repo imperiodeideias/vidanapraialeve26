@@ -29,12 +29,13 @@ import pHero2 from "@/assets/produtos/moqueca-cacao.jpg";
 import pPerf from "@/assets/produtos/frango-cubos.jpg";
 import pWell from "@/assets/produtos/feijoada-vegana.jpg";
 import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
-import pSnack from "@/assets/produtos/coxinha-fit.jpg";
+import pSnackAsset from "@/assets/produtos/coxinha-fit-nova.jpg.asset.json";
 import pDessAsset from "@/assets/produtos/brownie-fit-novo.jpg.asset.json";
 import pFuncAsset from "@/assets/produtos/suco-blue-majik-novo.jpg.asset.json";
 
 const pDess = pDessAsset.url;
 const pFunc = pFuncAsset.url;
+const pSnack = pSnackAsset.url;
 
 const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
 
@@ -54,7 +55,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Refeições congeladas, sucos prensados, lanches e doces em Peruíbe. Praticidade, sabor e bem-estar para deixar sua rotina mais leve." },
       { property: "og:title", content: "Vida na Praia Leve - Alimentação leve em Peruíbe" },
       { property: "og:description", content: "Refeições congeladas, sucos prensados, lanches e doces em Peruíbe. Praticidade, sabor e bem-estar para deixar sua rotina mais leve." },
-
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
