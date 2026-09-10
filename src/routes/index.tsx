@@ -24,6 +24,8 @@ import aboutImg from "@/assets/about-family.jpg";
 import beachImg from "@/assets/beach-banner.jpg";
 import { linhas as catalogoLinhas } from "@/data/catalogo";
 import pDaily from "@/assets/produtos/coxa-arroz-grega.jpg";
+import pHero from "@/assets/produtos/salmao-maracuja.jpg";
+import pHero2 from "@/assets/produtos/moqueca-cacao.jpg";
 import pPerf from "@/assets/produtos/frango-cubos.jpg";
 import pWell from "@/assets/produtos/feijoada-vegana.jpg";
 import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
@@ -219,23 +221,23 @@ function Index() {
             <div className="relative mx-auto aspect-square w-full max-w-[520px]">
               <div className="absolute inset-x-6 top-0 bottom-24 rounded-full bg-[color:var(--sage)]/25" />
               <img
-                src={pDaily}
-                alt="Coxa e sobrecoxa com arroz à grega, refeição da linha Dia a Dia"
+                src={pHero}
+                alt="Salmão ao molho de maracujá com brócolis e arroz negro, linha Premium"
                 width={900}
                 height={900}
                 className="blob-a absolute left-[14%] top-[4%] w-[74%] aspect-square object-cover shadow-[0_40px_80px_-30px_rgba(6,30,38,0.45)] ring-8 ring-background"
               />
               <img
-                src={pFunc}
-                alt="Suco funcional prensado a frio"
+                src={pHero2}
+                alt="Moqueca com arroz temperado sobre tábua de madeira"
                 loading="lazy"
                 width={520}
                 height={520}
-                className="blob-b animate-floaty absolute left-0 bottom-[6%] w-[38%] aspect-square object-cover bg-[color:var(--coral)]/25 shadow-xl ring-8 ring-background"
+                className="blob-b animate-floaty absolute left-0 bottom-[6%] w-[38%] aspect-square object-cover shadow-xl ring-8 ring-background"
               />
               <img
-                src={pPrem}
-                alt="Salmão ao molho de maracujá da linha Premium"
+                src={pDaily}
+                alt="Coxa e sobrecoxa com arroz à grega, refeição da linha Dia a Dia"
                 loading="lazy"
                 width={520}
                 height={520}
