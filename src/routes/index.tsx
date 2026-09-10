@@ -283,7 +283,7 @@ function Index() {
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="relative">
               <img
-                src={aboutImg}
+                src={aboutImgAsset.url}
                 alt="Cozinha em Peruíbe preparando refeições frescas em potes"
 
                 loading="lazy"
