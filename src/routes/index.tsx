@@ -30,9 +30,10 @@ import pPerf from "@/assets/produtos/frango-cubos.jpg";
 import pWell from "@/assets/produtos/feijoada-vegana.jpg";
 import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
 import pSnack from "@/assets/produtos/coxinha-fit.jpg";
-import pDess from "@/assets/produtos/brownie-fit.jpg";
+import pDessAsset from "@/assets/produtos/brownie-fit-novo.jpg.asset.json";
 import pFuncAsset from "@/assets/produtos/suco-blue-majik-novo.jpg.asset.json";
 
+const pDess = pDessAsset.url;
 const pFunc = pFuncAsset.url;
 
 const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
