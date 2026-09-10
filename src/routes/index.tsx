@@ -81,20 +81,6 @@ const passos = [
   { n: "04", t: "Aproveite", d: "Coma bem, viva leve, tenha mais tempo." },
 ];
 
-const kits = [
-  { n: "Kit Dia a Dia", d: "10 refeições equilibradas para a rotina.", p: "R$ 289" },
-  { n: "Kit Performance", d: "12 pratos com foco em proteína e energia.", p: "R$ 349" },
-  { n: "Kit Casal", d: "Refeições pensadas para dois, sem preocupação.", p: "R$ 429" },
-  { n: "Kit Família", d: "20 porções generosas para toda a semana.", p: "R$ 579" },
-  { n: "Kit Emagrecimento", d: "Cardápio equilibrado para seus objetivos.", p: "R$ 319" },
-  { n: "Kit Degustação", d: "Uma seleção do nosso melhor. Comece por aqui.", p: "R$ 199" },
-];
-
-const planos = [
-  { n: "Essencial", d: "Refeições da semana, no seu ritmo.", f: ["8 refeições/semana", "Ajuste livre do cardápio", "Frete facilitado"] },
-  { n: "Performance", d: "Para quem treina e vive intenso.", f: ["12 refeições + snacks", "Alto valor proteico", "Suporte nutricional"], destaque: true },
-  { n: "Família", d: "Praticidade para o dia a dia em casa.", f: ["20 porções generosas", "Cardápio infantil disponível", "Frete grátis"] },
-];
 
 const depoimentos = [
   { n: "Soraia", c: "Peruíbe, SP", t: "Meu almoço deixou de ser um problema. Sabor incrível e me sinto muito mais leve." },
