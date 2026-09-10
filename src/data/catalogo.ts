@@ -64,6 +64,14 @@ import frangoCrostaCastanha from "@/assets/produtos/frango-crosta-castanha.jpg";
 import estrogonofeCarne from "@/assets/produtos/estrogonofe-carne.jpg";
 import penneMolhoBranco from "@/assets/produtos/penne-molho-branco.jpg";
 import estrogonofeGraoDeBico from "@/assets/produtos/estrogonofe-grao-de-bico.jpg";
+import caseirinhoLinguica from "@/assets/produtos/caseirinho-linguica.jpg";
+import lasanhaPeitoPeru from "@/assets/produtos/lasanha-peito-peru.jpg";
+import tilapiaAlcaparras from "@/assets/produtos/tilapia-alcaparras.jpg";
+import tilapiaCremeAbobora from "@/assets/produtos/tilapia-creme-abobora.jpg";
+import caldoCouveFlor from "@/assets/produtos/caldo-couve-flor.jpg";
+import sopaFuncional from "@/assets/produtos/sopa-funcional.jpg";
+import lentilhasPomodoro from "@/assets/produtos/lentilhas-pomodoro.jpg";
+import escondidinhoBanana from "@/assets/produtos/escondidinho-banana.jpg";
 
 const brownieFit = brownieFitAsset.url;
 const brigadeiroCremoso = brigadeiroCremosoAsset.url;
@@ -123,7 +131,7 @@ export const linhas: Linha[] = [
       { slug: "sabor-sertanejo", nome: "Sabor Sertanejo", subtitulo: "carne desfiada, feijão preto, arroz e banana", img: saborSertanejo, peso: "300g", descricao: "Um clássico brasileiro em versão leve: carne desfiada, feijão preto, arroz e banana da terra.", tags: ["Sem glúten"] },
       { slug: "frango-cremoso-legumes-mandioca", nome: "Frango Cremoso", subtitulo: "com legumes e mandioca sautée", img: caseirinhoFrangoCremoso, peso: "300g", descricao: "Peito de frango ao molho de tomate com mandioca, milho e ervilha, finalizado com manteiga zero lactose, orégano e chimichurri." },
       { slug: "caseirinho-sobrecoxa-polenta", nome: "Caseirinho Sobrecoxa", subtitulo: "com polenta ao molho de tomate", img: caseirinhoSobrecoxaPolenta, peso: "300g", descricao: "Sobrecoxa de frango com polenta cremosa de farinha de milho ao molho de tomate com manjericão e orégano." },
-      { slug: "caseirinho-linguica-arroz-feijao-farofa", nome: "Caseirinho de Linguiça", subtitulo: "com arroz, feijão e farofa", img: saborSertanejo, descricao: "Ficha técnica oficial em breve." },
+      { slug: "caseirinho-linguica-arroz-feijao-farofa", nome: "Caseirinho de Linguiça", subtitulo: "com arroz, feijão e farofa", img: caseirinhoLinguica, peso: "300g", descricao: "Linguiça com arroz, feijão e farofa de mandioca com cenoura, azeite de oliva extra virgem, cheiro verde e folhas de louro." },
       { slug: "caseirinho-lombo-legumes", nome: "Caseirinho de Lombo", subtitulo: "ao molho, legumes, arroz e feijão carioca", img: caseirinhoLombo, peso: "300g", descricao: "Copa lombo ao molho com cenoura, batata, arroz e feijão carioca, temperado com tomilho, louro e zaatar." },
       { slug: "caseirinho-soja-legumes", nome: "Caseirinho de Soja", subtitulo: "com legumes, arroz integral e feijão", img: caseirinhoSoja, peso: "300g", descricao: "Proteína de soja com batata, tomate e cenoura, acompanhada de arroz integral e feijão." },
       { slug: "caseirinho-frango-creme-de-milho", nome: "Caseirinho de Frango", subtitulo: "com creme de milho e arroz branco", img: caseirinhoCremeMilho, peso: "300g", descricao: "Peito de frango empanado com farinha de rosca zero glúten, creme de milho com leite zero lactose e arroz branco." },
@@ -181,7 +189,7 @@ export const linhas: Linha[] = [
       { slug: "nhoque-mandioquinha-ragu", nome: "Nhoque de Mandioquinha", subtitulo: "com ragu de carne", img: nhoqueMandioquinha, peso: "300g", kcal: 51, descricao: "Nhoque delicado de mandioquinha com ragu suave de patinho.", tags: ["Sem glúten"] },
       { slug: "panqueca-frango-mussarela", nome: "Panqueca de Frango", subtitulo: "ao sugo com mussarela sem lactose", img: panquecaFrango, peso: "300g", kcal: 124, proteina: 11, descricao: "Panqueca sem glúten recheada com frango, ao sugo e mussarela sem lactose.", tags: ["Sem glúten"] },
       { slug: "penne-sem-gluten-molho-branco", nome: "Penne sem Glúten", subtitulo: "ao molho branco com frango, ervilha e milho", img: penneMolhoBranco, peso: "300g", descricao: "Macarrão sem glúten ao molho branco de leite e requeijão zero lactose com peito de frango, ervilha e milho.", tags: ["Sem glúten"] },
-      { slug: "lasanha-bolonhesa-peito-de-peru", nome: "Lasanha à Bolonhesa com Peito de Peru", img: nhoqueAbobora, descricao: "Ficha técnica oficial em breve." },
+      { slug: "lasanha-bolonhesa-peito-de-peru", nome: "Lasanha à Bolonhesa com Peito de Peru", img: lasanhaPeitoPeru, peso: "300g", kcal: 202, proteina: 10, descricao: "Lasanha sem glúten com massa de mix de farinhas, molho de tomate, patinho moído, peito de peru e mussarela zero lactose.", tags: ["Sem glúten"] },
     ],
   },
   {
@@ -197,8 +205,8 @@ export const linhas: Linha[] = [
       { slug: "tilapia-em-crosta", nome: "Tilápia em Crosta", subtitulo: "linhaça e gergelim com arroz fake de couve-flor", img: tilapiaCrosta, peso: "300g", kcal: 138, proteina: 14, descricao: "Filé de tilápia em crosta de linhaça dourada e gergelim. Low carb.", tags: ["Low carb", "Sem glúten"] },
       { slug: "salmao-ao-molho-de-maracuja", nome: "Salmão ao Molho de Maracujá", subtitulo: "arroz negro e brócolis", img: salmaoMaracuja, peso: "300g", kcal: 153, proteina: 13, descricao: "Salmão fresco com molho agridoce de maracujá, arroz negro e brócolis.", tags: ["Sem glúten"] },
       { slug: "moqueca-de-cacao", nome: "Moqueca de Cação", subtitulo: "e arroz de açafrão", img: moquecaCacao, peso: "300g", kcal: 135, proteina: 16, descricao: "Moqueca cremosa com leite de coco, azeite de dendê e arroz de açafrão.", tags: ["Sem glúten"] },
-      { slug: "tilapia-molho-tomate-alcaparras", nome: "Filé de Tilápia ao Molho de Tomate e Alcaparras", subtitulo: "com arroz à grega", img: tilapiaAssada, descricao: "Ficha técnica oficial em breve." },
-      { slug: "tilapia-creme-de-abobora", nome: "Filé de Tilápia com Creme de Abóbora", img: tilapiaCrosta, descricao: "Ficha técnica oficial em breve." },
+      { slug: "tilapia-molho-tomate-alcaparras", nome: "Filé de Tilápia ao Molho de Tomate e Alcaparras", subtitulo: "com arroz à grega", img: tilapiaAlcaparras, peso: "300g", descricao: "Filé de tilápia ao molho de tomate com alcaparras e pimentão, acompanhado de arroz à grega com vagem e cenoura.", tags: ["Sem glúten"] },
+      { slug: "tilapia-creme-de-abobora", nome: "Filé de Tilápia com Creme de Abóbora", img: tilapiaCremeAbobora, peso: "300g", descricao: "Filé de tilápia sobre creme de abóbora cabotiá com leite de coco e requeijão zero lactose.", tags: ["Low carb", "Sem glúten"] },
     ],
   },
   {
@@ -228,8 +236,8 @@ export const linhas: Linha[] = [
       { slug: "sopa-cabotia-carne", nome: "Sopa de Cabotiá", subtitulo: "com carne desfiada", img: sopaCabotia, peso: "300g", kcal: 70, proteina: 4.9, descricao: "Sopa cremosa de abóbora cabotiá com carne desfiada e couve manteiga.", tags: ["Sem glúten"] },
       { slug: "sopa-detox", nome: "Sopa Detox", img: sopaDetox, peso: "300g", kcal: 50, proteina: 1.3, descricao: "Sopa detox de abóbora cabotiá e couve manteiga. Leve e reconfortante.", tags: ["Detox", "Sem glúten"] },
       { slug: "sopa-low-carb-frango", nome: "Sopa Low Carb", subtitulo: "de frango", img: sopaLowcarb, peso: "300g", kcal: 62, proteina: 5.9, descricao: "Sopa low carb com frango, mandioquinha, cenoura e abobrinha.", tags: ["Low carb", "Sem glúten"] },
-      { slug: "caldo-couve-flor-alho-poro", nome: "Caldo de Couve-Flor com Alho-Poró", img: sopaDetox, descricao: "Ficha técnica oficial em breve." },
-      { slug: "sopa-funcional-castanhas", nome: "Sopa Funcional com Castanhas", img: sopaCabotia, descricao: "Ficha técnica oficial em breve." },
+      { slug: "caldo-couve-flor-alho-poro", nome: "Caldo de Couve-Flor com Alho-Poró", img: caldoCouveFlor, peso: "300g", descricao: "Caldo cremoso de couve-flor com leite de coco, alho-poró, cebola e azeite de oliva extra virgem.", tags: ["Low carb", "Sem glúten"] },
+      { slug: "sopa-funcional-castanhas", nome: "Sopa Funcional com Castanhas", img: sopaFuncional, peso: "300g", descricao: "Sopa funcional de couve-flor com castanha-de-caju, cúrcuma, noz-moscada e páprica doce.", tags: ["Sem glúten"] },
     ],
   },
   {
@@ -243,8 +251,8 @@ export const linhas: Linha[] = [
     produtos: [
       { slug: "feijoada-vegana", nome: "Feijoada Vegana", subtitulo: "arroz integral, couve e farofa", img: feijoadaVegana, peso: "300g", kcal: 129, proteina: 6.3, descricao: "Feijoada vegana com linguiça vegetal, feijão preto, arroz integral, couve e farofa de mandioca.", tags: ["Vegano"] },
       { slug: "estrogonofe-grao-de-bico", nome: "Estrogonofe de Grão-de-Bico", subtitulo: "com arroz integral, brócolis e batata", img: estrogonofeGraoDeBico, peso: "300g", descricao: "Grão-de-bico ao molho de tomate com champignon e castanha de caju, arroz integral, brócolis e batata.", tags: ["Vegano"] },
-      { slug: "lentilhas-ao-pomodoro", nome: "Lentilhas ao Pomodoro", subtitulo: "com arroz integral e cenoura", img: feijoadaVegana, descricao: "Ficha técnica oficial em breve." },
-      { slug: "escondidinho-banana-da-terra", nome: "Escondidinho de Banana-da-Terra", subtitulo: "com molho bolonhesa de soja", img: feijoadaVegana, descricao: "Ficha técnica oficial em breve." },
+      { slug: "lentilhas-ao-pomodoro", nome: "Lentilhas ao Pomodoro", subtitulo: "com arroz integral e cenoura", img: lentilhasPomodoro, peso: "300g", descricao: "Lentilha ao molho pomodoro com manjericão fresco e orégano, arroz integral e cenoura.", tags: ["Vegano", "Sem glúten"] },
+      { slug: "escondidinho-banana-da-terra", nome: "Escondidinho de Banana-da-Terra", subtitulo: "com molho bolonhesa de soja", img: escondidinhoBanana, peso: "300g", descricao: "Purê de banana-da-terra com bolonhesa de proteína de soja ao molho de tomate, alho e manjericão fresco.", tags: ["Vegano", "Sem glúten"] },
     ],
   },
   {
