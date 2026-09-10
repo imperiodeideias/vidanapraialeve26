@@ -147,8 +147,6 @@ function Index() {
               ["Sobre", "#sobre"],
               ["Linhas", "#linhas"],
               ["Sabores", "#sabores"],
-              ["Kits", "#kits"],
-              ["Assinaturas", "#assinaturas"],
               ["Como funciona", "#como"],
             ].map(([l, h]) => (
               <a key={h} href={h} className="text-foreground/80 transition-colors hover:text-accent">
