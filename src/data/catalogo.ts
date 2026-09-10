@@ -40,16 +40,25 @@ import brigadeiroCremoso from "@/assets/produtos/brigadeiro-cremoso.jpg";
 import beijinhoFit from "@/assets/produtos/beijinho-fit.jpg";
 import mousseLimao from "@/assets/produtos/mousse-limao.jpg";
 import mixNuts from "@/assets/produtos/mix-nuts.jpg";
-import sucoMelancia from "@/assets/produtos/suco-melancia.jpg";
-import sucoMaca from "@/assets/produtos/suco-maca.jpg";
-import sucoAbacaxi from "@/assets/produtos/suco-abacaxi.jpg";
-import sucoBlueMajik from "@/assets/produtos/suco-blue-majik.jpg";
-import sucoSuperGreen from "@/assets/produtos/suco-super-green.jpg";
-import sucoDesintox from "@/assets/produtos/suco-desintox.jpg";
-import sucoRelax from "@/assets/produtos/suco-relax.jpg";
-import sucoImuno from "@/assets/produtos/suco-imuno.jpg";
-import sucoVitalmax from "@/assets/produtos/suco-vitalmax.jpg";
-import sucoSucha from "@/assets/produtos/suco-sucha.jpg";
+import sucoMelanciaAsset from "@/assets/produtos/suco-melancia-novo.jpg.asset.json";
+import sucoAbacaxiAsset from "@/assets/produtos/suco-abacaxi-novo.jpg.asset.json";
+import sucoBlueMajikAsset from "@/assets/produtos/suco-blue-majik-novo.jpg.asset.json";
+import sucoSuperGreenAsset from "@/assets/produtos/suco-super-green-novo.jpg.asset.json";
+import sucoDesintoxAsset from "@/assets/produtos/suco-desintox-novo.jpg.asset.json";
+import sucoRelaxAsset from "@/assets/produtos/suco-relax-novo.jpg.asset.json";
+import sucoImunoAsset from "@/assets/produtos/suco-imuno-novo.jpg.asset.json";
+import sucoVitalmaxAsset from "@/assets/produtos/suco-vitalmax-novo.jpg.asset.json";
+import sucoSuchaAsset from "@/assets/produtos/suco-sucha-novo.jpg.asset.json";
+
+const sucoMelancia = sucoMelanciaAsset.url;
+const sucoAbacaxi = sucoAbacaxiAsset.url;
+const sucoBlueMajik = sucoBlueMajikAsset.url;
+const sucoSuperGreen = sucoSuperGreenAsset.url;
+const sucoDesintox = sucoDesintoxAsset.url;
+const sucoRelax = sucoRelaxAsset.url;
+const sucoImuno = sucoImunoAsset.url;
+const sucoVitalmax = sucoVitalmaxAsset.url;
+const sucoSucha = sucoSuchaAsset.url;
 
 
 export type Produto = {
@@ -236,7 +245,6 @@ export const linhas: Linha[] = [
     cor: "sage",
     produtos: [
       { slug: "suco-melancia", nome: "Suco de Melancia", subtitulo: "prensado a frio", img: sucoMelancia, peso: "300ml", kcal: 100, descricao: "Melancia prensada a frio. Hidratação e frescor em cada gole.", tags: ["Prensado a frio"] },
-      { slug: "suco-maca", nome: "Suco de Maçã", img: sucoMaca, peso: "300ml", kcal: 136, descricao: "Maçã prensada a frio, sem adição de açúcar." },
       { slug: "suco-abacaxi", nome: "Suco de Abacaxi", img: sucoAbacaxi, peso: "300ml", kcal: 152, descricao: "Abacaxi prensado a frio, doçura natural." },
       { slug: "suco-blue-majik", nome: "Suco Blue Majik", img: sucoBlueMajik, peso: "300ml", kcal: 114, descricao: "Abacaxi, água de coco, hortelã, spirulina azul, gengibre e cravo." },
       { slug: "suco-super-green", nome: "Suco Super Green", img: sucoSuperGreen, peso: "300ml", kcal: 88, descricao: "Maçã, couve, pepino, gengibre, limão, salsão, marapuama e spirulina." },
