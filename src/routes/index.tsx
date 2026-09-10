@@ -176,7 +176,7 @@ function Index() {
             <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Kits","#kits"],["Assinaturas","#assinaturas"],["Como funciona","#como"]].map(([l,h])=>(
+            {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <a href="#pedir" onClick={()=>setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
