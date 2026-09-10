@@ -98,9 +98,9 @@ const planos = [
 ];
 
 const depoimentos = [
-  { n: "Ana Beatriz", c: "São Paulo, SP", t: "Meu almoço deixou de ser um problema. Sabor incrível e me sinto muito mais leve." },
-  { n: "Rafael Menezes", c: "Rio de Janeiro, RJ", t: "Como atleta amador, o kit Performance mudou minha rotina. Recuperação melhor e mais energia." },
-  { n: "Família Souza", c: "Florianópolis, SC", t: "As crianças amam. E a gente ganha tempo pra viver o que importa." },
+  { n: "Soraia", c: "Peruíbe, SP", t: "Meu almoço deixou de ser um problema. Sabor incrível e me sinto muito mais leve." },
+  { n: "Andrey", c: "Peruíbe, SP", t: "Como atleta amador, o kit Performance mudou minha rotina. Recuperação melhor e mais energia." },
+  { n: "Edna", c: "Peruíbe, SP", t: "As crianças amam. E a gente ganha tempo pra viver o que importa." },
 ];
 
 function Index() {
