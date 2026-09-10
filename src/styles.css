@@ -42,7 +42,6 @@
   --color-deep: var(--deep);
 
   --font-display: "Capriola", ui-serif, Georgia, serif;
-  --font-script: "Madelyn", "Great Vibes", cursive;
   --font-sub: "Chivo", "Chiron Sans", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
@@ -115,7 +114,7 @@
     font-weight: 400;
     letter-spacing: -0.02em;
   }
-  .font-script { font-family: var(--font-script); font-weight: 400; }
+  .font-script { font-family: var(--font-display); font-weight: 700; }
   .font-sub { font-family: var(--font-sub); }
 }
 

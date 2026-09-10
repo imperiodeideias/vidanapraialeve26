@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Leaf,
   Sparkles,
-  Package,
   Truck,
   Snowflake,
   Heart,
@@ -82,25 +81,11 @@ const passos = [
   { n: "04", t: "Aproveite", d: "Coma bem, viva leve, tenha mais tempo." },
 ];
 
-const kits = [
-  { n: "Kit Dia a Dia", d: "10 refeições equilibradas para a rotina.", p: "R$ 289" },
-  { n: "Kit Performance", d: "12 pratos com foco em proteína e energia.", p: "R$ 349" },
-  { n: "Kit Casal", d: "Refeições pensadas para dois, sem preocupação.", p: "R$ 429" },
-  { n: "Kit Família", d: "20 porções generosas para toda a semana.", p: "R$ 579" },
-  { n: "Kit Emagrecimento", d: "Cardápio equilibrado para seus objetivos.", p: "R$ 319" },
-  { n: "Kit Degustação", d: "Uma seleção do nosso melhor. Comece por aqui.", p: "R$ 199" },
-];
-
-const planos = [
-  { n: "Essencial", d: "Refeições da semana, no seu ritmo.", f: ["8 refeições/semana", "Ajuste livre do cardápio", "Frete facilitado"] },
-  { n: "Performance", d: "Para quem treina e vive intenso.", f: ["12 refeições + snacks", "Alto valor proteico", "Suporte nutricional"], destaque: true },
-  { n: "Família", d: "Praticidade para o dia a dia em casa.", f: ["20 porções generosas", "Cardápio infantil disponível", "Frete grátis"] },
-];
 
 const depoimentos = [
-  { n: "Ana Beatriz", c: "São Paulo, SP", t: "Meu almoço deixou de ser um problema. Sabor incrível e me sinto muito mais leve." },
-  { n: "Rafael Menezes", c: "Rio de Janeiro, RJ", t: "Como atleta amador, o kit Performance mudou minha rotina. Recuperação melhor e mais energia." },
-  { n: "Família Souza", c: "Florianópolis, SC", t: "As crianças amam. E a gente ganha tempo pra viver o que importa." },
+  { n: "Soraia", c: "Peruíbe, SP", t: "Meu almoço deixou de ser um problema. Sabor incrível e me sinto muito mais leve." },
+  { n: "Andrey", c: "Peruíbe, SP", t: "Como atleta amador, o kit Performance mudou minha rotina. Recuperação melhor e mais energia." },
+  { n: "Edna", c: "Peruíbe, SP", t: "As crianças amam. E a gente ganha tempo pra viver o que importa." },
 ];
 
 function Index() {
@@ -147,8 +132,6 @@ function Index() {
               ["Sobre", "#sobre"],
               ["Linhas", "#linhas"],
               ["Sabores", "#sabores"],
-              ["Kits", "#kits"],
-              ["Assinaturas", "#assinaturas"],
               ["Como funciona", "#como"],
             ].map(([l, h]) => (
               <a key={h} href={h} className="text-foreground/80 transition-colors hover:text-accent">
@@ -178,7 +161,7 @@ function Index() {
             <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Kits","#kits"],["Assinaturas","#assinaturas"],["Como funciona","#como"]].map(([l,h])=>(
+            {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <a href="#pedir" onClick={()=>setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
@@ -511,83 +494,6 @@ function Index() {
         </div>
       </section>
 
-      {/* KITS */}
-      <section id="kits" className="py-24 md:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl mb-16">
-            <span className="eyebrow">Kits selecionados</span>
-            <h2 className="mt-4 text-4xl md:text-5xl leading-[1.05]">Combinações pensadas para o seu estilo de vida.</h2>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {kits.map((k, i) => (
-              <div
-                key={k.n}
-                className={`card-lift rounded-3xl p-8 flex flex-col justify-between min-h-[240px] ${
-                  i % 3 === 1 ? "bg-[color:var(--sage)]/25" : "bg-card border border-border"
-                }`}
-              >
-                <div>
-                  <Package className="size-5 text-[color:var(--coral)]" />
-                  <h3 className="mt-4 text-2xl">{k.n}</h3>
-                  <p className="mt-3 text-sm text-foreground/65 font-light">{k.d}</p>
-                </div>
-                <div className="mt-8 flex items-center justify-between">
-                  <span className="font-display text-2xl text-[color:var(--petrol)]">{k.p}</span>
-                  <a href="#pedir" className="inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-foreground hover:text-[color:var(--coral)]">
-                    Montar <ArrowRight className="size-3.5" />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ASSINATURAS */}
-      <section id="assinaturas" className="py-24 md:py-32 bg-[color:var(--deep)] text-[color:var(--offwhite)]">
-        <div className="container-x">
-          <div className="grid lg:grid-cols-12 gap-12 mb-16">
-            <div className="lg:col-span-7">
-              <span className="eyebrow !text-[color:var(--sand)]">Assinaturas</span>
-              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                Praticidade que <span className="font-script text-[color:var(--coral)]">vira hábito</span>.
-              </h2>
-            </div>
-            <p className="lg:col-span-5 self-end text-lg text-white/70 font-light">
-              Escolha um plano, deixe a rotina fluir. Ajuste, pause ou cancele quando quiser — sem burocracia.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {planos.map((p) => (
-              <div
-                key={p.n}
-                className={`rounded-3xl p-8 border transition-all ${
-                  p.destaque
-                    ? "bg-[color:var(--coral)] text-[color:var(--offwhite)] border-[color:var(--coral)] shadow-2xl scale-[1.02]"
-                    : "bg-white/5 border-white/10 hover:border-white/25"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl">{p.n}</h3>
-                  {p.destaque && <span className="text-[10px] font-sub uppercase tracking-[0.25em] bg-white/20 px-2.5 py-1 rounded-full">Mais escolhido</span>}
-                </div>
-                <p className={`mt-3 text-sm font-light ${p.destaque ? "text-white/85" : "text-white/70"}`}>{p.d}</p>
-                <ul className="mt-8 space-y-3 text-sm">
-                  {p.f.map((f) => (
-                    <li key={f} className="flex gap-3">
-                      <span className="mt-2 size-1.5 rounded-full bg-current opacity-60" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#pedir" className={`mt-10 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs ${p.destaque ? "text-white" : "text-[color:var(--sand)]"}`}>
-                  Em breve <ArrowRight className="size-3.5" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* DEPOIMENTOS */}
       <section className="py-24 md:py-32">
         <div className="container-x">
@@ -684,7 +590,7 @@ function Index() {
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
-              { t: "Explore", l: ["Sobre", "Linhas", "Kits", "Assinaturas", "Blog"] },
+              { t: "Explore", l: ["Sobre", "Linhas", "Sabores", "Blog"] },
               { t: "Institucional", l: ["Nossa história", "Parceiros", "Trabalhe conosco", "Imprensa"] },
               { t: "Contato", l: ["WhatsApp", "Instagram", "contato@vidanapraialeve.com.br", "Encontre uma loja"] },
             ].map((c) => (
@@ -708,6 +614,19 @@ function Index() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp flutuante */}
+      <a
+        href="https://wa.me/551333662961"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Fale conosco pelo WhatsApp"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center size-14 rounded-full bg-[#25D366] text-white shadow-[0_12px_40px_-12px_rgba(37,211,102,0.7)] hover:scale-110 transition-transform duration-300"
+      >
+        <svg className="size-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403c-.514.056-.97.43-1.136.916-.198.56.04 1.166.53 1.49.49.323 1.13.29 1.58-.084.45-.373.62-.99.42-1.55-.2-.56-.74-.91-1.394-.772M12.048 2C6.516 2 2 6.486 2 12.016c0 2.13.663 4.132 1.806 5.79L2.6 21.416l3.675-1.177A9.96 9.96 0 0 0 12.048 22c5.532 0 10.048-4.486 10.048-10.016S17.58 2 12.048 2z"/>
+        </svg>
+      </a>
     </div>
   );
 }
