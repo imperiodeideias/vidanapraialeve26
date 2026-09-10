@@ -251,8 +251,8 @@ export const linhas: Linha[] = [
     produtos: [
       { slug: "feijoada-vegana", nome: "Feijoada Vegana", subtitulo: "arroz integral, couve e farofa", img: feijoadaVegana, peso: "300g", kcal: 129, proteina: 6.3, descricao: "Feijoada vegana com linguiça vegetal, feijão preto, arroz integral, couve e farofa de mandioca.", tags: ["Vegano"] },
       { slug: "estrogonofe-grao-de-bico", nome: "Estrogonofe de Grão-de-Bico", subtitulo: "com arroz integral, brócolis e batata", img: estrogonofeGraoDeBico, peso: "300g", descricao: "Grão-de-bico ao molho de tomate com champignon e castanha de caju, arroz integral, brócolis e batata.", tags: ["Vegano"] },
-      { slug: "lentilhas-ao-pomodoro", nome: "Lentilhas ao Pomodoro", subtitulo: "com arroz integral e cenoura", img: feijoadaVegana, descricao: "Ficha técnica oficial em breve." },
-      { slug: "escondidinho-banana-da-terra", nome: "Escondidinho de Banana-da-Terra", subtitulo: "com molho bolonhesa de soja", img: feijoadaVegana, descricao: "Ficha técnica oficial em breve." },
+      { slug: "lentilhas-ao-pomodoro", nome: "Lentilhas ao Pomodoro", subtitulo: "com arroz integral e cenoura", img: lentilhasPomodoro, peso: "300g", descricao: "Lentilha ao molho pomodoro com manjericão fresco e orégano, arroz integral e cenoura.", tags: ["Vegano", "Sem glúten"] },
+      { slug: "escondidinho-banana-da-terra", nome: "Escondidinho de Banana-da-Terra", subtitulo: "com molho bolonhesa de soja", img: escondidinhoBanana, peso: "300g", descricao: "Purê de banana-da-terra com bolonhesa de proteína de soja ao molho de tomate, alho e manjericão fresco.", tags: ["Vegano", "Sem glúten"] },
     ],
   },
   {
