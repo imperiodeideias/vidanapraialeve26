@@ -509,38 +509,6 @@ function Index() {
         </div>
       </section>
 
-      {/* KITS */}
-      <section id="kits" className="py-24 md:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl mb-16">
-            <span className="eyebrow">Kits selecionados</span>
-            <h2 className="mt-4 text-4xl md:text-5xl leading-[1.05]">Combinações pensadas para o seu estilo de vida.</h2>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {kits.map((k, i) => (
-              <div
-                key={k.n}
-                className={`card-lift rounded-3xl p-8 flex flex-col justify-between min-h-[240px] ${
-                  i % 3 === 1 ? "bg-[color:var(--sage)]/25" : "bg-card border border-border"
-                }`}
-              >
-                <div>
-                  <Package className="size-5 text-[color:var(--coral)]" />
-                  <h3 className="mt-4 text-2xl">{k.n}</h3>
-                  <p className="mt-3 text-sm text-foreground/65 font-light">{k.d}</p>
-                </div>
-                <div className="mt-8 flex items-center justify-between">
-                  <span className="font-display text-2xl text-[color:var(--petrol)]">{k.p}</span>
-                  <a href="#pedir" className="inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-foreground hover:text-[color:var(--coral)]">
-                    Montar <ArrowRight className="size-3.5" />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ASSINATURAS */}
       <section id="assinaturas" className="py-24 md:py-32 bg-[color:var(--deep)] text-[color:var(--offwhite)]">
         <div className="container-x">
