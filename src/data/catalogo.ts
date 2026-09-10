@@ -189,7 +189,7 @@ export const linhas: Linha[] = [
       { slug: "nhoque-mandioquinha-ragu", nome: "Nhoque de Mandioquinha", subtitulo: "com ragu de carne", img: nhoqueMandioquinha, peso: "300g", kcal: 51, descricao: "Nhoque delicado de mandioquinha com ragu suave de patinho.", tags: ["Sem glúten"] },
       { slug: "panqueca-frango-mussarela", nome: "Panqueca de Frango", subtitulo: "ao sugo com mussarela sem lactose", img: panquecaFrango, peso: "300g", kcal: 124, proteina: 11, descricao: "Panqueca sem glúten recheada com frango, ao sugo e mussarela sem lactose.", tags: ["Sem glúten"] },
       { slug: "penne-sem-gluten-molho-branco", nome: "Penne sem Glúten", subtitulo: "ao molho branco com frango, ervilha e milho", img: penneMolhoBranco, peso: "300g", descricao: "Macarrão sem glúten ao molho branco de leite e requeijão zero lactose com peito de frango, ervilha e milho.", tags: ["Sem glúten"] },
-      { slug: "lasanha-bolonhesa-peito-de-peru", nome: "Lasanha à Bolonhesa com Peito de Peru", img: nhoqueAbobora, descricao: "Ficha técnica oficial em breve." },
+      { slug: "lasanha-bolonhesa-peito-de-peru", nome: "Lasanha à Bolonhesa com Peito de Peru", img: lasanhaPeitoPeru, peso: "300g", kcal: 202, proteina: 10, descricao: "Lasanha sem glúten com massa de mix de farinhas, molho de tomate, patinho moído, peito de peru e mussarela zero lactose.", tags: ["Sem glúten"] },
     ],
   },
   {
