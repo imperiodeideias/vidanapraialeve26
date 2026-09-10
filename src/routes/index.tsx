@@ -605,7 +605,7 @@ function Index() {
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
-              { t: "Explore", l: ["Sobre", "Linhas", "Kits", "Assinaturas", "Blog"] },
+              { t: "Explore", l: ["Sobre", "Linhas", "Sabores", "Blog"] },
               { t: "Institucional", l: ["Nossa história", "Parceiros", "Trabalhe conosco", "Imprensa"] },
               { t: "Contato", l: ["WhatsApp", "Instagram", "contato@vidanapraialeve.com.br", "Encontre uma loja"] },
             ].map((c) => (
