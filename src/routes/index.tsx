@@ -24,6 +24,8 @@ import aboutImg from "@/assets/about-family.jpg";
 import beachImg from "@/assets/beach-banner.jpg";
 import { linhas as catalogoLinhas } from "@/data/catalogo";
 import pDaily from "@/assets/produtos/coxa-arroz-grega.jpg";
+import pHero from "@/assets/produtos/salmao-maracuja.jpg";
+import pHero2 from "@/assets/produtos/moqueca-cacao.jpg";
 import pPerf from "@/assets/produtos/frango-cubos.jpg";
 import pWell from "@/assets/produtos/feijoada-vegana.jpg";
 import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
