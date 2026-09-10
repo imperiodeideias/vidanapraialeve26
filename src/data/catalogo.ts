@@ -64,6 +64,14 @@ import frangoCrostaCastanha from "@/assets/produtos/frango-crosta-castanha.jpg";
 import estrogonofeCarne from "@/assets/produtos/estrogonofe-carne.jpg";
 import penneMolhoBranco from "@/assets/produtos/penne-molho-branco.jpg";
 import estrogonofeGraoDeBico from "@/assets/produtos/estrogonofe-grao-de-bico.jpg";
+import caseirinhoLinguica from "@/assets/produtos/caseirinho-linguica.jpg";
+import lasanhaPeitoPeru from "@/assets/produtos/lasanha-peito-peru.jpg";
+import tilapiaAlcaparras from "@/assets/produtos/tilapia-alcaparras.jpg";
+import tilapiaCremeAbobora from "@/assets/produtos/tilapia-creme-abobora.jpg";
+import caldoCouveFlor from "@/assets/produtos/caldo-couve-flor.jpg";
+import sopaFuncional from "@/assets/produtos/sopa-funcional.jpg";
+import lentilhasPomodoro from "@/assets/produtos/lentilhas-pomodoro.jpg";
+import escondidinhoBanana from "@/assets/produtos/escondidinho-banana.jpg";
 
 const brownieFit = brownieFitAsset.url;
 const brigadeiroCremoso = brigadeiroCremosoAsset.url;
