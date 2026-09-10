@@ -205,8 +205,8 @@ export const linhas: Linha[] = [
       { slug: "tilapia-em-crosta", nome: "Tilápia em Crosta", subtitulo: "linhaça e gergelim com arroz fake de couve-flor", img: tilapiaCrosta, peso: "300g", kcal: 138, proteina: 14, descricao: "Filé de tilápia em crosta de linhaça dourada e gergelim. Low carb.", tags: ["Low carb", "Sem glúten"] },
       { slug: "salmao-ao-molho-de-maracuja", nome: "Salmão ao Molho de Maracujá", subtitulo: "arroz negro e brócolis", img: salmaoMaracuja, peso: "300g", kcal: 153, proteina: 13, descricao: "Salmão fresco com molho agridoce de maracujá, arroz negro e brócolis.", tags: ["Sem glúten"] },
       { slug: "moqueca-de-cacao", nome: "Moqueca de Cação", subtitulo: "e arroz de açafrão", img: moquecaCacao, peso: "300g", kcal: 135, proteina: 16, descricao: "Moqueca cremosa com leite de coco, azeite de dendê e arroz de açafrão.", tags: ["Sem glúten"] },
-      { slug: "tilapia-molho-tomate-alcaparras", nome: "Filé de Tilápia ao Molho de Tomate e Alcaparras", subtitulo: "com arroz à grega", img: tilapiaAssada, descricao: "Ficha técnica oficial em breve." },
-      { slug: "tilapia-creme-de-abobora", nome: "Filé de Tilápia com Creme de Abóbora", img: tilapiaCrosta, descricao: "Ficha técnica oficial em breve." },
+      { slug: "tilapia-molho-tomate-alcaparras", nome: "Filé de Tilápia ao Molho de Tomate e Alcaparras", subtitulo: "com arroz à grega", img: tilapiaAlcaparras, peso: "300g", descricao: "Filé de tilápia ao molho de tomate com alcaparras e pimentão, acompanhado de arroz à grega com vagem e cenoura.", tags: ["Sem glúten"] },
+      { slug: "tilapia-creme-de-abobora", nome: "Filé de Tilápia com Creme de Abóbora", img: tilapiaCremeAbobora, peso: "300g", descricao: "Filé de tilápia sobre creme de abóbora cabotiá com leite de coco e requeijão zero lactose.", tags: ["Low carb", "Sem glúten"] },
     ],
   },
   {
