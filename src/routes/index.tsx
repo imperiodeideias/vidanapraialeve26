@@ -37,6 +37,10 @@ const pDess = pDessAsset.url;
 const pFunc = pFuncAsset.url;
 const pSnack = pSnackAsset.url;
 
+const whatsappPedidoUrl = "https://wa.me/551333662961?text=" + encodeURIComponent(
+  "Olá, estou no site da Vida na Praia Leve e gostaria de fazer um pedido"
+);
+
 const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
 
 const sabores = catalogoLinhas.flatMap((l) =>
@@ -147,7 +151,7 @@ function Index() {
             ))}
           </nav>
           <div className="hidden lg:flex items-center gap-3">
-            <a href="#pedir" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
+            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
           </div>
           <button
             className="lg:hidden text-foreground"
@@ -171,7 +175,7 @@ function Index() {
             {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
-            <a href="#pedir" onClick={()=>setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
+            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
           </nav>
         </div>
       )}
@@ -626,7 +630,7 @@ function Index() {
 
       {/* WhatsApp flutuante */}
       <a
-        href="https://wa.me/551333662961"
+        href={whatsappPedidoUrl}
         target="_blank"
         rel="noreferrer"
         aria-label="Fale conosco pelo WhatsApp"
