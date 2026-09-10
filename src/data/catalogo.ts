@@ -236,8 +236,8 @@ export const linhas: Linha[] = [
       { slug: "sopa-cabotia-carne", nome: "Sopa de Cabotiá", subtitulo: "com carne desfiada", img: sopaCabotia, peso: "300g", kcal: 70, proteina: 4.9, descricao: "Sopa cremosa de abóbora cabotiá com carne desfiada e couve manteiga.", tags: ["Sem glúten"] },
       { slug: "sopa-detox", nome: "Sopa Detox", img: sopaDetox, peso: "300g", kcal: 50, proteina: 1.3, descricao: "Sopa detox de abóbora cabotiá e couve manteiga. Leve e reconfortante.", tags: ["Detox", "Sem glúten"] },
       { slug: "sopa-low-carb-frango", nome: "Sopa Low Carb", subtitulo: "de frango", img: sopaLowcarb, peso: "300g", kcal: 62, proteina: 5.9, descricao: "Sopa low carb com frango, mandioquinha, cenoura e abobrinha.", tags: ["Low carb", "Sem glúten"] },
-      { slug: "caldo-couve-flor-alho-poro", nome: "Caldo de Couve-Flor com Alho-Poró", img: sopaDetox, descricao: "Ficha técnica oficial em breve." },
-      { slug: "sopa-funcional-castanhas", nome: "Sopa Funcional com Castanhas", img: sopaCabotia, descricao: "Ficha técnica oficial em breve." },
+      { slug: "caldo-couve-flor-alho-poro", nome: "Caldo de Couve-Flor com Alho-Poró", img: caldoCouveFlor, peso: "300g", descricao: "Caldo cremoso de couve-flor com leite de coco, alho-poró, cebola e azeite de oliva extra virgem.", tags: ["Low carb", "Sem glúten"] },
+      { slug: "sopa-funcional-castanhas", nome: "Sopa Funcional com Castanhas", img: sopaFuncional, peso: "300g", descricao: "Sopa funcional de couve-flor com castanha-de-caju, cúrcuma, noz-moscada e páprica doce.", tags: ["Sem glúten"] },
     ],
   },
   {
