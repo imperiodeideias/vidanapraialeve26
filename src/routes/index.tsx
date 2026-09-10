@@ -509,51 +509,6 @@ function Index() {
         </div>
       </section>
 
-      {/* ASSINATURAS */}
-      <section id="assinaturas" className="py-24 md:py-32 bg-[color:var(--deep)] text-[color:var(--offwhite)]">
-        <div className="container-x">
-          <div className="grid lg:grid-cols-12 gap-12 mb-16">
-            <div className="lg:col-span-7">
-              <span className="eyebrow !text-[color:var(--sand)]">Assinaturas</span>
-              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                Praticidade que <span className="font-script text-[color:var(--coral)]">vira hábito</span>.
-              </h2>
-            </div>
-            <p className="lg:col-span-5 self-end text-lg text-white/70 font-light">
-              Escolha um plano, deixe a rotina fluir. Ajuste, pause ou cancele quando quiser — sem burocracia.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {planos.map((p) => (
-              <div
-                key={p.n}
-                className={`rounded-3xl p-8 border transition-all ${
-                  p.destaque
-                    ? "bg-[color:var(--coral)] text-[color:var(--offwhite)] border-[color:var(--coral)] shadow-2xl scale-[1.02]"
-                    : "bg-white/5 border-white/10 hover:border-white/25"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl">{p.n}</h3>
-                  {p.destaque && <span className="text-[10px] font-sub uppercase tracking-[0.25em] bg-white/20 px-2.5 py-1 rounded-full">Mais escolhido</span>}
-                </div>
-                <p className={`mt-3 text-sm font-light ${p.destaque ? "text-white/85" : "text-white/70"}`}>{p.d}</p>
-                <ul className="mt-8 space-y-3 text-sm">
-                  {p.f.map((f) => (
-                    <li key={f} className="flex gap-3">
-                      <span className="mt-2 size-1.5 rounded-full bg-current opacity-60" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#pedir" className={`mt-10 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs ${p.destaque ? "text-white" : "text-[color:var(--sand)]"}`}>
-                  Em breve <ArrowRight className="size-3.5" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* DEPOIMENTOS */}
       <section className="py-24 md:py-32">
         <div className="container-x">
