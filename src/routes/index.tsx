@@ -20,7 +20,7 @@ import {
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
 import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
 import logoLfwAsset from "@/assets/logo-lfw.png.asset.json";
-import aboutImg from "@/assets/about-family.jpg";
+import aboutImgAsset from "@/assets/about-family-new.png.asset.json";
 import beachImg from "@/assets/beach-banner.jpg";
 import { linhas as catalogoLinhas } from "@/data/catalogo";
 import pDaily from "@/assets/produtos/coxa-arroz-grega.jpg";
@@ -283,7 +283,7 @@ function Index() {
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="relative">
               <img
-                src={aboutImg}
+                src={aboutImgAsset.url}
                 alt="Cozinha em Peruíbe preparando refeições frescas em potes"
 
                 loading="lazy"
