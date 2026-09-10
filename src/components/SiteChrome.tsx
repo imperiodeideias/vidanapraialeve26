@@ -14,8 +14,7 @@ const navItems: NavItem[] = [
   { l: "Início", to: "/" },
   { l: "Catálogo", to: "/catalogo" },
   { l: "Sobre", href: "/#sobre" },
-  { l: "Kits", href: "/#kits" },
-  { l: "Assinaturas", href: "/#assinaturas" },
+  { l: "Kits", href: "/catalogo/kits-detox" },
   { l: "Como funciona", href: "/#como" },
 ];
 
@@ -111,8 +110,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
               <li><Link to="/" className="hover:text-white">Início</Link></li>
               <li><Link to="/catalogo" className="hover:text-white">Catálogo</Link></li>
               <li><a href="/#sobre" className="hover:text-white">Sobre</a></li>
-              <li><a href="/#kits" className="hover:text-white">Kits</a></li>
-              <li><a href="/#assinaturas" className="hover:text-white">Assinaturas</a></li>
+              <li><a href="/catalogo/kits-detox" className="hover:text-white">Kits Detox</a></li>
             </ul>
           </div>
           <div>

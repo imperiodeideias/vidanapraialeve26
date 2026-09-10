@@ -49,6 +49,21 @@ import sucoRelaxAsset from "@/assets/produtos/suco-relax-novo.jpg.asset.json";
 import sucoImunoAsset from "@/assets/produtos/suco-imuno-novo.jpg.asset.json";
 import sucoVitalmaxAsset from "@/assets/produtos/suco-vitalmax-novo.jpg.asset.json";
 import sucoSuchaAsset from "@/assets/produtos/suco-sucha-novo.jpg.asset.json";
+import sucoMaca from "@/assets/produtos/suco-maca.jpg";
+import caseirinhoFrangoCremoso from "@/assets/produtos/caseirinho-frango-cremoso.jpg";
+import caseirinhoSobrecoxaPolenta from "@/assets/produtos/caseirinho-sobrecoxa-polenta.jpg";
+import caseirinhoLombo from "@/assets/produtos/caseirinho-lombo.jpg";
+import caseirinhoSoja from "@/assets/produtos/caseirinho-soja.jpg";
+import caseirinhoCremeMilho from "@/assets/produtos/caseirinho-creme-milho.jpg";
+import caseirinhoSobrecoxaSautee from "@/assets/produtos/caseirinho-sobrecoxa-sautee.jpg";
+import caseirinhoBovinoPicadinho from "@/assets/produtos/caseirinho-bovino-picadinho.jpg";
+import caseirinhoMacarraoBolonhesa from "@/assets/produtos/caseirinho-macarrao-bolonhesa.jpg";
+import caseirinhoCarneMoida from "@/assets/produtos/caseirinho-carne-moida.jpg";
+import caseirinhoSaintPeter from "@/assets/produtos/caseirinho-saint-peter.jpg";
+import frangoCrostaCastanha from "@/assets/produtos/frango-crosta-castanha.jpg";
+import estrogonofeCarne from "@/assets/produtos/estrogonofe-carne.jpg";
+import penneMolhoBranco from "@/assets/produtos/penne-molho-branco.jpg";
+import estrogonofeGraoDeBico from "@/assets/produtos/estrogonofe-grao-de-bico.jpg";
 
 const brownieFit = brownieFitAsset.url;
 const brigadeiroCremoso = brigadeiroCremosoAsset.url;
@@ -106,8 +121,17 @@ export const linhas: Linha[] = [
     produtos: [
       { slug: "coxa-sobrecoxa-arroz-grega", nome: "Coxa e Sobrecoxa", subtitulo: "com arroz à grega", img: coxaArrozGrega, peso: "300g", kcal: 182, proteina: 11, descricao: "Coxa e sobrecoxa desossada com arroz à grega, batata, cenoura e ervilha.", tags: ["Sem glúten"] },
       { slug: "sabor-sertanejo", nome: "Sabor Sertanejo", subtitulo: "carne desfiada, feijão preto, arroz e banana", img: saborSertanejo, peso: "300g", descricao: "Um clássico brasileiro em versão leve: carne desfiada, feijão preto, arroz e banana da terra.", tags: ["Sem glúten"] },
-      { slug: "feijoada-light", nome: "Feijoada Light", subtitulo: "arroz integral, farofa e couve", img: feijoadaLight, peso: "300g", kcal: 79, proteina: 4, descricao: "Feijoada equilibrada com copa lombo, calabresa, arroz integral, farofa e couve refogada." },
-      { slug: "galinhada-light", nome: "Galinhada Light", img: galinhadaLight, peso: "300g", kcal: 112, proteina: 11, descricao: "Coxa de frango desossada, arroz integral, cenoura, milho e ervilha com temperos brasileiros.", tags: ["Sem glúten"] },
+      { slug: "frango-cremoso-legumes-mandioca", nome: "Frango Cremoso", subtitulo: "com legumes e mandioca sautée", img: caseirinhoFrangoCremoso, peso: "300g", descricao: "Peito de frango ao molho de tomate com mandioca, milho e ervilha, finalizado com manteiga zero lactose, orégano e chimichurri." },
+      { slug: "caseirinho-sobrecoxa-polenta", nome: "Caseirinho Sobrecoxa", subtitulo: "com polenta ao molho de tomate", img: caseirinhoSobrecoxaPolenta, peso: "300g", descricao: "Sobrecoxa de frango com polenta cremosa de farinha de milho ao molho de tomate com manjericão e orégano." },
+      { slug: "caseirinho-linguica-arroz-feijao-farofa", nome: "Caseirinho de Linguiça", subtitulo: "com arroz, feijão e farofa", img: saborSertanejo, descricao: "Ficha técnica oficial em breve." },
+      { slug: "caseirinho-lombo-legumes", nome: "Caseirinho de Lombo", subtitulo: "ao molho, legumes, arroz e feijão carioca", img: caseirinhoLombo, peso: "300g", descricao: "Copa lombo ao molho com cenoura, batata, arroz e feijão carioca, temperado com tomilho, louro e zaatar." },
+      { slug: "caseirinho-soja-legumes", nome: "Caseirinho de Soja", subtitulo: "com legumes, arroz integral e feijão", img: caseirinhoSoja, peso: "300g", descricao: "Proteína de soja com batata, tomate e cenoura, acompanhada de arroz integral e feijão." },
+      { slug: "caseirinho-frango-creme-de-milho", nome: "Caseirinho de Frango", subtitulo: "com creme de milho e arroz branco", img: caseirinhoCremeMilho, peso: "300g", descricao: "Peito de frango empanado com farinha de rosca zero glúten, creme de milho com leite zero lactose e arroz branco." },
+      { slug: "caseirinho-sobrecoxa-batata-sautee", nome: "Caseirinho Sobrecoxa de Frango", subtitulo: "arroz, feijão e batata sautée", img: caseirinhoSobrecoxaSautee, peso: "300g", descricao: "Sobrecoxa de frango ao vinho branco com batata sautée, arroz e feijão." },
+      { slug: "caseirinho-bovino-picadinho", nome: "Caseirinho Bovino", subtitulo: "picadinho de carne, arroz, feijão e farofa", img: caseirinhoBovinoPicadinho, peso: "300g", descricao: "Picadinho de patinho bovino com cenoura, batata e tomate, arroz, feijão e farofa de mandioca." },
+      { slug: "caseirinho-macarrao-bolonhesa", nome: "Caseirinho de Macarrão", subtitulo: "sem glúten à bolonhesa", img: caseirinhoMacarraoBolonhesa, peso: "300g", descricao: "Macarrão sem glúten ao molho de tomate com carne bovina e manjericão fresco.", tags: ["Sem glúten"] },
+      { slug: "caseirinho-carne-moida-legumes", nome: "Caseirinho de Carne Moída", subtitulo: "com legumes, arroz e feijão", img: caseirinhoCarneMoida, peso: "300g", descricao: "Acém bovino moído com batata, cenoura e tomate, acompanhado de arroz e feijão." },
+      { slug: "caseirinho-saint-peter", nome: "Caseirinho Saint Peter", subtitulo: "arroz branco, feijão carioca e mix de legumes", img: caseirinhoSaintPeter, peso: "300g", descricao: "Filé de tilápia empanado com farinha de rosca zero glúten, arroz branco, feijão carioca, cenoura, vagem, couve-flor e brócolis." },
     ],
   },
   {
@@ -124,6 +148,8 @@ export const linhas: Linha[] = [
       { slug: "frango-ao-curry", nome: "Frango ao Curry", subtitulo: "com legumes", img: frangoCurry, peso: "300g", kcal: 55, proteina: 5, descricao: "Peito de frango ao curry suave com cenoura, brócolis e couve-flor.", tags: ["Sem glúten"] },
       { slug: "fricasse-de-frango", nome: "Fricassê de Frango", subtitulo: "com arroz fake de couve-flor", img: fricasseFrango, peso: "300g", kcal: 126, proteina: 16, descricao: "Fricassê cremoso com arroz fake de couve-flor. Baixo carb, alto sabor.", tags: ["Low carb"] },
       { slug: "estrogonofe-de-frango", nome: "Estrogonofe de Frango", subtitulo: "batata, arroz integral e brócolis", img: estrogonofeFrango, peso: "300g", descricao: "Estrogonofe cremoso com creme de leite zero lactose, batata, arroz integral e brócolis." },
+      { slug: "galinhada-light", nome: "Galinhada Light", img: galinhadaLight, peso: "300g", kcal: 112, proteina: 11, descricao: "Coxa de frango desossada, arroz integral, cenoura, milho e ervilha com temperos brasileiros.", tags: ["Sem glúten"] },
+      { slug: "file-frango-crosta-castanha-caju", nome: "Filé de Frango em Crosta de Castanha de Caju", subtitulo: "com arroz integral e legumes sautée", img: frangoCrostaCastanha, peso: "300g", descricao: "Peito de frango em crosta de castanha de caju torrada e moída, com arroz integral, cenoura, couve-flor e brócolis sautée." },
     ],
   },
   {
@@ -135,7 +161,9 @@ export const linhas: Linha[] = [
     cover: escondidinhoCarne,
     cor: "deep",
     produtos: [
+      { slug: "feijoada-light", nome: "Feijoada Light", subtitulo: "arroz integral, farofa e couve", img: feijoadaLight, peso: "300g", kcal: 79, proteina: 4, descricao: "Feijoada equilibrada com copa lombo, calabresa, arroz integral, farofa e couve refogada." },
       { slug: "escondidinho-de-carne", nome: "Escondidinho de Carne", subtitulo: "com purê de abóbora cabotiá", img: escondidinhoCarne, peso: "300g", kcal: 97, proteina: 8.5, descricao: "Acém desfiado com temperos brasileiros e purê cremoso de abóbora cabotiá.", tags: ["Sem glúten"] },
+      { slug: "estrogonofe-de-carne", nome: "Estrogonofe de Carne", subtitulo: "com batata, arroz integral e brócolis", img: estrogonofeCarne, peso: "300g", descricao: "Patinho bovino ao creme de leite zero lactose com cogumelo, batata, arroz integral e brócolis." },
       { slug: "bolo-de-carne", nome: "Bolo de Carne", subtitulo: "na cama de legumes", img: boloCarne, peso: "300g", kcal: 117, proteina: 14, descricao: "Bolo de patinho com abobrinha, cenoura, brócolis e queijo zero lactose. Sem glúten.", tags: ["Sem glúten"] },
       { slug: "carne-desfiada-batata-doce", nome: "Carne Desfiada", subtitulo: "purê de batata doce e mix de legumes", img: carneDesfiada, peso: "300g", kcal: 99, proteina: 9.3, descricao: "Patinho desfiado com purê de batata doce e mix de legumes ao chimichurri.", tags: ["Sem glúten"] },
     ],
@@ -152,6 +180,8 @@ export const linhas: Linha[] = [
       { slug: "nhoque-abobora-cabotia", nome: "Nhoque de Abóbora Cabotiá", subtitulo: "ao sugo com patinho moído", img: nhoqueAbobora, peso: "300g", kcal: 104, proteina: 4.5, descricao: "Nhoque de abóbora cabotiá com sugo natural e patinho moído.", tags: ["Sem glúten"] },
       { slug: "nhoque-mandioquinha-ragu", nome: "Nhoque de Mandioquinha", subtitulo: "com ragu de carne", img: nhoqueMandioquinha, peso: "300g", kcal: 51, descricao: "Nhoque delicado de mandioquinha com ragu suave de patinho.", tags: ["Sem glúten"] },
       { slug: "panqueca-frango-mussarela", nome: "Panqueca de Frango", subtitulo: "ao sugo com mussarela sem lactose", img: panquecaFrango, peso: "300g", kcal: 124, proteina: 11, descricao: "Panqueca sem glúten recheada com frango, ao sugo e mussarela sem lactose.", tags: ["Sem glúten"] },
+      { slug: "penne-sem-gluten-molho-branco", nome: "Penne sem Glúten", subtitulo: "ao molho branco com frango, ervilha e milho", img: penneMolhoBranco, peso: "300g", descricao: "Macarrão sem glúten ao molho branco de leite e requeijão zero lactose com peito de frango, ervilha e milho.", tags: ["Sem glúten"] },
+      { slug: "lasanha-bolonhesa-peito-de-peru", nome: "Lasanha à Bolonhesa com Peito de Peru", img: nhoqueAbobora, descricao: "Ficha técnica oficial em breve." },
     ],
   },
   {
@@ -167,6 +197,8 @@ export const linhas: Linha[] = [
       { slug: "tilapia-em-crosta", nome: "Tilápia em Crosta", subtitulo: "linhaça e gergelim com arroz fake de couve-flor", img: tilapiaCrosta, peso: "300g", kcal: 138, proteina: 14, descricao: "Filé de tilápia em crosta de linhaça dourada e gergelim. Low carb.", tags: ["Low carb", "Sem glúten"] },
       { slug: "salmao-ao-molho-de-maracuja", nome: "Salmão ao Molho de Maracujá", subtitulo: "arroz negro e brócolis", img: salmaoMaracuja, peso: "300g", kcal: 153, proteina: 13, descricao: "Salmão fresco com molho agridoce de maracujá, arroz negro e brócolis.", tags: ["Sem glúten"] },
       { slug: "moqueca-de-cacao", nome: "Moqueca de Cação", subtitulo: "e arroz de açafrão", img: moquecaCacao, peso: "300g", kcal: 135, proteina: 16, descricao: "Moqueca cremosa com leite de coco, azeite de dendê e arroz de açafrão.", tags: ["Sem glúten"] },
+      { slug: "tilapia-molho-tomate-alcaparras", nome: "Filé de Tilápia ao Molho de Tomate e Alcaparras", subtitulo: "com arroz à grega", img: tilapiaAssada, descricao: "Ficha técnica oficial em breve." },
+      { slug: "tilapia-creme-de-abobora", nome: "Filé de Tilápia com Creme de Abóbora", img: tilapiaCrosta, descricao: "Ficha técnica oficial em breve." },
     ],
   },
   {
@@ -196,6 +228,8 @@ export const linhas: Linha[] = [
       { slug: "sopa-cabotia-carne", nome: "Sopa de Cabotiá", subtitulo: "com carne desfiada", img: sopaCabotia, peso: "300g", kcal: 70, proteina: 4.9, descricao: "Sopa cremosa de abóbora cabotiá com carne desfiada e couve manteiga.", tags: ["Sem glúten"] },
       { slug: "sopa-detox", nome: "Sopa Detox", img: sopaDetox, peso: "300g", kcal: 50, proteina: 1.3, descricao: "Sopa detox de abóbora cabotiá e couve manteiga. Leve e reconfortante.", tags: ["Detox", "Sem glúten"] },
       { slug: "sopa-low-carb-frango", nome: "Sopa Low Carb", subtitulo: "de frango", img: sopaLowcarb, peso: "300g", kcal: 62, proteina: 5.9, descricao: "Sopa low carb com frango, mandioquinha, cenoura e abobrinha.", tags: ["Low carb", "Sem glúten"] },
+      { slug: "caldo-couve-flor-alho-poro", nome: "Caldo de Couve-Flor com Alho-Poró", img: sopaDetox, descricao: "Ficha técnica oficial em breve." },
+      { slug: "sopa-funcional-castanhas", nome: "Sopa Funcional com Castanhas", img: sopaCabotia, descricao: "Ficha técnica oficial em breve." },
     ],
   },
   {
@@ -208,6 +242,9 @@ export const linhas: Linha[] = [
     cor: "sage",
     produtos: [
       { slug: "feijoada-vegana", nome: "Feijoada Vegana", subtitulo: "arroz integral, couve e farofa", img: feijoadaVegana, peso: "300g", kcal: 129, proteina: 6.3, descricao: "Feijoada vegana com linguiça vegetal, feijão preto, arroz integral, couve e farofa de mandioca.", tags: ["Vegano"] },
+      { slug: "estrogonofe-grao-de-bico", nome: "Estrogonofe de Grão-de-Bico", subtitulo: "com arroz integral, brócolis e batata", img: estrogonofeGraoDeBico, peso: "300g", descricao: "Grão-de-bico ao molho de tomate com champignon e castanha de caju, arroz integral, brócolis e batata.", tags: ["Vegano"] },
+      { slug: "lentilhas-ao-pomodoro", nome: "Lentilhas ao Pomodoro", subtitulo: "com arroz integral e cenoura", img: feijoadaVegana, descricao: "Ficha técnica oficial em breve." },
+      { slug: "escondidinho-banana-da-terra", nome: "Escondidinho de Banana-da-Terra", subtitulo: "com molho bolonhesa de soja", img: feijoadaVegana, descricao: "Ficha técnica oficial em breve." },
     ],
   },
   {
@@ -256,6 +293,7 @@ export const linhas: Linha[] = [
     produtos: [
       { slug: "suco-melancia", nome: "Suco de Melancia", subtitulo: "prensado a frio", img: sucoMelancia, peso: "300ml", kcal: 100, descricao: "Melancia prensada a frio. Hidratação e frescor em cada gole.", tags: ["Prensado a frio"] },
       { slug: "suco-abacaxi", nome: "Suco de Abacaxi", img: sucoAbacaxi, peso: "300ml", kcal: 152, descricao: "Abacaxi prensado a frio, doçura natural." },
+      { slug: "suco-maca", nome: "Suco de Maçã", img: sucoMaca, peso: "300ml", descricao: "Maçã prensada a frio, sem adição de açúcar." },
       { slug: "suco-blue-majik", nome: "Suco Blue Majik", img: sucoBlueMajik, peso: "300ml", kcal: 114, descricao: "Abacaxi, água de coco, hortelã, spirulina azul, gengibre e cravo." },
       { slug: "suco-super-green", nome: "Suco Super Green", img: sucoSuperGreen, peso: "300ml", kcal: 88, descricao: "Maçã, couve, pepino, gengibre, limão, salsão, marapuama e spirulina." },
       { slug: "suco-desintox", nome: "Suco Desintox", img: sucoDesintox, peso: "300ml", kcal: 76, descricao: "Abacaxi, matcha, carqueja, mate verde, hortelã, gengibre, sálvia e alecrim.", tags: ["Detox"] },
@@ -275,6 +313,20 @@ export const linhas: Linha[] = [
     cor: "sage",
     produtos: [
       { slug: "mix-de-nuts", nome: "Mix de Nuts", img: mixNuts, peso: "30g", kcal: 187, proteina: 5.9, descricao: "Sementes de girassol, amendoim, semente de abóbora, castanha do pará e castanha de caju." },
+    ],
+  },
+  {
+    slug: "kits-detox",
+    nome: "Kits Detox",
+    eyebrow: "Programas",
+    headline: "Um programa completo pra recomeçar.",
+    descricao: "Kits com os sucos detox funcionais, mix de nuts e marmitinhas — programas de 1, 3 e 5 dias.",
+    cover: sucoBlueMajik,
+    cor: "petrol",
+    produtos: [
+      { slug: "kit-detox-1-dia", nome: "Kit Detox 1 Dia", subtitulo: "com 7 sucos", img: sucoBlueMajik, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik." },
+      { slug: "kit-detox-3-dias", nome: "Kit Detox 3 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoSuperGreen, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
+      { slug: "kit-detox-5-dias", nome: "Kit Detox 5 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoVitalmax, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
     ],
   },
 ];
