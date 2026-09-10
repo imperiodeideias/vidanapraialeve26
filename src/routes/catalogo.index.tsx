@@ -12,6 +12,7 @@ export const Route = createFileRoute("/catalogo/")({
       { property: "og:description", content: "Refeições, sucos, snacks e sobremesas saudáveis. Encontre a linha ideal para você." },
       { property: "og:url", content: "https://vidanapraialeve.lovable.app/catalogo" },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://vidanapraialeve.lovable.app/catalogo" }],
     scripts: [
