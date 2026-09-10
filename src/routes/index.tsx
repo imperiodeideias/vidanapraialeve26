@@ -241,10 +241,12 @@ function Index() {
                 height={520}
                 className="absolute right-0 bottom-0 w-[36%] aspect-square rounded-full object-cover shadow-xl ring-8 ring-background"
               />
-              <div className="spin-slow absolute -left-2 top-[6%] size-24 md:size-28 rounded-full bg-[color:var(--sand)] hidden sm:block" />
-              <span className="absolute left-[1.25rem] top-[calc(6%+1.6rem)] w-20 md:w-24 text-center font-sub uppercase tracking-[0.18em] text-[9px] leading-[1.6] text-[color:var(--deep)]/80 hidden sm:block">
-                curadoria<br />prazer + praticidade
-              </span>
+              <div className="absolute -left-2 top-[6%] size-24 md:size-28 hidden sm:block">
+                <div className="spin-slow absolute inset-0 rounded-full bg-[color:var(--sand)]" />
+                <span className="absolute inset-0 flex items-center justify-center text-center font-sub uppercase tracking-[0.18em] text-[9px] leading-[1.6] text-[color:var(--deep)]/80 px-3">
+                  curadoria<br />prazer + praticidade
+                </span>
+              </div>
               <div className="absolute right-[2%] top-[14%] rounded-2xl bg-card shadow-[0_20px_45px_-20px_rgba(6,30,38,0.45)] px-4 py-3 flex items-center gap-2.5">
                 <span className="size-2 rounded-full bg-[color:var(--coral)]" />
                 <p className="text-xs md:text-[13px] leading-tight font-sub">
