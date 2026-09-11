@@ -1,3 +1,4 @@
+import { ProductPrice } from "@/components/ProductPrice";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, Flame, Beef } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -158,6 +159,7 @@ function LinhaPage() {
                   <h2 className="text-xl leading-tight">{p.nome}</h2>
                   {p.subtitulo && <p className="mt-1 text-sm text-foreground/60 font-light">{p.subtitulo}</p>}
                   <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed flex-1">{p.descricao}</p>
+                  <ProductPrice produto={p} />
 
                   {(p.kcal || p.proteina) && (
                     <div className="mt-5 flex items-center gap-4 text-xs font-sub uppercase tracking-[0.15em] text-foreground/60">

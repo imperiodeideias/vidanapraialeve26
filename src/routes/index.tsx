@@ -1,3 +1,4 @@
+import { ProductPrice } from "@/components/ProductPrice";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -446,6 +447,7 @@ function Index() {
                     <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{p.linhaNome}</span>
                     <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
                     {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
+                    <ProductPrice produto={p} />
                     <span className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-[11px] text-[color:var(--petrol)]">
                       Ver detalhes <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
