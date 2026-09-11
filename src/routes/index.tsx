@@ -1,3 +1,4 @@
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
@@ -6,7 +7,6 @@ import {
   Sparkles,
   Truck,
   Snowflake,
-  Heart,
   ChevronRight,
   Instagram,
   MessageCircle,
@@ -568,18 +568,7 @@ function Index() {
                   Receba conteúdos, <span className="font-script text-[color:var(--coral)]">novidades</span> e ofertas exclusivas.
                 </h2>
               </div>
-              <form className="lg:col-span-5 space-y-4" onSubmit={(e)=>e.preventDefault()}>
-                <input
-                  type="email"
-                  required
-                  placeholder="seu melhor e-mail"
-                  className="w-full rounded-full bg-white/10 border border-white/20 px-6 py-4 text-base placeholder:text-white/50 focus:outline-none focus:border-[color:var(--coral)] transition"
-                />
-                <button className="btn-primary bg-[color:var(--coral)] hover:!bg-[color:var(--coral)] w-full">
-                  Quero receber <Heart className="size-4" />
-                </button>
-                <p className="text-xs text-white/50 font-light">Sem spam. Só coisas boas.</p>
-              </form>
+              <NewsletterForm />
             </div>
           </div>
         </div>
