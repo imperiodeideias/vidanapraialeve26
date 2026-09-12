@@ -1,3 +1,4 @@
+import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -433,7 +434,7 @@ function Index() {
                   params={{ linha: p.linhaSlug }}
                   className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={p.img}
                       alt={p.nome}
@@ -442,6 +443,7 @@ function Index() {
                       height={750}
                       className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
                     />
+                    {p.emBreve && <ComingSoonBanner />}
                   </div>
                   <div className="p-6">
                     <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{p.linhaNome}</span>
@@ -634,3 +636,4 @@ function Index() {
     </div>
   );
 }
+

@@ -1,3 +1,4 @@
+import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, Flame, Beef } from "lucide-react";
@@ -149,6 +150,7 @@ function LinhaPage() {
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-[1000ms] group-hover:scale-105"
                   />
+                  {p.emBreve && <ComingSoonBanner />}
                   {p.peso && (
                     <span className="absolute top-4 right-4 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
                       {p.peso}
@@ -186,12 +188,16 @@ function LinhaPage() {
                     </div>
                   )}
 
+                  {p.emBreve ? (
+                    <p className="mt-6 font-sub uppercase tracking-[0.2em] text-xs text-foreground/60">Disponível em breve</p>
+                  ) : (
                   <a
                     href="/#pedir"
                     className="mt-6 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors"
                   >
                     Adicionar ao pedido <ArrowRight className="size-3.5" />
                   </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -230,3 +236,4 @@ function LinhaPage() {
     </SiteChrome>
   );
 }
+
