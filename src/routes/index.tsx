@@ -296,7 +296,7 @@ function Index() {
                 loading="lazy"
                 width={1122}
                 height={1402}
-                className="rounded-3xl w-full h-auto shadow-[0_40px_80px_-30px_rgba(6,30,38,0.35)] object-contain"
+                className="rounded-3xl w-full h-auto shadow-[0_40px_80px_-30px_rgba(6,30,38,0.35)] object-cover"
               />
               <div className="absolute -bottom-8 -right-4 md:-right-10 bg-[color:var(--sand)] rounded-2xl p-6 max-w-[240px] shadow-xl">
                 <p className="font-script text-3xl text-[color:var(--petrol)] leading-none">leveza</p>
@@ -358,7 +358,7 @@ function Index() {
                     loading="lazy"
                     width={1000}
                     height={1200}
-                    className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30"
+                    className="h-full w-full object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/70 via-[color:var(--deep)]/10 to-transparent" />
                   <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
@@ -440,7 +440,7 @@ function Index() {
                       loading="lazy"
                       width={1000}
                       height={750}
-                      className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30"
+                      className="h-full w-full object-cover object-center"
                     />
                   </div>
                   {p.emBreve && <ComingSoonBanner />}

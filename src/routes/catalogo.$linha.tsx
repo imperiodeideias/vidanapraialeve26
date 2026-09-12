@@ -149,7 +149,7 @@ function LinhaPage() {
                     src={p.img}
                     alt={p.nome}
                     loading="lazy"
-                    className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30"
+                    className="h-full w-full object-cover object-center"
                   />
                 </div>
                 {p.emBreve && <ComingSoonBanner />}
@@ -209,7 +209,7 @@ function LinhaPage() {
                 className="card-lift group relative overflow-hidden rounded-2xl bg-card block"
               >
                 <div className="relative aspect-[4/5] overflow-hidden">
-                  <img src={l.cover} alt={l.nome} loading="lazy" className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30" />
+                  <img src={l.cover} alt={l.nome} loading="lazy" className="h-full w-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <p className="text-[10px] font-sub uppercase tracking-[0.25em] text-white/70">{l.eyebrow}</p>
