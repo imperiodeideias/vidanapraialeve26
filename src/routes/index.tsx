@@ -590,15 +590,15 @@ function Index() {
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
-              { t: "Explore", l: ["Sobre", "Linhas", "Sabores", "Blog"] },
-              { t: "Institucional", l: ["Nossa história", "Parceiros", "Trabalhe conosco", "Imprensa"] },
-              { t: "Contato", l: ["WhatsApp", "Instagram", "contato@vidanapraialeve.com.br", "Encontre uma loja"] },
+              { t: "Explore", l: [["Sobre", "/#sobre"], ["Linhas", "/#linhas"], ["Sabores", "/#sabores"], ["Blog", "/#blog"]] },
+              { t: "Sua compra", l: [["Como funciona", "/#como"], ["Catálogo completo", "/catalogo"], ["Kits Detox", "/catalogo/kits-detox"], ["Meu carrinho", "/carrinho"]] },
+              { t: "Contato", l: [["WhatsApp", contactLinks.whatsapp], ["Instagram", contactLinks.instagram], ["contato@vidanapraialeve.com.br", contactLinks.email], ["Consultar entrega em Peruíbe", contactLinks.whatsapp]] },
             ].map((c) => (
               <div key={c.t}>
                 <p className="font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--sand)]">{c.t}</p>
                 <ul className="mt-5 space-y-3 text-sm text-white/70 font-light">
-                  {c.l.map((li) => (
-                    <li key={li}><a href="#" className="hover:text-[color:var(--coral)] transition">{li}</a></li>
+                  {c.l.map(([label, href]) => (
+                    <li key={label}><a href={href} target={href.startsWith("https:") ? "_blank" : undefined} rel={href.startsWith("https:") ? "noopener noreferrer" : undefined} className="hover:text-[color:var(--coral)] transition">{label}</a></li>
                   ))}
                 </ul>
               </div>
@@ -608,8 +608,6 @@ function Index() {
         <div className="container-x mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-white/50 font-light">
           <p>© {new Date().getFullYear()} Vida na Praia Leve. Todos os direitos reservados.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white">Política de privacidade</a>
-            <a href="#" className="hover:text-white">Termos de uso</a>
             <a href={contactLinks.location} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><MapPin className="size-3.5" /> Peruíbe-SP</a>
           </div>
         </div>
@@ -630,4 +628,5 @@ function Index() {
     </div>
   );
 }
+
 
