@@ -149,17 +149,13 @@ function LinhaPage() {
                     src={p.img}
                     alt={p.nome}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-[1000ms] group-hover:scale-105"
+                    className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30"
                   />
-                  {p.emBreve && <ComingSoonBanner />}
-                  {p.peso && (
-                    <span className="absolute top-4 right-4 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
-                      {p.peso}
-                    </span>
-                  )}
                 </div>
+                {p.emBreve && <ComingSoonBanner />}
                 <div className="p-6 flex flex-col flex-1">
                   <h2 className="text-xl leading-tight">{p.nome}</h2>
+                  {p.peso && <p className="mt-2 text-xs text-foreground/60">{p.peso}</p>}
                   {p.subtitulo && <p className="mt-1 text-sm text-foreground/60 font-light">{p.subtitulo}</p>}
                   <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed flex-1">{p.descricao}</p>
                   <ProductPrice produto={p} />
@@ -213,7 +209,7 @@ function LinhaPage() {
                 className="card-lift group relative overflow-hidden rounded-2xl bg-card block"
               >
                 <div className="relative aspect-[4/5] overflow-hidden">
-                  <img src={l.cover} alt={l.nome} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1000ms] group-hover:scale-105" />
+                  <img src={l.cover} alt={l.nome} loading="lazy" className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <p className="text-[10px] font-sub uppercase tracking-[0.25em] text-white/70">{l.eyebrow}</p>

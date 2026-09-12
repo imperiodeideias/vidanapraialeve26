@@ -16,7 +16,7 @@ function CartPage() {
     {!ready ? <p>Carregando seu carrinho…</p> : !items.length ? <div className="rounded-3xl bg-card p-8 border border-border"><p className="mb-6">Seu carrinho está vazio. Escolha seus produtos favoritos para começar.</p><Link to="/catalogo" className="btn-primary">Explorar catálogo</Link></div> : <div className="grid gap-8 lg:grid-cols-[1fr_360px] items-start">
       <div className="space-y-4">
         {items.map(({ product: p, quantity }) => <article key={p.slug} className="rounded-2xl border border-border bg-card p-5 flex gap-4 flex-wrap sm:flex-nowrap">
-          <img src={p.img} alt={p.nome} className="size-24 rounded-xl object-cover" />
+          <img src={p.img} alt={p.nome} className="size-24 shrink-0 rounded-xl object-contain bg-[color:var(--sand)]/30" />
           <div className="min-w-0 flex-1">
             <h2 className="text-lg">{orderName(p)}</h2>
             <p className="text-sm mt-2 mb-3">{p.precoCentavos === undefined ? "Preço sob consulta" : money(p.precoCentavos) + " / unidade"}</p>

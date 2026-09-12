@@ -1,3 +1,4 @@
+import { HeroPhoto } from "@/components/HeroPhoto";
 import { AddToCart, HeaderCart } from "@/components/Cart";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
@@ -237,28 +238,21 @@ function Index() {
           <div className="lg:col-span-6 relative animate-fade-up" style={{ animationDelay: "120ms" }}>
             <div className="relative mx-auto aspect-square w-full max-w-[520px]">
               <div className="absolute inset-x-6 top-0 bottom-24 rounded-full bg-[color:var(--sage)]/25" />
-              <img
+              <HeroPhoto
                 src={pHero}
+                eager
                 alt="Suco Blue Majik com salmão ao molho de maracujá, arroz negro e brócolis"
-                width={900}
-                height={900}
-                className="blob-a absolute left-[10%] top-[2%] w-[80%] aspect-square object-cover shadow-[0_40px_80px_-30px_rgba(6,30,38,0.45)] ring-8 ring-background"
+                className="blob-a absolute left-[10%] top-[2%] w-[80%] aspect-square  bg-[color:var(--sand)] shadow-[0_40px_80px_-30px_rgba(6,30,38,0.45)] ring-8 ring-background"
               />
-              <img
+              <HeroPhoto
                 src={pHero2}
                 alt="Suco Vital Max com lanche de frango e pães de queijo"
-                loading="lazy"
-                width={520}
-                height={520}
-                className="blob-b animate-floaty absolute left-0 bottom-[6%] w-[38%] aspect-square object-cover shadow-xl ring-8 ring-background"
+                className="blob-b animate-floaty absolute left-0 bottom-[6%] w-[38%] aspect-square  bg-[color:var(--sand)] shadow-xl ring-8 ring-background"
               />
-              <img
+              <HeroPhoto
                 src={pHero3}
                 alt="Doces fit: mousse de limão, brigadeiro, beijinho e brownie"
-                loading="lazy"
-                width={520}
-                height={520}
-                className="absolute right-0 bottom-0 w-[36%] aspect-square rounded-full object-cover shadow-xl ring-8 ring-background"
+                className="absolute right-0 bottom-0 w-[36%] aspect-square rounded-full  bg-[color:var(--sand)] shadow-xl ring-8 ring-background"
               />
               <div className="absolute -left-2 top-[6%] size-24 md:size-28 hidden sm:block">
                 <div className="spin-slow absolute inset-0 rounded-full bg-[color:var(--sand)]" />
@@ -266,7 +260,7 @@ function Index() {
                   curadoria<br />prazer + praticidade
                 </span>
               </div>
-              <div className="absolute right-[2%] top-[14%] rounded-2xl bg-card shadow-[0_20px_45px_-20px_rgba(6,30,38,0.45)] px-4 py-3 flex items-center gap-2.5">
+              <div className="absolute right-[2%] -top-[8%] rounded-2xl bg-card shadow-[0_20px_45px_-20px_rgba(6,30,38,0.45)] px-4 py-3 flex items-center gap-2.5">
                 <span className="size-2 rounded-full bg-[color:var(--coral)]" />
                 <p className="text-xs md:text-[13px] leading-tight font-sub">
                   Comida de verdade<br />para a vida real
@@ -301,7 +295,7 @@ function Index() {
                 loading="lazy"
                 width={1122}
                 height={1402}
-                className="rounded-3xl w-full h-auto shadow-[0_40px_80px_-30px_rgba(6,30,38,0.35)] object-cover aspect-[4/5]"
+                className="rounded-3xl w-full h-auto shadow-[0_40px_80px_-30px_rgba(6,30,38,0.35)] object-contain"
               />
               <div className="absolute -bottom-8 -right-4 md:-right-10 bg-[color:var(--sand)] rounded-2xl p-6 max-w-[240px] shadow-xl">
                 <p className="font-script text-3xl text-[color:var(--petrol)] leading-none">leveza</p>
@@ -363,7 +357,7 @@ function Index() {
                     loading="lazy"
                     width={1000}
                     height={1200}
-                    className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
+                    className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/70 via-[color:var(--deep)]/10 to-transparent" />
                   <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
@@ -445,10 +439,10 @@ function Index() {
                       loading="lazy"
                       width={1000}
                       height={750}
-                      className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
+                      className="h-full w-full object-contain object-center bg-[color:var(--sand)]/30"
                     />
-                    {p.emBreve && <ComingSoonBanner />}
                   </div>
+                  {p.emBreve && <ComingSoonBanner />}
                   <div className="p-6">
                     <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{p.linhaNome}</span>
                     <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
