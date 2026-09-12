@@ -1,3 +1,4 @@
+import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeaderCart } from "@/components/Cart";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
@@ -103,11 +104,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             <p className="font-light text-white/70 leading-relaxed">
               Vida na Praia Leve — alimentação saudável, praticidade e leveza. Um jeito novo de viver.
             </p>
-            <div className="mt-8 flex items-center gap-3">
-              <a href="#" className="size-11 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors"><Instagram className="size-4" /></a>
-              <a href="#" className="size-11 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors"><MessageCircle className="size-4" /></a>
-              <a href="#" className="size-11 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors"><Mail className="size-4" /></a>
-            </div>
+            <FooterContacts />
           </div>
           <div>
             <p className="font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--sand)] mb-5">Navegue</p>
@@ -121,9 +118,9 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
           <div>
             <p className="font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--sand)] mb-5">Contato</p>
             <ul className="space-y-3 text-sm text-white/80">
-              <li className="flex gap-2"><MapPin className="size-4 mt-0.5 shrink-0" /> Litoral & Grandes centros — Brasil</li>
-              <li className="flex gap-2"><Mail className="size-4 mt-0.5 shrink-0" /> contato@vidanapraialeve.com.br</li>
-              <li className="flex gap-2"><MessageCircle className="size-4 mt-0.5 shrink-0" /> WhatsApp da loja</li>
+              <li><a href={contactLinks.location} target="_blank" rel="noopener noreferrer" className="flex gap-2 hover:text-white"><MapPin className="size-4 mt-0.5 shrink-0" /> Peruíbe-SP</a></li>
+              <li><a href={contactLinks.email} className="flex gap-2 hover:text-white"><Mail className="size-4 mt-0.5 shrink-0" /> contato@vidanapraialeve.com.br</a></li>
+              <li><a href={contactLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="flex gap-2 hover:text-white"><MessageCircle className="size-4 mt-0.5 shrink-0" /> WhatsApp da loja</a></li>
             </ul>
           </div>
         </div>

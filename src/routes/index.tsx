@@ -1,3 +1,4 @@
+import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeroPhoto } from "@/components/HeroPhoto";
 import { AddToCart, HeaderCart } from "@/components/Cart";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
@@ -85,15 +86,15 @@ const linhas = [
 
 const diferenciais = [
   { icon: Leaf, title: "Ingredientes selecionados", desc: "Do produtor à sua mesa, com curadoria criteriosa." },
-  { icon: Snowflake, title: "Congelamento inteligente", desc: "Preservamos sabor, textura e nutrientes." },
+  { icon: Snowflake, title: "Ultracongelamento", desc: "Preservamos sabor, textura e nutrientes." },
   { icon: Sparkles, title: "Sabor de verdade", desc: "Receitas assinadas para você amar cada garfada." },
-  { icon: Truck, title: "Entrega rápida", desc: "Chega em casa pronto para aquecer e aproveitar." },
+  { icon: Truck, title: "Entrega segura (agendada)", desc: "Chega em casa pronto para aquecer e aproveitar." },
 ];
 
 const passos = [
   { n: "01", t: "Escolha", d: "Monte seu pedido ou assine um plano." },
   { n: "02", t: "Receba", d: "Entregamos congelado, com toda a segurança." },
-  { n: "03", t: "Aqueça", d: "Pronto em minutos, no micro-ondas ou forno." },
+  { n: "03", t: "Aqueça", d: "Pronto em minutos, no micro-ondas." },
   { n: "04", t: "Aproveite", d: "Coma bem, viva leve, tenha mais tempo." },
 ];
 
@@ -585,13 +586,7 @@ function Index() {
             <p className="mt-6 text-white/65 font-light max-w-sm">
               Alimentação saudável, prática e deliciosa. Uma marca brasileira de lifestyle para você viver com mais leveza.
             </p>
-            <div className="mt-8 flex gap-3">
-              {[Instagram, MessageCircle, Mail].map((Ic, i) => (
-                <a key={i} href="#" className="size-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-white/40 transition">
-                  <Ic className="size-4" />
-                </a>
-              ))}
-            </div>
+            <FooterContacts />
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
@@ -615,7 +610,7 @@ function Index() {
           <div className="flex gap-6">
             <a href="#" className="hover:text-white">Política de privacidade</a>
             <a href="#" className="hover:text-white">Termos de uso</a>
-            <span className="inline-flex items-center gap-2"><MapPin className="size-3.5" /> Brasil</span>
+            <a href={contactLinks.location} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><MapPin className="size-3.5" /> Peruíbe-SP</a>
           </div>
         </div>
       </footer>
