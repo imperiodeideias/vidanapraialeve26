@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { linhas, type Produto } from "@/data/catalogo";
 import { cleanCart, type Quantities } from "@/lib/order";
 
@@ -38,6 +38,14 @@ export function CartLink() {
   const count = Object.values(quantities).reduce((a, b) => a + b, 0);
   return <Link to="/carrinho" className="fixed left-4 bottom-5 z-50 inline-flex items-center gap-2 rounded-full bg-[color:var(--petrol)] px-5 py-3 text-white shadow-xl text-sm" aria-label={"Conferir carrinho, " + count + " itens"}>
     <ShoppingBag className="size-5" /> Carrinho ({count})
+  </Link>;
+}
+export function HeaderCart({ onClick }: { onClick?: () => void }) {
+  const { quantities } = useCart();
+  const count = Object.values(quantities).reduce((a, b) => a + b, 0);
+  return <Link to="/carrinho" onClick={onClick} title="Conferir carrinho" aria-label={"Conferir carrinho, " + count + " itens"} className="relative inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-current/20 text-[color:var(--petrol)] hover:bg-[color:var(--sand)] transition-colors">
+    <ShoppingCart className="size-5" aria-hidden="true" />
+    <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-[color:var(--coral)] text-white text-[10px] font-semibold flex items-center justify-center" aria-hidden="true">{count}</span>
   </Link>;
 }
 export function Quantity({ value, minimum = 1, onChange, name }: { value: number; minimum?: number; onChange: (q: number) => void; name: string }) {

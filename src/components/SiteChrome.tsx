@@ -1,3 +1,4 @@
+import { HeaderCart } from "@/components/Cart";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { Menu, X, Instagram, MessageCircle, Mail, MapPin } from "lucide-react";
@@ -57,8 +58,9 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
               ),
             )}
           </nav>
-          <div className="hidden lg:flex items-center gap-3">
-            <a href="/catalogo" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
+          <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
+            <HeaderCart />
+            <a href="/catalogo" className="btn-primary !py-2.5 !px-5 text-xs !hidden lg:!inline-flex">Quero pedir</a>
           </div>
           <button
             className={`lg:hidden ${textLight ? "text-white" : "text-foreground"}`}
@@ -84,7 +86,10 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
                 <a key={n.l} href={n.href} onClick={() => setMenuOpen(false)}>{n.l}</a>
               ),
             )}
-            <a href="/catalogo" onClick={() => setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
+            <div className="flex items-center gap-4 mt-6">
+            <a href="/catalogo" onClick={() => setMenuOpen(false)} className="btn-primary w-fit">Quero pedir</a>
+              <HeaderCart onClick={() => setMenuOpen(false)} />
+            </div>
           </nav>
         </div>
       )}

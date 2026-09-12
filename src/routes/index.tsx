@@ -1,4 +1,4 @@
-import { AddToCart } from "@/components/Cart";
+import { AddToCart, HeaderCart } from "@/components/Cart";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
 import { NewsletterForm } from "@/components/NewsletterForm";
@@ -154,8 +154,9 @@ function Index() {
               </a>
             ))}
           </nav>
-          <div className="hidden lg:flex items-center gap-3">
-            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
+          <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
+            <HeaderCart />
+            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2.5 !px-5 text-xs !hidden lg:!inline-flex">Quero pedir</a>
           </div>
           <button
             className="lg:hidden text-foreground"
@@ -179,7 +180,10 @@ function Index() {
             {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
-            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
+            <div className="flex items-center gap-4 mt-6">
+            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} className="btn-primary w-fit">Quero pedir</a>
+              <HeaderCart onClick={() => setMenuOpen(false)} />
+            </div>
           </nav>
         </div>
       )}
