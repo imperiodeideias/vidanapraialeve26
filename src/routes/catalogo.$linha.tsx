@@ -144,12 +144,12 @@ function LinhaPage() {
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {linha.produtos.map((p: Produto) => (
               <article key={p.slug} className="card-lift group bg-card rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
+                <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
                   <img
                     src={p.img}
                     alt={p.nome}
                     loading="lazy"
-                    className="h-full w-full object-cover object-center"
+                    className="absolute inset-0 block h-full w-full object-cover object-center"
                   />
                 </div>
                 {p.emBreve && <ComingSoonBanner />}
@@ -208,8 +208,8 @@ function LinhaPage() {
                 params={{ linha: l.slug }}
                 className="card-lift group relative overflow-hidden rounded-2xl bg-card block"
               >
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <img src={l.cover} alt={l.nome} loading="lazy" className="h-full w-full object-cover object-center" />
+                <div className="relative shrink-0 aspect-[4/5] overflow-hidden">
+                  <img src={l.cover} alt={l.nome} loading="lazy" className="absolute inset-0 block h-full w-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <p className="text-[10px] font-sub uppercase tracking-[0.25em] text-white/70">{l.eyebrow}</p>

@@ -358,7 +358,7 @@ function Index() {
                     loading="lazy"
                     width={1000}
                     height={1200}
-                    className="h-full w-full object-cover object-center"
+                    className="absolute inset-0 block h-full w-full object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/70 via-[color:var(--deep)]/10 to-transparent" />
                   <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
@@ -433,14 +433,14 @@ function Index() {
                   key={p.slug}
                   className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative shrink-0 aspect-[4/3] overflow-hidden">
                     <img
                       src={p.img}
                       alt={p.nome}
                       loading="lazy"
                       width={1000}
                       height={750}
-                      className="h-full w-full object-cover object-center"
+                      className="absolute inset-0 block h-full w-full object-cover object-center"
                     />
                   </div>
                   {p.emBreve && <ComingSoonBanner />}
@@ -628,5 +628,4 @@ function Index() {
     </div>
   );
 }
-
 
