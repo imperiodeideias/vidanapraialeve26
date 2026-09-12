@@ -21,11 +21,23 @@ test("calculates integer-cent totals and encodes complete WhatsApp order", () =>
   assert.match(message, /2 × Frango — com arroz — 300g/);
   assert.match(message, /3 × Suco/);
   assert.match(message, /98,50/);
-  assert.match(message, /Frete: a combinar/);
-  assert.match(message, /Total final com frete: a confirmar/);
+  assert.equal(result.shipping, 890);
+  assert.equal(result.grandTotal, 10740);
+  assert.match(message, /Frete \(Peruíbe-SP\): R\$/);
+  assert.match(message, /Total com frete: R\$.*107,40/);
 });
 test("does not treat unpriced products as a complete total", () => {
   const result = orderSummary(products, { a: 1, d: 10 });
   assert.equal(result.pending, true);
   assert.match(decodeURIComponent(result.url), /Subtotal dos itens com preço/);
+});
+
+test("charges shipping through R$ 200 and waives it strictly above", () => {
+  for (const [price, freight] of [[19999, 890], [20000, 890], [20001, 0]]) {
+    const result = orderSummary([{ slug: "x", nome: "Pedido", emBreve: false, precoCentavos: price }], { x: 1 });
+    assert.equal(result.shipping, freight);
+    assert.equal(result.grandTotal, price + freight);
+  }
+  assert.equal(orderSummary(products, {}).grandTotal, 0);
+  assert.equal(orderSummary(products, { d: 10 }).grandTotal, null);
 });

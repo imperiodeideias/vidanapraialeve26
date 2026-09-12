@@ -9,7 +9,7 @@ export const Route = createFileRoute("/carrinho")({
 });
 function CartPage() {
   const { quantities, set, ready } = useCart();
-  const { items, total, pending, url } = orderSummary(cartProducts, quantities);
+  const { items, total, pending, shipping, grandTotal, url } = orderSummary(cartProducts, quantities);
   return <SiteChrome><section className="container-x pt-32 pb-28">
     <span className="eyebrow">Confira antes de enviar</span>
     <h1 className="text-4xl mt-4 mb-8">Seu pedido</h1>
@@ -31,13 +31,13 @@ function CartPage() {
         <h2 className="text-2xl mb-6">Resumo do pedido</h2>
         <dl className="space-y-4">
           <div className="flex justify-between gap-4"><dt>{pending ? "Subtotal com preço" : "Total dos produtos"}</dt><dd className="font-semibold">{money(total)}</dd></div>
-          <div className="flex justify-between gap-4"><dt>Frete</dt><dd>A combinar</dd></div>
-          <div className="border-t border-border pt-4"><dt>Total final com frete</dt><dd className="mt-1 font-semibold">A confirmar pelo WhatsApp</dd></div>
+          <div className="flex justify-between gap-4"><dt>Frete (Peruíbe-SP)</dt><dd>{shipping === null ? "A confirmar" : shipping === 0 ? "Grátis" : money(shipping)}</dd></div>
+          <div className="border-t border-border pt-4"><dt>Total final com frete</dt><dd className="mt-1 font-semibold">{grandTotal === null ? "A confirmar após definir os preços" : money(grandTotal)}</dd></div>
         </dl>
         {pending && <p className="text-sm mt-4">Há itens com preço sob consulta. Seus valores serão confirmados na conversa.</p>}
-        <p className="text-sm mt-5 mb-6 text-foreground/70">O frete será calculado após recebermos seu endereço pelo WhatsApp.</p>
+        <p className="text-sm mt-5 mb-6 text-foreground/70">Entrega em Peruíbe-SP: R$ 8,90. Pedidos acima de R$ 200 em produtos têm frete grátis.</p>
         <a href={url} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center !px-4">Enviar pedido pelo WhatsApp</a>
-        <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com os itens e valores preenchidos. Toque em enviar para concluir a solicitação. A loja confirmará o pedido e o frete.</p>
+        <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com os itens e valores preenchidos. Toque em enviar para concluir a solicitação. A loja confirmará seu pedido e endereço de entrega.</p>
       </aside>
     </div>}
   </section></SiteChrome>;

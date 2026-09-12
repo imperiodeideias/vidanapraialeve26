@@ -89,7 +89,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
         </div>
       )}
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1"><div className="mt-20 bg-[color:var(--petrol)] text-white text-center px-4 py-3 text-sm">Pedidos acima de R$ 200: frete grátis em Peruíbe-SP. Demais pedidos: R$ 8,90.</div>{children}</main>
 
       <footer className="bg-[color:var(--deep)] text-[color:var(--offwhite)] pt-20 pb-10">
         <div className="container-x grid gap-12 lg:grid-cols-4">

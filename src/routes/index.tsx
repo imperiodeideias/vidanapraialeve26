@@ -126,7 +126,7 @@ function Index() {
       >
         <div className="bg-[color:var(--deep)] text-[color:var(--offwhite)]">
           <div className="container-x flex items-center justify-center gap-3 py-2 text-[10px] sm:text-[11px] font-sub uppercase tracking-[0.25em]">
-            <span className="text-white/80">Um jeito mais leve de comer bem, em Peruíbe</span>
+            <span className="text-white text-center">Pedidos acima de R$ 200: frete grátis em Peruíbe-SP</span>
             <span className="hidden sm:inline text-[color:var(--coral)]">•</span>
             <a
               href="https://www.instagram.com/vidanapraialeve/"
