@@ -1,3 +1,4 @@
+import { AddToCart } from "@/components/Cart";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
@@ -124,7 +125,7 @@ function LinhaPage() {
           <div className="mt-10 flex flex-wrap items-center gap-6 text-sm font-sub uppercase tracking-[0.2em] text-white/80">
             <span>{linha.produtos.length} {linha.produtos.length === 1 ? "produto" : "produtos"}</span>
             <span className="h-px w-8 bg-white/30" />
-            <a href="/#pedir" className="hover:text-white transition-colors inline-flex items-center gap-2">
+            <a href="/catalogo" className="hover:text-white transition-colors inline-flex items-center gap-2">
               Fazer pedido <ArrowRight className="size-3.5" />
             </a>
           </div>
@@ -188,16 +189,7 @@ function LinhaPage() {
                     </div>
                   )}
 
-                  {p.emBreve ? (
-                    <p className="mt-6 font-sub uppercase tracking-[0.2em] text-xs text-foreground/60">Disponível em breve</p>
-                  ) : (
-                  <a
-                    href="/#pedir"
-                    className="mt-6 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors"
-                  >
-                    Adicionar ao pedido <ArrowRight className="size-3.5" />
-                  </a>
-                  )}
+                  {p.emBreve ? <p className="mt-6 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} />}
                 </div>
               </article>
             ))}

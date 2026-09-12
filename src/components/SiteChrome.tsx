@@ -58,7 +58,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             )}
           </nav>
           <div className="hidden lg:flex items-center gap-3">
-            <a href="/#pedir" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
+            <a href="/catalogo" className="btn-primary !py-2.5 !px-5 text-xs">Quero pedir</a>
           </div>
           <button
             className={`lg:hidden ${textLight ? "text-white" : "text-foreground"}`}
@@ -84,7 +84,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
                 <a key={n.l} href={n.href} onClick={() => setMenuOpen(false)}>{n.l}</a>
               ),
             )}
-            <a href="/#pedir" onClick={() => setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
+            <a href="/catalogo" onClick={() => setMenuOpen(false)} className="btn-primary mt-6 w-fit">Quero pedir</a>
           </nav>
         </div>
       )}

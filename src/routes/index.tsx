@@ -1,3 +1,4 @@
+import { AddToCart } from "@/components/Cart";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
 import { NewsletterForm } from "@/components/NewsletterForm";
@@ -429,10 +430,8 @@ function Index() {
             {sabores
               .filter((p) => filtro === "todos" || p.linhaSlug === filtro)
               .map((p) => (
-                <Link
+                <article
                   key={p.slug}
-                  to="/catalogo/$linha"
-                  params={{ linha: p.linhaSlug }}
                   className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
@@ -451,11 +450,12 @@ function Index() {
                     <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
                     {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
                     <ProductPrice produto={p} />
-                    <span className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-[11px] text-[color:var(--petrol)]">
+                    <Link to="/catalogo/$linha" params={{ linha: p.linhaSlug }} className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-[11px] text-[color:var(--petrol)]">
                       Ver detalhes <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-                    </span>
+                    </Link>
+                    <AddToCart produto={p} />
                   </div>
-                </Link>
+                </article>
               ))}
           </div>
 
@@ -637,5 +637,4 @@ function Index() {
     </div>
   );
 }
-
 

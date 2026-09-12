@@ -1,3 +1,4 @@
+import { CartProvider, CartLink } from "@/components/Cart";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -123,7 +124,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <CartProvider><Outlet /><CartLink /></CartProvider>
     </QueryClientProvider>
   );
 }
