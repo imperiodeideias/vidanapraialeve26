@@ -142,7 +142,7 @@ function LinhaPage() {
           </div>
 
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {linha.produtos.map((p: Produto) => (
+            {[...linha.produtos].sort((a,b) => Number(a.emBreve) - Number(b.emBreve)).map((p: Produto) => (
               <article key={p.slug} className="card-lift group bg-card rounded-3xl overflow-hidden shadow-sm flex flex-col">
                 <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
                   <img

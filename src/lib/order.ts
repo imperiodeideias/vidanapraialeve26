@@ -14,7 +14,7 @@ export function cleanCart(value: unknown, products: OrderProduct[]): Quantities 
 export function orderName(p: OrderProduct) {
   return [p.nome, p.subtitulo, p.peso].filter(Boolean).join(" — ");
 }
-export function orderSummary<T extends OrderProduct>(products: T[], quantities: Quantities) {
+export function orderSummary<T extends OrderProduct>(products: T[], quantities: Quantities, customer?: { name: string; address: string }) {
   const cart = cleanCart(quantities, products);
   const items = products.filter(p => cart[p.slug]).map(p => ({ product: p, quantity: cart[p.slug] }));
   const total = items.reduce((sum, i) => sum + (i.product.precoCentavos || 0) * i.quantity, 0);
@@ -24,6 +24,7 @@ export function orderSummary<T extends OrderProduct>(products: T[], quantities: 
   const message = [
     "Olá, estou no site da Vida na Praia Leve e gostaria de fazer um pedido:",
     "",
+    ...(customer ? ["Nome: " + customer.name.trim(), "Endereço de entrega: " + customer.address.trim(), ""] : []),
     ...items.map(({ product: p, quantity: q }) => p.precoCentavos === undefined
       ? q + " × " + orderName(p) + " | preço sob consulta"
       : q + " × " + orderName(p) + " | " + money(p.precoCentavos) + " cada | " + money(p.precoCentavos * q)),

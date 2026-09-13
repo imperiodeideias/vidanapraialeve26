@@ -50,7 +50,7 @@ const whatsappPedidoUrl = "https://wa.me/551333662961?text=" + encodeURIComponen
 const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
 
 const sabores = catalogoLinhas.flatMap((l) =>
-  l.produtos.slice(0, 2).map((p) => ({ ...p, linhaSlug: l.slug, linhaNome: l.nome })),
+  l.produtos.map((p) => ({ ...p, linhaSlug: l.slug, linhaNome: l.nome })),
 );
 const saboresFiltros = [
   { slug: "todos", nome: "Todos" },
@@ -109,6 +109,10 @@ function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [filtro, setFiltro] = useState("todos");
+  const [busca, setBusca] = useState("");
+  const normalizar = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const resultados = sabores.filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim()))).sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
+
 
 
   useEffect(() => {
@@ -405,15 +409,20 @@ function Index() {
               Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
             </h2>
             <p className="mt-6 text-foreground/65 font-light text-lg">
-              Uma amostra do catálogo completo. Filtre pelo momento que combina com você.
+              Explore o catálogo completo. Busque um produto ou escolha uma categoria.
             </p>
           </div>
 
+          <div className="mt-8 max-w-xl">
+            <label htmlFor="busca-produtos" className="block mb-2 font-sub text-sm">Buscar prato ou produto</label>
+            <input id="busca-produtos" type="search" value={busca} onChange={e => { setBusca(e.target.value); setFiltro("todos"); }} placeholder="Ex.: frango, suco, empada..." className="w-full rounded-xl border border-border bg-white px-4 py-3" />
+          </div>
           <div className="mt-10 flex flex-wrap gap-2.5">
             {saboresFiltros.map((f) => (
               <button
                 key={f.slug}
                 onClick={() => setFiltro(f.slug)}
+                aria-pressed={filtro === f.slug}
                 className={`rounded-full px-4 py-2 font-sub text-[11px] uppercase tracking-[0.18em] transition-colors ${
                   filtro === f.slug
                     ? "bg-[color:var(--petrol)] text-[color:var(--offwhite)]"
@@ -425,9 +434,9 @@ function Index() {
             ))}
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {sabores
-              .filter((p) => filtro === "todos" || p.linhaSlug === filtro)
+          <p role="status" className="mt-5 text-sm text-foreground/65">{resultados.length} produtos encontrados{resultados.length === 0 ? ". Tente outro termo ou categoria." : ""}</p>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {resultados
               .map((p) => (
                 <article
                   key={p.slug}

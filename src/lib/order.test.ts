@@ -7,6 +7,13 @@ const products = [
   { slug: "c", nome: "Indisponível", emBreve: true, precoCentavos: 1000 },
   { slug: "d", nome: "Nuts", emBreve: false, pedidoMinimo: 10 },
 ];
+test("includes customer details in the encoded WhatsApp message", () => {
+  const result = orderSummary(products, { a: 1 }, { name: " Maria & João ", address: "Rua São José, 10 - Centro, Peruíbe-SP" });
+  const message = new URL(result.url).searchParams.get("text")!;
+  assert.match(message, /Nome: Maria & João/);
+  assert.match(message, /Endereço de entrega: Rua São José, 10/);
+  assert.match(message, /Total com frete/);
+});
 test("revalidates saved carts against availability and quantity limits", () => {
   assert.deepEqual(cleanCart({ a: 2, b: -1, c: 3, d: 1, missing: 5 }, products), { a: 2, d: 10 });
   assert.deepEqual(cleanCart({ a: 0.5, b: 1000 }, products), { b: 999 });
