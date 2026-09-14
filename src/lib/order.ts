@@ -33,7 +33,6 @@ export function orderSummary<T extends OrderProduct>(products: T[], quantities: 
     ...(pending ? ["Há itens com preço a confirmar."] : []),
     "Frete (Peruíbe-SP): " + (shipping === null ? "a confirmar após definir os preços" : shipping === 0 ? "Grátis" : money(shipping)),
     "Total com frete: " + (grandTotal === null ? "a confirmar" : money(grandTotal)),
-    "Entrega em Peruíbe-SP: R$ 8,90. Pedidos acima de R$ 200 em produtos têm frete grátis.",
   ].join("\n");
   return { items, total, pending, shipping, grandTotal, url: "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message) };
 }

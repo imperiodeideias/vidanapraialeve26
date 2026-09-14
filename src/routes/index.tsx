@@ -458,9 +458,6 @@ function Index() {
                     <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
                     {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
                     <ProductPrice produto={p} />
-                    <Link to="/catalogo/$linha" params={{ linha: p.linhaSlug }} className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-[11px] text-[color:var(--petrol)]">
-                      Ver detalhes <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-                    </Link>
                     <AddToCart produto={p} />
                   </div>
                 </article>

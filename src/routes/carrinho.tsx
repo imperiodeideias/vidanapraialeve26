@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { DeliveryForm } from "@/components/DeliveryForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
 import { cartProducts, Quantity, useCart } from "@/components/Cart";
@@ -10,9 +10,7 @@ export const Route = createFileRoute("/carrinho")({
 });
 function CartPage() {
   const { quantities, set, ready } = useCart();
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const { items, total, pending, shipping, grandTotal, url } = orderSummary(cartProducts, quantities, { name, address });
+  const { items, total, pending, shipping, grandTotal } = orderSummary(cartProducts, quantities);
   return <SiteChrome><section className="container-x pt-32 pb-28">
     <span className="eyebrow">Confira antes de enviar</span>
     <h1 className="text-4xl mt-4 mb-8">Seu pedido</h1>
@@ -39,12 +37,7 @@ function CartPage() {
         </dl>
         {pending && <p className="text-sm mt-4">Há itens com preço sob consulta. Seus valores serão confirmados na conversa.</p>}
         <p className="text-sm mt-5 mb-6 text-foreground/70">Entrega em Peruíbe-SP: R$ 8,90. Pedidos acima de R$ 200 em produtos têm frete grátis.</p>
-        <form onSubmit={e => { e.preventDefault(); if (name.trim() && address.trim()) window.open(url, "_blank", "noopener,noreferrer"); }} className="space-y-4">
-          <div><label htmlFor="pedido-nome" className="block text-sm mb-2">Seu nome</label><input id="pedido-nome" autoComplete="name" required minLength={2} maxLength={120} pattern=".*\S.*" value={name} onChange={e => setName(e.target.value)} className="w-full rounded-xl border border-border bg-white px-3 py-3" /></div>
-          <div><label htmlFor="pedido-endereco" className="block text-sm mb-2">Endereço completo de entrega</label><textarea id="pedido-endereco" autoComplete="street-address" required minLength={10} maxLength={600} rows={4} value={address} onChange={e => setAddress(e.target.value)} placeholder="Rua, número, bairro, complemento e cidade" className="w-full rounded-xl border border-border bg-white px-3 py-3" /></div>
-          <p className="text-xs text-foreground/65">Nome e endereço serão incluídos na mensagem enviada à loja pelo WhatsApp. Frete informado válido para Peruíbe-SP.</p>
-          <button type="submit" className="btn-primary w-full text-center !px-4">Enviar pedido pelo WhatsApp</button>
-        </form>
+        <DeliveryForm getUrl={(name, address) => orderSummary(cartProducts, quantities, { name, address }).url} />
         <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com os itens e valores preenchidos. Toque em enviar para concluir a solicitação. A loja confirmará seu pedido e endereço de entrega.</p>
       </aside>
     </div>}

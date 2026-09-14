@@ -13,6 +13,8 @@ test("includes customer details in the encoded WhatsApp message", () => {
   assert.match(message, /Nome: Maria & João/);
   assert.match(message, /Endereço de entrega: Rua São José, 10/);
   assert.match(message, /Total com frete/);
+  assert.equal(message.includes("Entrega em Peruíbe-SP:"), false);
+  assert.equal(message.includes("Pedidos acima de"), false);
 });
 test("revalidates saved carts against availability and quantity limits", () => {
   assert.deepEqual(cleanCart({ a: 2, b: -1, c: 3, d: 1, missing: 5 }, products), { a: 2, d: 10 });
