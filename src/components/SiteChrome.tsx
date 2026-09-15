@@ -61,7 +61,6 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
           </nav>
           <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
             <HeaderCart />
-            <a href="/catalogo" className="btn-primary !py-2.5 !px-5 text-xs !hidden lg:!inline-flex">Quero pedir</a>
           </div>
           <button
             className={`lg:hidden ${textLight ? "text-white" : "text-foreground"}`}
@@ -88,7 +87,6 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
               ),
             )}
             <div className="flex items-center gap-4 mt-6">
-            <a href="/catalogo" onClick={() => setMenuOpen(false)} className="btn-primary w-fit">Quero pedir</a>
               <HeaderCart onClick={() => setMenuOpen(false)} />
             </div>
           </nav>

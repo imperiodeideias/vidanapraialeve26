@@ -54,7 +54,7 @@ const sabores = catalogoLinhas.flatMap((l) =>
 );
 const saboresFiltros = [
   { slug: "todos", nome: "Todos" },
-  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.nome })),
+  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.slug === "doces" ? "Doces" : l.nome })),
 ];
 
 
@@ -162,7 +162,6 @@ function Index() {
           </nav>
           <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
             <HeaderCart />
-            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary !py-2.5 !px-5 text-xs !hidden lg:!inline-flex">Quero pedir</a>
           </div>
           <button
             className="lg:hidden text-foreground"
@@ -187,7 +186,6 @@ function Index() {
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <div className="flex items-center gap-4 mt-6">
-            <a href={whatsappPedidoUrl} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} className="btn-primary w-fit">Quero pedir</a>
               <HeaderCart onClick={() => setMenuOpen(false)} />
             </div>
           </nav>
