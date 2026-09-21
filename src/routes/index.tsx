@@ -28,6 +28,8 @@ import logoLfwAsset from "@/assets/logo-lfw.png.asset.json";
 import aboutImg from "@/assets/sobre-familia.webp";
 import beachImg from "@/assets/beach-banner.jpg";
 import { linhas as catalogoLinhas } from "@/data/catalogo";
+import { useEstoque } from "@/hooks/useEstoque";
+import { emBreveDe } from "@/lib/estoque";
 import pHero from "@/assets/hero-prato-blue-majik.webp";
 import pHero2 from "@/assets/hero-lanche-vitalmax.webp";
 import pHero3 from "@/assets/hero-doces.webp";
