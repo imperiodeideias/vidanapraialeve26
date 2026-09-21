@@ -2,7 +2,7 @@ import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeaderCart } from "@/components/Cart";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import { Menu, X, Instagram, MessageCircle, Mail, MapPin } from "lucide-react";
+import { Menu, X, Instagram, MessageCircle, Mail, MapPin, User } from "lucide-react";
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
 import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
 
