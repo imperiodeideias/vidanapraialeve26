@@ -97,6 +97,7 @@ const sucoSucha = sucoSuchaAsset.url;
 export type Produto = {
   slug: string;
   nome: string;
+  tipo?: string;
   subtitulo?: string;
   img: string;
   peso?: string;
@@ -124,14 +125,13 @@ export const linhas: Linha[] = [
   {
     slug: "caseirinhos",
     nome: "Caseirinhos",
-    eyebrow: "Dia a Dia",
-    headline: "Comida de casa, feita com carinho.",
+    eyebrow: "Pratos",
+    headline: "Caseirinhos",
     descricao: "Nossa linha mais amada. Pratos completos com arroz, feijão, proteína e legumes — o almoço de domingo, todos os dias.",
     cover: coxaArrozGrega,
     cor: "sage",
     produtos: [
       { slug: "coxa-sobrecoxa-arroz-grega", emBreve: false, precoCentavos: 2090, nome: "Coxa e Sobrecoxa", subtitulo: "com arroz à grega", img: coxaArrozGrega, peso: "300g", kcal: 182, proteina: 11, descricao: "Coxa e sobrecoxa desossada com arroz à grega, batata, cenoura e ervilha.", tags: ["Sem glúten"] },
-      { slug: "sabor-sertanejo", emBreve: true, precoCentavos: 2390, nome: "Sabor Sertanejo", subtitulo: "carne desfiada, feijão preto, arroz e banana", img: saborSertanejo, peso: "300g", descricao: "Um clássico brasileiro em versão leve: carne desfiada, feijão preto, arroz e banana da terra.", tags: ["Sem glúten"] },
       { slug: "frango-cremoso-legumes-mandioca", emBreve: false, precoCentavos: 2090, nome: "Frango Cremoso", subtitulo: "com legumes e mandioca sautée", img: caseirinhoFrangoCremoso, peso: "300g", descricao: "Peito de frango ao molho de tomate com mandioca, milho e ervilha, finalizado com manteiga zero lactose, orégano e chimichurri." },
       { slug: "caseirinho-sobrecoxa-polenta", emBreve: false, precoCentavos: 1890, nome: "Caseirinho Sobrecoxa", subtitulo: "com polenta ao molho de tomate", img: caseirinhoSobrecoxaPolenta, peso: "300g", descricao: "Sobrecoxa de frango com polenta cremosa de farinha de milho ao molho de tomate com manjericão e orégano." },
       { slug: "caseirinho-linguica-arroz-feijao-farofa", emBreve: true, nome: "Caseirinho de Linguiça", subtitulo: "com arroz, feijão e farofa", img: caseirinhoLinguica, peso: "300g", descricao: "Linguiça com arroz, feijão e farofa de mandioca com cenoura, azeite de oliva extra virgem, cheiro verde e folhas de louro." },
@@ -148,8 +148,8 @@ export const linhas: Linha[] = [
   {
     slug: "aves",
     nome: "Aves",
-    eyebrow: "Performance & Rotina",
-    headline: "Frango do jeito que você ama.",
+    eyebrow: "Pratos",
+    headline: "Aves",
     descricao: "Receitas variadas com frango — do curry ao escondidinho — para dias saborosos e proteicos.",
     cover: parmegianaFrango,
     cor: "petrol",
@@ -166,12 +166,13 @@ export const linhas: Linha[] = [
   {
     slug: "carnes",
     nome: "Carnes",
-    eyebrow: "Robustez & Sabor",
-    headline: "Carne bovina em receitas equilibradas.",
+    eyebrow: "Pratos",
+    headline: "Carnes",
     descricao: "Pratos completos com patinho e cortes magros, para saciar sem pesar.",
     cover: escondidinhoCarne,
     cor: "deep",
     produtos: [
+      { slug: "sabor-sertanejo", emBreve: true, precoCentavos: 2390, nome: "Sabor Sertanejo", subtitulo: "carne desfiada, feijão preto, arroz e banana", img: saborSertanejo, peso: "300g", descricao: "Um clássico brasileiro em versão leve: carne desfiada, feijão preto, arroz e banana da terra.", tags: ["Sem glúten"] },
       { slug: "feijoada-light", emBreve: true, precoCentavos: 2390, nome: "Feijoada Light", subtitulo: "arroz integral, farofa e couve", img: feijoadaLight, peso: "300g", kcal: 79, proteina: 4, descricao: "Feijoada equilibrada com copa lombo, calabresa, arroz integral, farofa e couve refogada." },
       { slug: "escondidinho-de-carne", emBreve: false, precoCentavos: 2390, nome: "Escondidinho de Carne", subtitulo: "com purê de abóbora cabotiá", img: escondidinhoCarne, peso: "300g", kcal: 97, proteina: 8.5, descricao: "Acém desfiado com temperos brasileiros e purê cremoso de abóbora cabotiá.", tags: ["Sem glúten"] },
       { slug: "estrogonofe-de-carne", emBreve: false, precoCentavos: 2590, nome: "Estrogonofe de Carne", subtitulo: "com batata, arroz integral e brócolis", img: estrogonofeCarne, peso: "300g", descricao: "Patinho bovino ao creme de leite zero lactose com cogumelo, batata, arroz integral e brócolis." },
@@ -182,8 +183,8 @@ export const linhas: Linha[] = [
   {
     slug: "massas",
     nome: "Massas",
-    eyebrow: "Conforto Leve",
-    headline: "Massas artesanais, sem culpa.",
+    eyebrow: "Pratos",
+    headline: "Massas",
     descricao: "Nhoques, panquecas e pastas sem glúten com molhos autorais.",
     cover: nhoqueAbobora,
     cor: "coral",
@@ -198,8 +199,8 @@ export const linhas: Linha[] = [
   {
     slug: "peixes",
     nome: "Peixes",
-    eyebrow: "Premium",
-    headline: "Peixes nobres, do mar ao seu prato.",
+    eyebrow: "Pratos",
+    headline: "Peixes",
     descricao: "Tilápia, salmão e cação em receitas leves e sofisticadas.",
     cover: salmaoMaracuja,
     cor: "petrol",
@@ -214,9 +215,9 @@ export const linhas: Linha[] = [
   },
   {
     slug: "maromba",
-    nome: "Maromba",
-    eyebrow: "Performance",
-    headline: "Mais proteína, mais resultado.",
+    nome: "Marombas",
+    eyebrow: "Pratos",
+    headline: "Marombas",
     descricao: "Pratos com alto valor proteico para quem treina e busca performance.",
     cover: frangoCubos,
     cor: "petrol",
@@ -229,9 +230,9 @@ export const linhas: Linha[] = [
   },
   {
     slug: "sopas-caldos",
-    nome: "Sopas & Caldos",
-    eyebrow: "Bem-estar",
-    headline: "Colo em forma de sopa.",
+    nome: "Sopas",
+    eyebrow: "Pratos",
+    headline: "Sopas",
     descricao: "Sopas nutritivas e reconfortantes, do detox ao alto proteico.",
     cover: sopaFrango,
     cor: "sage",
@@ -247,9 +248,9 @@ export const linhas: Linha[] = [
   },
   {
     slug: "veggie",
-    nome: "Veggie",
-    eyebrow: "Bem-estar",
-    headline: "100% vegetal, 100% sabor.",
+    nome: "Vegs",
+    eyebrow: "Pratos",
+    headline: "Vegs",
     descricao: "Opções veganas ricas em proteína vegetal e fibras.",
     cover: feijoadaVegana,
     cor: "sage",
@@ -262,10 +263,10 @@ export const linhas: Linha[] = [
   },
   {
     slug: "salgados",
-    nome: "Salgados & Pizzas",
-    eyebrow: "Lanches Inteligentes",
-    headline: "Beliscar sem sair da linha.",
-    descricao: "Crepiocas, empadas, pães de queijo e pizzas fit — pra qualquer hora do dia.",
+    nome: "Salgados",
+    eyebrow: "Salgados",
+    headline: "Salgados",
+    descricao: "Tortas, crepiocas, empadas, coxinhas e pães de queijo.",
     cover: coxinhaFit,
     cor: "coral",
     produtos: [
@@ -276,15 +277,13 @@ export const linhas: Linha[] = [
       { slug: "empada-palmito", emBreve: false, precoCentavos: 1990, nome: "Empada de Palmito", img: empadaPalmito, peso: "140g", kcal: 295, proteina: 15, descricao: "Empada de farinha de aveia recheada com palmito e molho de tomate." },
       { slug: "coxinha-de-frango-fit", emBreve: false, precoCentavos: 2190, nome: "Coxinha de Frango Fit", img: coxinhaFit, peso: "200g (4 un.)", kcal: 155, proteina: 10, descricao: "Coxinha de farinha de arroz e mandioca com recheio cremoso de frango. Sem glúten.", tags: ["Sem glúten"] },
       { slug: "pao-de-queijo-fit", emBreve: true, precoCentavos: 1990, nome: "Pão de Queijo Fit", img: paoQueijoFit, peso: "200g (10 un.)", kcal: 491, proteina: 14, descricao: "Pão de queijo cremoso com mussarela sem lactose. O clássico mineiro em versão leve." },
-      { slug: "pizza-frango-requeijao", emBreve: true, nome: "Pizza de Frango", subtitulo: "e requeijão lac free", img: pizzaFrango, peso: "180g", kcal: 243, proteina: 37, descricao: "Pizza fit com massa de sementes, frango desfiado e requeijão sem lactose.", tags: ["High protein", "Sem glúten"] },
-      { slug: "pizza-marguerita", emBreve: true, precoCentavos: 2190, nome: "Pizza Marguerita", img: pizzaMarguerita, peso: "160g", kcal: 441, proteina: 20, descricao: "Massa de sementes com mussarela sem lactose, tomate, manjericão e azeitona.", tags: ["Sem glúten"] },
     ],
   },
   {
     slug: "doces",
-    nome: "Momento Leve",
-    eyebrow: "Sobremesas Funcionais",
-    headline: "Doce com propósito.",
+    nome: "Doces",
+    eyebrow: "Doces",
+    headline: "Doces",
     descricao: "Sobremesas sem açúcar refinado, sem lactose e sem culpa.",
     cover: brownieFit,
     cor: "coral",
@@ -296,14 +295,42 @@ export const linhas: Linha[] = [
     ],
   },
   {
+    slug: "pizzas",
+    nome: "Pizzas",
+    eyebrow: "Pizzas",
+    headline: "Pizzas",
+    descricao: "Pizzas em porções individuais.",
+    cover: pizzaMarguerita,
+    cor: "coral",
+    produtos: [
+      { slug: "pizza-frango-requeijao", emBreve: true, nome: "Pizza de Frango", subtitulo: "e requeijão lac free", img: pizzaFrango, peso: "180g", kcal: 243, proteina: 37, descricao: "Pizza fit com massa de sementes, frango desfiado e requeijão sem lactose.", tags: ["High protein", "Sem glúten"] },
+      { slug: "pizza-marguerita", emBreve: true, precoCentavos: 2190, nome: "Pizza Marguerita", img: pizzaMarguerita, peso: "160g", kcal: 441, proteina: 20, descricao: "Massa de sementes com mussarela sem lactose, tomate, manjericão e azeitona.", tags: ["Sem glúten"] },
+    ],
+  },
+  {
+    slug: "nuts",
+    nome: "Mix Nuts",
+    eyebrow: "Mix Nuts",
+    headline: "Mix Nuts",
+    descricao: "Mix de castanhas e sementes selecionadas para lanches inteligentes.",
+    cover: mixNuts,
+    cor: "sage",
+    produtos: [
+      { slug: "mix-de-nuts", emBreve: true, precoCentavos: 890, nome: "Mix de Nuts", img: mixNuts, peso: "30g", pedidoMinimo: 10, kcal: 187, proteina: 5.9, descricao: "Sementes de girassol, amendoim, semente de abóbora, castanha do pará e castanha de caju." },
+    ],
+  },
+  {
     slug: "sucos",
-    nome: "Sucos Detox",
-    eyebrow: "Funcionais",
-    headline: "Prensados a frio, cheios de vida.",
+    nome: "Sucos",
+    eyebrow: "Sucos",
+    headline: "Sucos",
     descricao: "Sucos naturais prensados a frio e funcionais para cada momento.",
     cover: sucoBlueMajik,
     cor: "sage",
     produtos: [
+      { tipo: "Kit Detox", slug: "kit-detox-1-dia", emBreve: true, precoCentavos: 11490, nome: "Kit Detox 1 Dia", subtitulo: "com 7 sucos", img: sucoBlueMajik, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik." },
+      { tipo: "Kit Detox", slug: "kit-detox-3-dias", emBreve: true, precoCentavos: 31590, nome: "Kit Detox 3 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoSuperGreen, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
+      { tipo: "Kit Detox", slug: "kit-detox-5-dias", emBreve: true, precoCentavos: 46590, nome: "Kit Detox 5 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoVitalmax, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
       { slug: "suco-melancia", emBreve: true, precoCentavos: 1390, nome: "Suco de Melancia", subtitulo: "prensado a frio", img: sucoMelancia, peso: "300ml", kcal: 100, descricao: "Melancia prensada a frio. Hidratação e frescor em cada gole.", tags: ["Prensado a frio"] },
       { slug: "suco-abacaxi", emBreve: true, precoCentavos: 1490, nome: "Suco de Abacaxi", img: sucoAbacaxi, peso: "300ml", kcal: 152, descricao: "Abacaxi prensado a frio, doçura natural." },
       { slug: "suco-maca", emBreve: true, nome: "Suco de Maçã", img: sucoMaca, peso: "300ml", descricao: "Maçã prensada a frio, sem adição de açúcar." },
@@ -316,33 +343,14 @@ export const linhas: Linha[] = [
       { slug: "suco-sucha", emBreve: false, precoCentavos: 1790, nome: "Suco Suchá", img: sucoSucha, peso: "300ml", kcal: 78, descricao: "Melancia, gengibre, cavalinha e colágeno." },
     ],
   },
-  {
-    slug: "nuts",
-    nome: "Nuts",
-    eyebrow: "Funcionais",
-    headline: "Snacks que trabalham por você.",
-    descricao: "Mix de castanhas e sementes selecionadas para lanches inteligentes.",
-    cover: mixNuts,
-    cor: "sage",
-    produtos: [
-      { slug: "mix-de-nuts", emBreve: true, precoCentavos: 890, nome: "Mix de Nuts", img: mixNuts, peso: "30g", pedidoMinimo: 10, kcal: 187, proteina: 5.9, descricao: "Sementes de girassol, amendoim, semente de abóbora, castanha do pará e castanha de caju." },
-    ],
-  },
-  {
-    slug: "kits-detox",
-    nome: "Kits Detox",
-    eyebrow: "Programas",
-    headline: "Um programa completo pra recomeçar.",
-    descricao: "Kits com os sucos detox funcionais, mix de nuts e marmitinhas — programas de 1, 3 e 5 dias.",
-    cover: sucoBlueMajik,
-    cor: "petrol",
-    produtos: [
-      { slug: "kit-detox-1-dia", emBreve: true, precoCentavos: 11490, nome: "Kit Detox 1 Dia", subtitulo: "com 7 sucos", img: sucoBlueMajik, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik." },
-      { slug: "kit-detox-3-dias", emBreve: true, precoCentavos: 31590, nome: "Kit Detox 3 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoSuperGreen, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
-      { slug: "kit-detox-5-dias", emBreve: true, precoCentavos: 46590, nome: "Kit Detox 5 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoVitalmax, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
-    ],
-  },
 ];
 
-export const getLinha = (slug: string) => linhas.find((l) => l.slug === slug);
+// Preserve existing links to kits while listing them under Sucos in the catalog.
+export const getLinha = (slug: string) => {
+  if (slug === "kits-detox") {
+    const sucos = linhas.find(l => l.slug === "sucos")!;
+    return { ...sucos, slug, nome: "Kit Detox", eyebrow: "Kit Detox", headline: "Kit Detox", produtos: sucos.produtos.filter(p => p.tipo === "Kit Detox") };
+  }
+  return linhas.find(l => l.slug === slug);
+};
 

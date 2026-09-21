@@ -16,7 +16,7 @@ export const Route = createFileRoute("/catalogo/$linha")({
     if (!loaderData) {
       return {
         meta: [
-          { title: "Linha não encontrada — Vida na Praia Leve" },
+          { title: "Categoria não encontrada — Vida na Praia Leve" },
           { name: "robots", content: "noindex" },
         ],
       };
@@ -81,8 +81,8 @@ function LinhaNotFound() {
   return (
     <SiteChrome>
       <div className="pt-40 pb-32 container-x text-center">
-        <h1 className="text-5xl">Linha não encontrada</h1>
-        <p className="mt-4 text-foreground/70">A linha que você procura pode ter sido movida ou renomeada.</p>
+        <h1 className="text-5xl">Categoria não encontrada</h1>
+        <p className="mt-4 text-foreground/70">A categoria que você procura pode ter sido movida ou renomeada.</p>
         <Link to="/catalogo" className="btn-primary mt-8 inline-flex">Ver catálogo completo</Link>
       </div>
     </SiteChrome>
@@ -112,13 +112,10 @@ function LinhaPage() {
             <span>/</span>
             <span className="text-white">{linha.nome}</span>
           </nav>
-          <span className="eyebrow !text-[color:var(--sand)]">Linha {linha.eyebrow}</span>
+          <span className="eyebrow !text-[color:var(--sand)]">{linha.eyebrow}</span>
           <h1 className="mt-5 text-5xl md:text-6xl lg:text-7xl leading-[1.02]">
             {linha.nome}
           </h1>
-          <p className="mt-6 font-script text-4xl md:text-5xl text-[color:var(--coral)]">
-            {linha.headline}
-          </p>
           <p className="mt-8 text-lg font-light text-white/85 max-w-2xl leading-relaxed">
             {linha.descricao}
           </p>
@@ -198,7 +195,7 @@ function LinhaPage() {
         <div className="container-x">
           <div className="max-w-2xl mb-12">
             <span className="eyebrow">Continue explorando</span>
-            <h2 className="mt-4 text-3xl md:text-4xl leading-[1.05]">Outras linhas do catálogo</h2>
+            <h2 className="mt-4 text-3xl md:text-4xl leading-[1.05]">Outras categorias do catálogo</h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {outrasLinhas.map((l) => (

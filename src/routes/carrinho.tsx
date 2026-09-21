@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { deliveryFee, type DeliveryRegion } from "@/lib/delivery";
 import { DeliveryForm } from "@/components/DeliveryForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -10,7 +12,11 @@ export const Route = createFileRoute("/carrinho")({
 });
 function CartPage() {
   const { quantities, set, ready } = useCart();
-  const { items, total, pending, shipping, grandTotal } = orderSummary(cartProducts, quantities);
+  const [region, setRegion] = useState<DeliveryRegion>({ city: "", state: "" });
+  const { items, total, pending } = orderSummary(cartProducts, quantities);
+  const fee = deliveryFee(total, region);
+  const shipping = pending && fee === 890 ? null : fee;
+  const grandTotal = pending || shipping === null ? null : total + shipping;
   return <SiteChrome><section className="container-x pt-32 pb-28">
     <span className="eyebrow">Confira antes de enviar</span>
     <h1 className="text-4xl mt-4 mb-8">Seu pedido</h1>
@@ -32,12 +38,12 @@ function CartPage() {
         <h2 className="text-2xl mb-6">Resumo do pedido</h2>
         <dl className="space-y-4">
           <div className="flex justify-between gap-4"><dt>{pending ? "Subtotal com preço" : "Total dos produtos"}</dt><dd className="font-semibold">{money(total)}</dd></div>
-          <div className="flex justify-between gap-4"><dt>Frete (Peruíbe-SP)</dt><dd>{shipping === null ? "A confirmar" : shipping === 0 ? "Grátis" : money(shipping)}</dd></div>
-          <div className="border-t border-border pt-4"><dt>Total final com frete</dt><dd className="mt-1 font-semibold">{grandTotal === null ? "A confirmar após definir os preços" : money(grandTotal)}</dd></div>
+          <div className="flex justify-between gap-4"><dt>Frete{region.city ? ` (${region.city}-${region.state})` : ""}</dt><dd>{shipping === null ? "A confirmar" : shipping === 0 ? "Grátis" : money(shipping)}</dd></div>
+          <div className="border-t border-border pt-4"><dt>Total final com frete</dt><dd className="mt-1 font-semibold">{grandTotal === null ? "A confirmar após preencher o endereço e os preços" : money(grandTotal)}</dd></div>
         </dl>
         {pending && <p className="text-sm mt-4">Há itens com preço sob consulta. Seus valores serão confirmados na conversa.</p>}
-        <p className="text-sm mt-5 mb-6 text-foreground/70">Entrega em Peruíbe-SP: R$ 8,90. Pedidos acima de R$ 200 em produtos têm frete grátis.</p>
-        <DeliveryForm getUrl={(name, address) => orderSummary(cartProducts, quantities, { name, address }).url} />
+        <p className="text-sm mt-5 mb-6 text-foreground/70">Peruíbe: R$ 8,90, com frete grátis acima de R$ 200 em produtos. Pedro de Toledo, Ana Dias e Itariri: R$ 18,90.</p>
+        <DeliveryForm onRegionChange={setRegion} getUrl={(name, address, region) => orderSummary(cartProducts, quantities, { name, address, region }).url} />
         <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com os itens e valores preenchidos. Toque em enviar para concluir a solicitação. A loja confirmará seu pedido e endereço de entrega.</p>
       </aside>
     </div>}

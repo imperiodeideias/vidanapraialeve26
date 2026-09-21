@@ -49,7 +49,7 @@ function CatalogoIndex() {
             de comer bem todos os dias.
           </h1>
           <p className="mt-8 text-lg md:text-xl font-light text-foreground/70 max-w-2xl leading-relaxed">
-            De caseirinhos afetivos a sucos prensados a frio, cada linha foi pensada para um momento da sua rotina. Escolha por objetivo, estilo de vida ou humor do dia.
+            Escolha uma categoria para conferir todos os seus produtos. Os itens disponíveis aparecem primeiro, seguidos dos itens em breve.
           </p>
         </div>
       </section>
@@ -88,7 +88,7 @@ function CatalogoIndex() {
                 <div className="p-7">
                   <p className="text-sm text-foreground/65 font-light leading-relaxed">{l.descricao}</p>
                   <span className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] group-hover:text-[color:var(--coral)] transition-colors">
-                    Ver linha <ArrowRight className="size-3.5" />
+                    Explorar <ArrowRight className="size-3.5" />
                   </span>
                 </div>
               </Link>

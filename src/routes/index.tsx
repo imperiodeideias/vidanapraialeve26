@@ -28,20 +28,10 @@ import logoLfwAsset from "@/assets/logo-lfw.png.asset.json";
 import aboutImg from "@/assets/sobre-familia.webp";
 import beachImg from "@/assets/beach-banner.jpg";
 import { linhas as catalogoLinhas } from "@/data/catalogo";
-import pDaily from "@/assets/produtos/coxa-arroz-grega.jpg";
 import pHero from "@/assets/hero-prato-blue-majik.webp";
 import pHero2 from "@/assets/hero-lanche-vitalmax.webp";
 import pHero3 from "@/assets/hero-doces.webp";
-import pPerf from "@/assets/produtos/frango-cubos.jpg";
-import pWell from "@/assets/produtos/feijoada-vegana.jpg";
-import pPrem from "@/assets/produtos/salmao-maracuja.jpg";
-import pSnackAsset from "@/assets/produtos/coxinha-fit-nova.jpg.asset.json";
-import pDessAsset from "@/assets/produtos/brownie-fit-novo.jpg.asset.json";
-import pFuncAsset from "@/assets/produtos/suco-blue-majik-novo.jpg.asset.json";
 
-const pDess = pDessAsset.url;
-const pFunc = pFuncAsset.url;
-const pSnack = pSnackAsset.url;
 
 const whatsappPedidoUrl = "https://wa.me/551333662961?text=" + encodeURIComponent(
   "Olá, estou no site da Vida na Praia Leve e gostaria de fazer um pedido"
@@ -54,7 +44,7 @@ const sabores = catalogoLinhas.flatMap((l) =>
 );
 const saboresFiltros = [
   { slug: "todos", nome: "Todos" },
-  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.slug === "doces" ? "Doces" : l.nome })),
+  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.nome })),
 ];
 
 
@@ -74,15 +64,9 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const linhas = [
-  { slug: "caseirinhos", tag: "Dia a Dia", title: "Refeições equilibradas", desc: "Pratos completos para toda a semana, do café ao jantar.", img: pDaily, color: "sage" },
-  { slug: "maromba", tag: "Performance", title: "Mais proteína, mais energia", desc: "Nutrição precisa para quem treina e busca resultados.", img: pPerf, color: "petrol" },
-  { slug: "veggie", tag: "Bem-estar", title: "Low carb, vegano, sem glúten", desc: "Opções funcionais para cada estilo de vida.", img: pWell, color: "sage" },
-  { slug: "peixes", tag: "Premium", title: "Peixes & receitas especiais", desc: "Ingredientes selecionados para momentos únicos.", img: pPrem, color: "deep" },
-  { slug: "salgados", tag: "Lanches Inteligentes", title: "Empadas, pães de queijo, pizza fit", desc: "Praticidade saborosa para qualquer hora do dia.", img: pSnack, color: "coral" },
-  { slug: "doces", tag: "Momento Leve", title: "Brownies & sobremesas funcionais", desc: "Doces com propósito, sem culpa.", img: pDess, color: "coral" },
-  { slug: "sucos", tag: "Funcionais", title: "Sucos, chás & mix nuts", desc: "Bebidas e snacks que trabalham por você.", img: pFunc, color: "sage" },
-];
+const linhas = catalogoLinhas.map(l => ({
+  slug: l.slug, tag: l.eyebrow, title: l.nome, desc: l.descricao, img: l.cover,
+}));
 
 const diferenciais = [
   { icon: Leaf, title: "Ingredientes selecionados", desc: "Do produtor à sua mesa, com curadoria criteriosa." },
@@ -111,7 +95,7 @@ function Index() {
   const [filtro, setFiltro] = useState("todos");
   const [busca, setBusca] = useState("");
   const normalizar = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  const resultados = sabores.filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim()))).sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
+  const resultados = sabores.filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim()))).sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
 
 
 
@@ -151,7 +135,7 @@ function Index() {
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
             {[
               ["Sobre", "#sobre"],
-              ["Linhas", "#linhas"],
+              ["Categorias", "#linhas"],
               ["Sabores", "#sabores"],
               ["Como funciona", "#como"],
             ].map(([l, h]) => (
@@ -182,7 +166,7 @@ function Index() {
             <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {[["Sobre","#sobre"],["Linhas","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
+            {[["Sobre","#sobre"],["Categorias","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <div className="flex items-center gap-4 mt-6">
@@ -337,7 +321,7 @@ function Index() {
         <div className="container-x">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
             <div className="max-w-2xl">
-              <span className="eyebrow">Nossas linhas</span>
+              <span className="eyebrow">Categorias</span>
               <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
                 Um cardápio para <span className="font-script text-[color:var(--coral)]">cada momento</span> da sua vida.
               </h2>
@@ -348,7 +332,7 @@ function Index() {
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {linhas.map((l, i) => (
               <article
-                key={l.tag}
+                key={l.slug}
                 className={`card-lift group relative overflow-hidden rounded-3xl bg-card shadow-sm ${
                   i === 0 ? "lg:col-span-2 lg:row-span-1" : ""
                 }`}
@@ -381,19 +365,7 @@ function Index() {
 
             ))}
 
-            {/* Em breve card */}
-            <article className="card-lift relative overflow-hidden rounded-3xl bg-[color:var(--petrol)] text-[color:var(--offwhite)] p-8 flex flex-col justify-between min-h-[280px]">
-              <div>
-                <span className="eyebrow !text-[color:var(--sand)]">Em breve</span>
-                <h3 className="mt-4 text-3xl leading-tight">Novas linhas chegando</h3>
-              </div>
-              <ul className="mt-6 space-y-2 text-sm font-light text-white/80">
-                <li>· Linha Pet</li>
-                <li>· Produtos próprios</li>
-                <li>· Suplementos</li>
-                <li>· Snacks & presentes</li>
-              </ul>
-            </article>
+
           </div>
         </div>
       </section>
@@ -402,7 +374,7 @@ function Index() {
       <section id="sabores" className="py-24 md:py-32">
         <div className="container-x">
           <div className="max-w-2xl">
-            <span className="eyebrow">Cardápio por linha</span>
+            <span className="eyebrow">Cardápio por categoria</span>
             <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
             </h2>
@@ -594,8 +566,8 @@ function Index() {
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
-              { t: "Explore", l: [["Sobre", "/#sobre"], ["Linhas", "/#linhas"], ["Sabores", "/#sabores"], ["Blog", "/#blog"]] },
-              { t: "Sua compra", l: [["Como funciona", "/#como"], ["Catálogo completo", "/catalogo"], ["Kits Detox", "/catalogo/kits-detox"], ["Meu carrinho", "/carrinho"]] },
+              { t: "Explore", l: [["Sobre", "/#sobre"], ["Categorias", "/#linhas"], ["Sabores", "/#sabores"], ["Blog", "/#blog"]] },
+              { t: "Sua compra", l: [["Como funciona", "/#como"], ["Catálogo completo", "/catalogo"], ["Kit Detox", "/catalogo/kits-detox"], ["Meu carrinho", "/carrinho"]] },
               { t: "Contato", l: [["WhatsApp", contactLinks.whatsapp], ["Instagram", contactLinks.instagram], ["contato@vidanapraialeve.com.br", contactLinks.email], ["Consultar entrega em Peruíbe", contactLinks.whatsapp]] },
             ].map((c) => (
               <div key={c.t}>
