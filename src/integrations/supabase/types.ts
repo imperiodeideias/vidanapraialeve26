@@ -144,6 +144,7 @@ export type Database = {
       produtos_estoque: {
         Row: {
           ativo: boolean
+          controlar_estoque: boolean
           created_at: string
           estoque_minimo: number
           nome: string
@@ -154,6 +155,7 @@ export type Database = {
         }
         Insert: {
           ativo?: boolean
+          controlar_estoque?: boolean
           created_at?: string
           estoque_minimo?: number
           nome?: string
@@ -164,6 +166,7 @@ export type Database = {
         }
         Update: {
           ativo?: boolean
+          controlar_estoque?: boolean
           created_at?: string
           estoque_minimo?: number
           nome?: string
