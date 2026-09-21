@@ -28,6 +28,8 @@ import logoLfwAsset from "@/assets/logo-lfw.png.asset.json";
 import aboutImg from "@/assets/sobre-familia.webp";
 import beachImg from "@/assets/beach-banner.jpg";
 import { linhas as catalogoLinhas } from "@/data/catalogo";
+import { useEstoque } from "@/hooks/useEstoque";
+import { emBreveDe } from "@/lib/estoque";
 import pHero from "@/assets/hero-prato-blue-majik.webp";
 import pHero2 from "@/assets/hero-lanche-vitalmax.webp";
 import pHero3 from "@/assets/hero-doces.webp";
@@ -94,8 +96,12 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [filtro, setFiltro] = useState("todos");
   const [busca, setBusca] = useState("");
+  const { estoque } = useEstoque();
   const normalizar = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  const resultados = sabores.filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim()))).sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
+  const resultados = sabores
+    .map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }))
+    .filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim())))
+    .sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
 
 
 

@@ -27,3 +27,8 @@ export function disponivel(slug: string, estoque: EstoqueMap | undefined) {
   if (!item.controlar_estoque) return undefined;
   return Math.max(0, item.quantidade);
 }
+
+/** Mostra a tarja "em breve" quando o catálogo marca assim ou quando o estoque zerou. */
+export function emBreveDe(slug: string, emBreveCatalogo: boolean, estoque: EstoqueMap | undefined) {
+  return emBreveCatalogo || disponivel(slug, estoque) === 0;
+}

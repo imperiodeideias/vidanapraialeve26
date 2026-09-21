@@ -5,6 +5,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, Flame, Beef } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
 import { getLinha, linhas, type Produto } from "@/data/catalogo";
+import { useEstoque } from "@/hooks/useEstoque";
+import { emBreveDe } from "@/lib/estoque";
 
 export const Route = createFileRoute("/catalogo/$linha")({
   loader: ({ params }) => {
@@ -91,7 +93,9 @@ function LinhaNotFound() {
 
 function LinhaPage() {
   const { linha } = Route.useLoaderData();
+  const { estoque } = useEstoque();
   const outrasLinhas = linhas.filter((l) => l.slug !== linha.slug).slice(0, 4);
+  const produtos: Produto[] = linha.produtos.map((p: Produto) => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
 
   return (
     <SiteChrome>
@@ -139,7 +143,7 @@ function LinhaPage() {
           </div>
 
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[...linha.produtos].sort((a,b) => Number(a.emBreve) - Number(b.emBreve)).map((p: Produto) => (
+            {[...produtos].sort((a,b) => Number(a.emBreve) - Number(b.emBreve)).map((p: Produto) => (
               <article key={p.slug} className="card-lift group bg-card rounded-3xl overflow-hidden shadow-sm flex flex-col">
                 <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
                   <img
