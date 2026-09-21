@@ -94,8 +94,12 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [filtro, setFiltro] = useState("todos");
   const [busca, setBusca] = useState("");
+  const { estoque } = useEstoque();
   const normalizar = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  const resultados = sabores.filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim()))).sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
+  const resultados = sabores
+    .map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }))
+    .filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim())))
+    .sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
 
 
 
