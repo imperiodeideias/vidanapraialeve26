@@ -7,7 +7,7 @@ export const Route = createFileRoute("/catalogo/")({
   head: () => ({
     meta: [
       { title: "Catálogo completo — Vida na Praia Leve" },
-      { name: "description", content: "Explore todas as linhas Vida na Praia Leve: caseirinhos, aves, carnes, peixes, massas, sopas, salgados fit, sobremesas, sucos detox e nuts." },
+      { name: "description", content: "Explore todas as linhas Vida na Praia Leve: caseirinhos, aves, carnes, peixes, massas, sopas, salgados fit, sobremesas e sucos." },
       { property: "og:title", content: "Catálogo completo — Vida na Praia Leve" },
       { property: "og:description", content: "Refeições, sucos, snacks e sobremesas saudáveis. Encontre a linha ideal para você." },
       { property: "og:url", content: "https://vidanapraialeve.lovable.app/catalogo" },

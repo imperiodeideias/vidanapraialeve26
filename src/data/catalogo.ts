@@ -121,7 +121,7 @@ export type Linha = {
   produtos: Produto[];
 };
 
-export const linhas: Linha[] = [
+const catalogoCompleto: Linha[] = [
   {
     slug: "caseirinhos",
     nome: "Caseirinhos",
@@ -344,6 +344,9 @@ export const linhas: Linha[] = [
     ],
   },
 ];
+
+const categoriasOcultas = new Set(["nuts", "pizzas"]);
+export const linhas: Linha[] = catalogoCompleto.filter(linha => !categoriasOcultas.has(linha.slug));
 
 // Preserve existing links to kits while listing them under Sucos in the catalog.
 export const getLinha = (slug: string) => {
