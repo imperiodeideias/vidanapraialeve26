@@ -12,7 +12,7 @@ async function admin(context: { supabase: SupabaseClient<Database>; userId: stri
 
 type Db = Awaited<ReturnType<typeof admin>>;
 
-async function movimentar(db: Db, slug: string, delta: number, tipo: "entrada" | "venda" | "consumo_proprio" | "ajuste", motivo: string | null, userId: string, pedidoId?: string) {
+async function movimentar(db: Db, slug: string, delta: number, tipo: "entrada" | "venda" | "venda_extra" | "consumo_proprio" | "ajuste", motivo: string | null, userId: string, pedidoId?: string) {
   const { data: atual, error } = await db.from("produtos_estoque").select("quantidade").eq("slug", slug).maybeSingle();
   if (error) throw new Error(error.message);
   if (!atual) throw new Error("Produto não encontrado no estoque.");
@@ -34,14 +34,17 @@ export const painel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const db = await admin(context);
-    const [estoque, pedidos, movimentacoes, vendas] = await Promise.all([
+    const [estoque, pedidos, movimentacoes, vendas, extras, perfis] = await Promise.all([
       db.from("produtos_estoque").select("*").order("nome"),
-      db.from("pedidos").select("*, pedido_itens(*)").order("created_at", { ascending: false }).limit(60),
-      db.from("movimentacoes_estoque").select("*").order("created_at", { ascending: false }).limit(40),
+      db.from("pedidos").select("*, pedido_itens(*)").order("created_at", { ascending: false }).limit(200),
+      db.from("movimentacoes_estoque").select("*").order("created_at", { ascending: false }).limit(60),
       db.from("pedido_itens").select("slug, nome, quantidade, pedidos!inner(status, confirmado_em)").eq("pedidos.status", "confirmado"),
+      db.from("movimentacoes_estoque").select("slug, quantidade, created_at").eq("tipo", "venda_extra"),
+      db.from("profiles").select("*"),
     ]);
-    const erro = estoque.error || pedidos.error || movimentacoes.error || vendas.error;
+    const erro = estoque.error || pedidos.error || movimentacoes.error || vendas.error || extras.error || perfis.error;
     if (erro) throw new Error(erro.message);
+    const nomeDoSlug = new Map((estoque.data ?? []).map((p) => [p.slug, p.nome] as const));
     return {
       estoque: estoque.data ?? [],
       pedidos: pedidos.data ?? [],
@@ -51,7 +54,13 @@ export const painel = createServerFn({ method: "GET" })
         nome: v.nome,
         quantidade: v.quantidade,
         confirmado_em: (v as unknown as { pedidos: { confirmado_em: string | null } }).pedidos.confirmado_em,
-      })),
+      })).concat((extras.data ?? []).map((e) => ({
+        slug: e.slug,
+        nome: nomeDoSlug.get(e.slug) ?? e.slug,
+        quantidade: Math.abs(e.quantidade),
+        confirmado_em: e.created_at as string | null,
+      }))),
+      clientes: agruparClientes(perfis.data ?? [], pedidos.data ?? []),
     };
   });
 
@@ -89,13 +98,14 @@ export const salvarProduto = createServerFn({ method: "POST" })
 
 export const registrarMovimento = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string; quantidade: number; tipo: "entrada" | "consumo_proprio"; motivo?: string }) => input)
+  .inputValidator((input: { slug: string; quantidade: number; tipo: "entrada" | "consumo_proprio" | "venda_extra"; motivo?: string }) => input)
   .handler(async ({ data, context }) => {
     const db = await admin(context);
     const quantidade = Math.trunc(Number(data.quantidade) || 0);
     if (quantidade < 1 || quantidade > 9999) throw new Error("Informe uma quantidade válida.");
     const delta = data.tipo === "entrada" ? quantidade : -quantidade;
-    await movimentar(db, data.slug, delta, data.tipo, data.motivo?.slice(0, 200) || (data.tipo === "entrada" ? "Entrada de estoque" : "Consumo próprio"), context.userId);
+    const padrao = data.tipo === "entrada" ? "Entrada de estoque" : data.tipo === "venda_extra" ? "Venda fora do site" : "Consumo próprio";
+    await movimentar(db, data.slug, delta, data.tipo, data.motivo?.trim().slice(0, 200) || padrao, context.userId);
     return { ok: true };
   });
 
