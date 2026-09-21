@@ -9,7 +9,7 @@ export function useEstoque() {
     queryFn: async (): Promise<EstoqueMap> => {
       const { data, error } = await supabase
         .from("produtos_estoque")
-        .select("slug, nome, quantidade, preco_centavos, estoque_minimo, ativo");
+        .select("slug, nome, quantidade, preco_centavos, estoque_minimo, ativo, controlar_estoque");
       if (error) throw error;
       const map: EstoqueMap = {};
       for (const item of (data || []) as EstoqueItem[]) map[item.slug] = item;

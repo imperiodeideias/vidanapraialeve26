@@ -5,6 +5,7 @@ export type EstoqueItem = {
   preco_centavos: number | null;
   estoque_minimo: number;
   ativo: boolean;
+  controlar_estoque: boolean;
 };
 
 export type EstoqueMap = Record<string, EstoqueItem>;
@@ -23,5 +24,6 @@ export function disponivel(slug: string, estoque: EstoqueMap | undefined) {
   const item = estoque?.[slug];
   if (!item) return undefined;
   if (!item.ativo) return 0;
+  if (!item.controlar_estoque) return undefined;
   return Math.max(0, item.quantidade);
 }
