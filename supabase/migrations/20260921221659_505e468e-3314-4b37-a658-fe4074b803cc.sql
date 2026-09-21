@@ -1,0 +1,1 @@
+ALTER TYPE public.movimentacao_tipo ADD VALUE IF NOT EXISTS 'venda_extra';
