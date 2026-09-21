@@ -2,7 +2,7 @@ import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeaderCart } from "@/components/Cart";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import { Menu, X, Instagram, MessageCircle, Mail, MapPin } from "lucide-react";
+import { Menu, X, Instagram, MessageCircle, Mail, MapPin, User } from "lucide-react";
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
 import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
 
@@ -60,6 +60,9 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             )}
           </nav>
           <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
+            <Link to="/conta" title="Minha conta" aria-label="Minha conta" className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-current/20 text-[color:var(--petrol)] hover:bg-[color:var(--sand)] transition-colors">
+              <User className="size-5" aria-hidden="true" />
+            </Link>
             <HeaderCart />
           </div>
           <button

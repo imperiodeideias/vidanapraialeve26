@@ -10,13 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CatalogoIndexRouteImport } from './routes/catalogo.index'
 import { Route as CatalogoLinhaRouteImport } from './routes/catalogo.$linha'
+import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const CarrinhoRoute = CarrinhoRouteImport.update({
   id: '/carrinho',
   path: '/carrinho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -34,36 +47,81 @@ const CatalogoLinhaRoute = CatalogoLinhaRouteImport.update({
   path: '/catalogo/$linha',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/carrinho': typeof CarrinhoRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/conta': typeof AuthenticatedContaRoute
   '/catalogo/$linha': typeof CatalogoLinhaRoute
   '/catalogo/': typeof CatalogoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/carrinho': typeof CarrinhoRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/conta': typeof AuthenticatedContaRoute
   '/catalogo/$linha': typeof CatalogoLinhaRoute
   '/catalogo': typeof CatalogoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/carrinho': typeof CarrinhoRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/catalogo/$linha': typeof CatalogoLinhaRoute
   '/catalogo/': typeof CatalogoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/carrinho' | '/catalogo/$linha' | '/catalogo/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/carrinho'
+    | '/admin'
+    | '/conta'
+    | '/catalogo/$linha'
+    | '/catalogo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carrinho' | '/catalogo/$linha' | '/catalogo'
-  id: '__root__' | '/' | '/carrinho' | '/catalogo/$linha' | '/catalogo/'
+  to:
+    | '/'
+    | '/auth'
+    | '/carrinho'
+    | '/admin'
+    | '/conta'
+    | '/catalogo/$linha'
+    | '/catalogo'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/carrinho'
+    | '/_authenticated/admin'
+    | '/_authenticated/conta'
+    | '/catalogo/$linha'
+    | '/catalogo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   CarrinhoRoute: typeof CarrinhoRoute
   CatalogoLinhaRoute: typeof CatalogoLinhaRoute
   CatalogoIndexRoute: typeof CatalogoIndexRoute
@@ -76,6 +134,20 @@ declare module '@tanstack/react-router' {
       path: '/carrinho'
       fullPath: '/carrinho'
       preLoaderRoute: typeof CarrinhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -99,11 +171,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogoLinhaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedContaRoute: typeof AuthenticatedContaRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedContaRoute: AuthenticatedContaRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   CarrinhoRoute: CarrinhoRoute,
   CatalogoLinhaRoute: CatalogoLinhaRoute,
   CatalogoIndexRoute: CatalogoIndexRoute,

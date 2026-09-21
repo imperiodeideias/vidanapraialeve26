@@ -1,0 +1,1 @@
+ALTER TABLE public.produtos_estoque ADD COLUMN controlar_estoque BOOLEAN NOT NULL DEFAULT false;

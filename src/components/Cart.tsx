@@ -3,6 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { linhas, type Produto } from "@/data/catalogo";
 import { cleanCart, type Quantities } from "@/lib/order";
+import { useEstoque } from "@/hooks/useEstoque";
+import { disponivel } from "@/lib/estoque";
 
 export const cartProducts = linhas.flatMap(l => l.produtos);
 const storageKey = "vnpl-pedido-v1";
@@ -56,13 +58,20 @@ export function Quantity({ value, minimum = 1, onChange, name }: { value: number
   </div>;
 }
 export function AddToCart({ produto }: { produto: Produto }) {
-  const { add, ready } = useCart();
+  const { add, ready, quantities } = useCart();
+  const { estoque } = useEstoque();
   const [quantity, setQuantity] = useState(produto.pedidoMinimo || 1);
   const [added, setAdded] = useState(false);
   if (produto.emBreve) return null;
+  const emEstoque = disponivel(produto.slug, estoque);
+  const noCarrinho = quantities[produto.slug] || 0;
+  const esgotado = emEstoque === 0;
+  const excede = emEstoque !== undefined && noCarrinho + quantity > emEstoque;
   return <div className="mt-5 space-y-3">
     <Quantity value={quantity} minimum={produto.pedidoMinimo || 1} name={produto.nome} onChange={q => { setQuantity(q); setAdded(false); }} />
-    <button type="button" disabled={!ready} className="btn-primary !px-4 !py-3 w-full text-xs" onClick={() => { add(produto.slug, quantity); setAdded(true); }}>Adicionar ao pedido</button>
-    <p role="status" className="text-sm text-[color:var(--petrol)]">{added ? "Adicionado! Confira no carrinho." : ""}</p>
+    <button type="button" disabled={!ready || esgotado || excede} className="btn-primary !px-4 !py-3 w-full text-xs disabled:opacity-50" onClick={() => { add(produto.slug, quantity); setAdded(true); }}>
+      {esgotado ? "Esgotado" : "Adicionar ao pedido"}
+    </button>
+    <p role="status" className="text-sm text-[color:var(--petrol)]">{esgotado ? "Produto esgotado. Fale com a loja para saber a próxima data." : excede ? `Temos apenas ${emEstoque} unidade(s) disponíveis.` : added ? "Adicionado! Confira no carrinho." : ""}</p>
   </div>;
 }
