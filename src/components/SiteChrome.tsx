@@ -60,6 +60,9 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             )}
           </nav>
           <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
+            <Link to="/conta" title="Minha conta" aria-label="Minha conta" className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-current/20 text-[color:var(--petrol)] hover:bg-[color:var(--sand)] transition-colors">
+              <User className="size-5" aria-hidden="true" />
+            </Link>
             <HeaderCart />
           </div>
           <button
