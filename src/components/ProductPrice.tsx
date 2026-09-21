@@ -20,7 +20,6 @@ export function ProductPrice({ produto }: { produto: Produto }) {
           {preco !== undefined && ` (${reais.format((preco * produto.pedidoMinimo) / 100)})`}
         </p>
       )}
-      {emEstoque === 0 && <p className="mt-1 text-xs font-semibold text-[color:var(--coral)]">Esgotado no momento</p>}
       {emEstoque !== undefined && emEstoque > 0 && emEstoque <= 2 && (
         <p className="mt-1 text-xs text-[color:var(--coral)]">Últimas {emEstoque} unidades</p>
       )}

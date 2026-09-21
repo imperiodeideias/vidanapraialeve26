@@ -62,8 +62,8 @@ export function AddToCart({ produto }: { produto: Produto }) {
   const { estoque } = useEstoque();
   const [quantity, setQuantity] = useState(produto.pedidoMinimo || 1);
   const [added, setAdded] = useState(false);
-  if (produto.emBreve) return null;
   const emEstoque = disponivel(produto.slug, estoque);
+  if (produto.emBreve || emEstoque === 0) return null;
   const noCarrinho = quantities[produto.slug] || 0;
   const esgotado = emEstoque === 0;
   const excede = emEstoque !== undefined && noCarrinho + quantity > emEstoque;
