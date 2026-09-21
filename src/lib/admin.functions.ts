@@ -30,6 +30,55 @@ async function movimentar(db: Db, slug: string, delta: number, tipo: "entrada" |
   await db.from("movimentacoes_estoque").insert({ slug, tipo, quantidade: delta, motivo, created_by: userId, pedido_id: pedidoId ?? null });
 }
 
+
+type PerfilRow = { id: string; nome: string; email: string | null; cpf: string | null; telefone: string | null; cep: string | null; rua: string | null; numero: string | null; bairro: string | null; cidade: string | null; estado: string | null };
+type PedidoComItens = {
+  id: string; user_id: string | null; cliente_nome: string; cliente_email: string | null; cliente_cpf: string | null;
+  cliente_telefone: string | null; endereco: string; status: string; total_centavos: number; frete_centavos: number;
+  created_at: string; pedido_itens?: { id: string; nome: string; quantidade: number }[] | null;
+};
+export type ClienteResumo = {
+  chave: string; nome: string; email: string | null; cpf: string | null; telefone: string | null; endereco: string | null;
+  temConta: boolean; pedidos: PedidoComItens[]; totalGasto: number; ultimoPedido: string | null;
+};
+
+const soDigitos = (v: string | null | undefined) => (v || "").replace(/\D/g, "");
+
+/** Junta clientes cadastrados e visitantes (agrupados pelo telefone do pedido). */
+function agruparClientes(perfis: PerfilRow[], pedidos: PedidoComItens[]): ClienteResumo[] {
+  const mapa = new Map<string, ClienteResumo>();
+  for (const perfil of perfis) {
+    const endereco = [perfil.rua, perfil.numero, perfil.bairro, perfil.cidade, perfil.estado].filter(Boolean).join(", ");
+    mapa.set("conta:" + perfil.id, {
+      chave: "conta:" + perfil.id,
+      nome: perfil.nome || perfil.email || "Cliente",
+      email: perfil.email, cpf: perfil.cpf, telefone: perfil.telefone,
+      endereco: endereco || null,
+      temConta: true, pedidos: [], totalGasto: 0, ultimoPedido: null,
+    });
+  }
+  for (const pedido of pedidos) {
+    const chave = pedido.user_id ? "conta:" + pedido.user_id : "visitante:" + (soDigitos(pedido.cliente_telefone) || pedido.cliente_nome.trim().toLowerCase());
+    let cliente = mapa.get(chave);
+    if (!cliente) {
+      cliente = {
+        chave, nome: pedido.cliente_nome, email: pedido.cliente_email, cpf: pedido.cliente_cpf,
+        telefone: pedido.cliente_telefone, endereco: pedido.endereco,
+        temConta: !!pedido.user_id, pedidos: [], totalGasto: 0, ultimoPedido: null,
+      };
+      mapa.set(chave, cliente);
+    }
+    cliente.pedidos.push(pedido);
+    if (pedido.status === "confirmado") cliente.totalGasto += (pedido.total_centavos || 0) + (pedido.frete_centavos || 0);
+    if (!cliente.ultimoPedido || pedido.created_at > cliente.ultimoPedido) cliente.ultimoPedido = pedido.created_at;
+    cliente.telefone = cliente.telefone || pedido.cliente_telefone;
+    cliente.cpf = cliente.cpf || pedido.cliente_cpf;
+    cliente.email = cliente.email || pedido.cliente_email;
+    cliente.endereco = cliente.endereco || pedido.endereco;
+  }
+  return [...mapa.values()].sort((a, b) => (b.ultimoPedido || "").localeCompare(a.ultimoPedido || ""));
+}
+
 export const painel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
