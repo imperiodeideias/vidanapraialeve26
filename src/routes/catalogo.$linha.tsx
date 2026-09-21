@@ -91,7 +91,9 @@ function LinhaNotFound() {
 
 function LinhaPage() {
   const { linha } = Route.useLoaderData();
+  const { estoque } = useEstoque();
   const outrasLinhas = linhas.filter((l) => l.slug !== linha.slug).slice(0, 4);
+  const produtos: Produto[] = linha.produtos.map((p: Produto) => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
 
   return (
     <SiteChrome>
