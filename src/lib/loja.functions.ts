@@ -61,7 +61,7 @@ export const criarPedido = createServerFn({ method: "POST" })
     const slugs = data.itens.map((i) => i.slug);
     const { data: estoque, error: estoqueErro } = await supabaseAdmin
       .from("produtos_estoque")
-      .select("slug, nome, quantidade, preco_centavos, ativo")
+      .select("slug, nome, quantidade, preco_centavos, ativo, controlar_estoque")
       .in("slug", slugs);
     if (estoqueErro) throw new Error(estoqueErro.message);
 
@@ -69,7 +69,7 @@ export const criarPedido = createServerFn({ method: "POST" })
     let total = 0;
     const itens = data.itens.map((item) => {
       const produto = porSlug.get(item.slug);
-      if (produto && (!produto.ativo || produto.quantidade < item.quantidade)) {
+      if (produto && (!produto.ativo || (produto.controlar_estoque && produto.quantidade < item.quantidade))) {
         throw new Error(`Sem estoque suficiente de ${produto.nome || item.slug}.`);
       }
       const preco = produto?.preco_centavos ?? null;
