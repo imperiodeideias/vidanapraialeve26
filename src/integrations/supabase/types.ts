@@ -261,7 +261,12 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
-      movimentacao_tipo: "entrada" | "venda" | "consumo_proprio" | "ajuste"
+      movimentacao_tipo:
+        | "entrada"
+        | "venda"
+        | "consumo_proprio"
+        | "ajuste"
+        | "venda_extra"
       pedido_status: "pendente" | "confirmado" | "cancelado"
     }
     CompositeTypes: {
@@ -391,7 +396,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
-      movimentacao_tipo: ["entrada", "venda", "consumo_proprio", "ajuste"],
+      movimentacao_tipo: [
+        "entrada",
+        "venda",
+        "consumo_proprio",
+        "ajuste",
+        "venda_extra",
+      ],
       pedido_status: ["pendente", "confirmado", "cancelado"],
     },
   },
