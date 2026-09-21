@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Produto = { slug: string; nome: string; quantidade: number; preco_centavos: number | null; estoque_minimo: number; ativo: boolean };
+type Produto = { slug: string; nome: string; quantidade: number; preco_centavos: number | null; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean };
 const campo = "rounded-lg border border-border bg-white px-2 py-2 text-sm";
 
 function AdminPage() {
@@ -42,7 +42,7 @@ function AdminPage() {
   });
 
   const estoque = (data?.estoque ?? []) as Produto[];
-  const alertas = estoque.filter((p) => p.ativo && p.quantidade <= p.estoque_minimo);
+  const alertas = estoque.filter((p) => p.ativo && p.controlar_estoque && p.quantidade <= p.estoque_minimo);
   const pedidos = data?.pedidos ?? [];
   const pendentes = pedidos.filter((p) => p.status === "pendente");
 
@@ -138,11 +138,11 @@ function Card({ titulo, valor }: { titulo: string; valor: string }) {
 function LinhaProduto({ produto, onDone }: { produto: Produto; onDone: (msg: string) => void }) {
   const salvar = useServerFn(salvarProduto);
   const movimentar = useServerFn(registrarMovimento);
-  const [form, setForm] = useState({ quantidade: String(produto.quantidade), preco: produto.preco_centavos === null ? "" : (produto.preco_centavos / 100).toFixed(2), minimo: String(produto.estoque_minimo), ativo: produto.ativo });
+  const [form, setForm] = useState({ quantidade: String(produto.quantidade), preco: produto.preco_centavos === null ? "" : (produto.preco_centavos / 100).toFixed(2), minimo: String(produto.estoque_minimo), ativo: produto.ativo, controlar: produto.controlar_estoque });
   const [extra, setExtra] = useState("1");
 
   const salvarMut = useMutation({
-    mutationFn: () => salvar({ data: { slug: produto.slug, quantidade: Number(form.quantidade), preco_centavos: form.preco.trim() === "" ? null : Math.round(Number(form.preco.replace(",", ".")) * 100), estoque_minimo: Number(form.minimo), ativo: form.ativo } }),
+    mutationFn: () => salvar({ data: { slug: produto.slug, quantidade: Number(form.quantidade), preco_centavos: form.preco.trim() === "" ? null : Math.round(Number(form.preco.replace(",", ".")) * 100), estoque_minimo: Number(form.minimo), ativo: form.ativo, controlar_estoque: form.controlar } }),
     onSuccess: () => onDone(`${produto.nome} atualizado.`),
     onError: (e: Error) => onDone(e.message),
   });
@@ -161,6 +161,7 @@ function LinhaProduto({ produto, onDone }: { produto: Produto; onDone: (msg: str
           <label className="text-xs">Preço (R$)<input className={campo + " w-28 block mt-1"} inputMode="decimal" placeholder="sob consulta" value={form.preco} onChange={(e) => setForm({ ...form, preco: e.target.value })} /></label>
           <label className="text-xs">Alerta abaixo de<input className={campo + " w-20 block mt-1"} inputMode="numeric" value={form.minimo} onChange={(e) => setForm({ ...form, minimo: e.target.value })} /></label>
           <label className="text-xs flex items-center gap-2 pb-2"><input type="checkbox" checked={form.ativo} onChange={(e) => setForm({ ...form, ativo: e.target.checked })} /> À venda</label>
+          <label className="text-xs flex items-center gap-2 pb-2"><input type="checkbox" checked={form.controlar} onChange={(e) => setForm({ ...form, controlar: e.target.checked })} /> Controlar estoque</label>
           <button type="button" onClick={() => salvarMut.mutate()} disabled={salvarMut.isPending} className="btn-primary !px-3 !py-2 text-xs disabled:opacity-50">Salvar</button>
         </div>
       </div>

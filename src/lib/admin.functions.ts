@@ -26,6 +26,7 @@ async function movimentar(db: Db, slug: string, delta: number, tipo: "entrada" |
     .select("slug");
   if (updateErro) throw new Error(updateErro.message);
   if (!atualizado?.length) throw new Error("O estoque mudou enquanto salvávamos. Tente de novo.");
+  await db.from("produtos_estoque").update({ controlar_estoque: true }).eq("slug", slug);
   await db.from("movimentacoes_estoque").insert({ slug, tipo, quantidade: delta, motivo, created_by: userId, pedido_id: pedidoId ?? null });
 }
 
@@ -56,7 +57,7 @@ export const painel = createServerFn({ method: "GET" })
 
 export const salvarProduto = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string; preco_centavos: number | null; quantidade: number; estoque_minimo: number; ativo: boolean }) => input)
+  .inputValidator((input: { slug: string; preco_centavos: number | null; quantidade: number; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean }) => input)
   .handler(async ({ data, context }) => {
     const db = await admin(context);
     const { data: atual, error } = await db.from("produtos_estoque").select("quantidade").eq("slug", data.slug).maybeSingle();
@@ -70,6 +71,7 @@ export const salvarProduto = createServerFn({ method: "POST" })
         preco_centavos: data.preco_centavos === null ? null : Math.max(0, Math.trunc(data.preco_centavos)),
         estoque_minimo: Math.max(0, Math.trunc(Number(data.estoque_minimo) || 0)),
         ativo: !!data.ativo,
+        controlar_estoque: !!data.controlar_estoque,
       })
       .eq("slug", data.slug);
     if (updateErro) throw new Error(updateErro.message);
