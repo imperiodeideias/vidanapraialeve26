@@ -59,16 +59,14 @@ function CatalogoIndex() {
       <section className="py-20 md:py-28">
         <div className="container-x">
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {linhas.map((l, i) => (
+            {linhas.map((l) => (
               <Link
                 key={l.slug}
                 to="/catalogo/$linha"
                 params={{ linha: l.slug }}
-                className={`card-lift group relative overflow-hidden rounded-3xl bg-card shadow-sm ${
-                  i === 0 ? "sm:col-span-2 lg:col-span-2" : ""
-                }`}
+                className="card-lift group relative flex h-full flex-col overflow-hidden rounded-3xl bg-card shadow-sm"
               >
-                <div className={`relative overflow-hidden ${i === 0 ? "aspect-[16/9]" : "aspect-[4/5]"}`}>
+                <div className="relative aspect-[4/3] overflow-hidden">
                   <CatalogPhoto
                     src={l.cover}
                     alt={l.nome}
@@ -86,9 +84,9 @@ function CatalogoIndex() {
                     <h2 className="mt-2 text-3xl md:text-4xl leading-tight">{l.nome}</h2>
                   </div>
                 </div>
-                <div className="p-7">
+                <div className="flex flex-1 flex-col p-7">
                   <p className="text-sm text-foreground/65 font-light leading-relaxed">{l.descricao}</p>
-                  <span className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] group-hover:text-[color:var(--coral)] transition-colors">
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] group-hover:text-[color:var(--coral)] transition-colors">
                     Explorar <ArrowRight className="size-3.5" />
                   </span>
                 </div>

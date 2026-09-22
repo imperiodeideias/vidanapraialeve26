@@ -1,4 +1,11 @@
 import categoriaCarnes from "@/assets/categoria-carnes.webp";
+import categoriaCaseirinhosAsset from "@/assets/categorias/caseirinhos.webp.asset.json";
+import categoriaAvesAsset from "@/assets/categorias/aves.webp.asset.json";
+import categoriaMassasAsset from "@/assets/categorias/massas.webp.asset.json";
+import categoriaPeixesAsset from "@/assets/categorias/peixes.webp.asset.json";
+import categoriaMarombaAsset from "@/assets/categorias/maromba.webp.asset.json";
+import categoriaSopasAsset from "@/assets/categorias/sopas.jpg.asset.json";
+import categoriaVegsAsset from "@/assets/categorias/vegs.webp.asset.json";
 // Catálogo de produtos por linha — Vida na Praia Leve / Light Food Way
 import coxaArrozGrega from "@/assets/produtos/coxa-arroz-grega.jpg";
 import parmegianaFrango from "@/assets/produtos/parmegiana-frango.jpg";
@@ -93,6 +100,13 @@ const sucoRelax = sucoRelaxAsset.url;
 const sucoImuno = sucoImunoAsset.url;
 const sucoVitalmax = sucoVitalmaxAsset.url;
 const sucoSucha = sucoSuchaAsset.url;
+const categoriaCaseirinhos = categoriaCaseirinhosAsset.url;
+const categoriaAves = categoriaAvesAsset.url;
+const categoriaMassas = categoriaMassasAsset.url;
+const categoriaPeixes = categoriaPeixesAsset.url;
+const categoriaMaromba = categoriaMarombaAsset.url;
+const categoriaSopas = categoriaSopasAsset.url;
+const categoriaVegs = categoriaVegsAsset.url;
 
 
 export type Produto = {
@@ -129,7 +143,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Caseirinhos",
     descricao: "Nossa linha mais amada. Pratos completos com arroz, feijão, proteína e legumes — o almoço de domingo, todos os dias.",
-    cover: coxaArrozGrega,
+    cover: categoriaCaseirinhos,
     cor: "sage",
     produtos: [
       { slug: "coxa-sobrecoxa-arroz-grega", emBreve: false, precoCentavos: 2090, nome: "Coxa e Sobrecoxa", subtitulo: "com arroz à grega", img: coxaArrozGrega, peso: "300g", kcal: 182, proteina: 11, descricao: "Coxa e sobrecoxa desossada com arroz à grega, batata, cenoura e ervilha.", tags: ["Sem glúten"] },
@@ -152,7 +166,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Aves",
     descricao: "Receitas variadas com frango — do curry ao escondidinho — para dias saborosos e proteicos.",
-    cover: parmegianaFrango,
+    cover: categoriaAves,
     cor: "petrol",
     produtos: [
       { slug: "parmegiana-de-frango", emBreve: false, precoCentavos: 2190, nome: "Parmegiana de Frango", subtitulo: "com purê de batata", img: parmegianaFrango, peso: "300g", kcal: 87, proteina: 12, descricao: "Filé de frango empanado sem glúten com molho de tomate, mussarela sem lactose e purê de batata." },
@@ -187,7 +201,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Massas",
     descricao: "Nhoques, panquecas e pastas sem glúten com molhos autorais.",
-    cover: nhoqueAbobora,
+    cover: categoriaMassas,
     cor: "coral",
     produtos: [
       { slug: "nhoque-abobora-cabotia", emBreve: false, precoCentavos: 2390, nome: "Nhoque de Abóbora Cabotiá", subtitulo: "ao sugo com patinho moído", img: nhoqueAbobora, peso: "300g", kcal: 104, proteina: 4.5, descricao: "Nhoque de abóbora cabotiá com sugo natural e patinho moído.", tags: ["Sem glúten"] },
@@ -203,7 +217,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Peixes",
     descricao: "Tilápia, salmão e cação em receitas leves e sofisticadas.",
-    cover: salmaoMaracuja,
+    cover: categoriaPeixes,
     cor: "petrol",
     produtos: [
       { slug: "tilapia-assada", emBreve: true, precoCentavos: 2890, nome: "Tilápia Assada", subtitulo: "com legumes e arroz integral", img: tilapiaAssada, peso: "300g", kcal: 121, proteina: 9.5, descricao: "Filé de tilápia assado com abobrinha, berinjela, cenoura e arroz integral." },
@@ -220,7 +234,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Marombas",
     descricao: "Pratos com alto valor proteico para quem treina e busca performance.",
-    cover: frangoCubos,
+    cover: categoriaMaromba,
     cor: "petrol",
     produtos: [
       { slug: "frango-em-cubos-batata-doce", emBreve: true, precoCentavos: 2490, nome: "Frango em Cubos", subtitulo: "com purê de batata doce", img: frangoCubos, peso: "400g", kcal: 196, proteina: 26, descricao: "Peito de frango em cubos com purê cremoso de batata doce. Alto valor proteico.", tags: ["High protein", "Sem glúten"] },
@@ -235,7 +249,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Sopas",
     descricao: "Sopas nutritivas e reconfortantes, do detox ao alto proteico.",
-    cover: sopaFrango,
+    cover: categoriaSopas,
     cor: "sage",
     produtos: [
       { slug: "sopa-de-frango-alho-poro", emBreve: true, precoCentavos: 1790, nome: "Sopa de Frango", subtitulo: "com alho poró", img: sopaFrango, peso: "300g", kcal: 101, proteina: 8.1, descricao: "Sopa cremosa de frango com batata e alho poró. Sem glúten.", tags: ["Sem glúten"] },
@@ -253,7 +267,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Vegs",
     descricao: "Opções veganas ricas em proteína vegetal e fibras.",
-    cover: feijoadaVegana,
+    cover: categoriaVegs,
     cor: "sage",
     produtos: [
       { slug: "feijoada-vegana", emBreve: true, precoCentavos: 2390, nome: "Feijoada Vegana", subtitulo: "arroz integral, couve e farofa", img: feijoadaVegana, peso: "300g", kcal: 129, proteina: 6.3, descricao: "Feijoada vegana com linguiça vegetal, feijão preto, arroz integral, couve e farofa de mandioca.", tags: ["Vegano"] },
