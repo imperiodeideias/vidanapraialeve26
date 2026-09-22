@@ -15,49 +15,83 @@ export type Database = {
   public: {
     Tables: {
       clientes_manuais: {
-        Row: { id: string; nome: string; telefone: string; email: string | null; cpf: string | null; endereco: string | null; created_at: string; created_by: string | null }
-        Insert: { id?: string; nome: string; telefone: string; email?: string | null; cpf?: string | null; endereco?: string | null; created_at?: string; created_by?: string | null }
-        Update: { nome?: string; telefone?: string; email?: string | null; cpf?: string | null; endereco?: string | null }
+        Row: {
+          cpf: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          endereco: string | null
+          id: string
+          nome: string
+          telefone: string
+        }
+        Insert: {
+          cpf?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          endereco?: string | null
+          id?: string
+          nome: string
+          telefone: string
+        }
+        Update: {
+          cpf?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          endereco?: string | null
+          id?: string
+          nome?: string
+          telefone?: string
+        }
         Relationships: []
       }
       movimentacoes_estoque: {
         Row: {
-          preco_unitario_centavos: number | null
           cliente_id: string | null
           created_at: string
           created_by: string | null
           id: string
           motivo: string | null
           pedido_id: string | null
+          preco_unitario_centavos: number | null
           quantidade: number
           slug: string
           tipo: Database["public"]["Enums"]["movimentacao_tipo"]
         }
         Insert: {
-          preco_unitario_centavos?: number | null
           cliente_id?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
           motivo?: string | null
           pedido_id?: string | null
+          preco_unitario_centavos?: number | null
           quantidade: number
           slug: string
           tipo: Database["public"]["Enums"]["movimentacao_tipo"]
         }
         Update: {
-          preco_unitario_centavos?: number | null
           cliente_id?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
           motivo?: string | null
           pedido_id?: string | null
+          preco_unitario_centavos?: number | null
           quantidade?: number
           slug?: string
           tipo?: Database["public"]["Enums"]["movimentacao_tipo"]
         }
         Relationships: [
+          {
+            foreignKeyName: "movimentacoes_estoque_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes_manuais"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "movimentacoes_estoque_pedido_id_fkey"
             columns: ["pedido_id"]
@@ -263,8 +297,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      admin_registrar_movimento: { Args: { p_slug: string; p_quantidade: number; p_tipo: string; p_motivo: string | null; p_user_id: string; p_cliente_id?: string | null }; Returns: undefined }
-      admin_confirmar_pedido: { Args: { p_id: string; p_user_id: string }; Returns: undefined }
+      admin_confirmar_pedido: {
+        Args: { p_id: string; p_user_id: string }
+        Returns: undefined
+      }
+      admin_registrar_movimento: {
+        Args: {
+          p_cliente_id?: string
+          p_motivo: string
+          p_quantidade: number
+          p_slug: string
+          p_tipo: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
