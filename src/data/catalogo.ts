@@ -346,7 +346,10 @@ const catalogoCompleto: Linha[] = [
 ];
 
 const categoriasOcultas = new Set(["nuts", "pizzas"]);
-export const linhas: Linha[] = catalogoCompleto.filter(linha => !categoriasOcultas.has(linha.slug));
+const produtosOcultos = new Set(["suco-maca"]);
+export const linhas: Linha[] = catalogoCompleto
+  .filter(linha => !categoriasOcultas.has(linha.slug))
+  .map(linha => ({ ...linha, produtos: linha.produtos.filter(produto => !produtosOcultos.has(produto.slug)) }));
 
 // Preserve existing links to kits while listing them under Sucos in the catalog.
 export const getLinha = (slug: string) => {
