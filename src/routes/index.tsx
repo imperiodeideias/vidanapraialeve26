@@ -349,7 +349,7 @@ function Index() {
                 </div>
                 <div className="flex flex-1 flex-col p-7">
                   <h3 className="text-2xl leading-tight">{l.title}</h3>
-                  <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
+                  <p className="mt-3 min-h-[4.5rem] line-clamp-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
                   <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
                     Explorar <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>

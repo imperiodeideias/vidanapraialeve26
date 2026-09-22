@@ -85,7 +85,7 @@ function CatalogoIndex() {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-7">
-                  <p className="text-sm text-foreground/65 font-light leading-relaxed">{l.descricao}</p>
+                  <p className="min-h-[4.5rem] line-clamp-3 text-sm text-foreground/65 font-light leading-relaxed">{l.descricao}</p>
                   <span className="mt-auto inline-flex items-center gap-2 pt-5 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] group-hover:text-[color:var(--coral)] transition-colors">
                     Explorar <ArrowRight className="size-3.5" />
                   </span>
