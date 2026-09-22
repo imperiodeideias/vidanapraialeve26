@@ -1,3 +1,4 @@
+import categoriaCarnes from "@/assets/categoria-carnes.webp";
 // Catálogo de produtos por linha — Vida na Praia Leve / Light Food Way
 import coxaArrozGrega from "@/assets/produtos/coxa-arroz-grega.jpg";
 import parmegianaFrango from "@/assets/produtos/parmegiana-frango.jpg";
@@ -169,7 +170,7 @@ const catalogoCompleto: Linha[] = [
     eyebrow: "Pratos",
     headline: "Carnes",
     descricao: "Pratos completos com patinho e cortes magros, para saciar sem pesar.",
-    cover: escondidinhoCarne,
+    cover: categoriaCarnes,
     cor: "deep",
     produtos: [
       { slug: "sabor-sertanejo", emBreve: true, precoCentavos: 2390, nome: "Sabor Sertanejo", subtitulo: "carne desfiada, feijão preto, arroz e banana", img: saborSertanejo, peso: "300g", descricao: "Um clássico brasileiro em versão leve: carne desfiada, feijão preto, arroz e banana da terra.", tags: ["Sem glúten"] },
