@@ -1,3 +1,4 @@
+import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -68,7 +69,7 @@ function CatalogoIndex() {
                 }`}
               >
                 <div className={`relative overflow-hidden ${i === 0 ? "aspect-[16/9]" : "aspect-[4/5]"}`}>
-                  <img
+                  <CatalogPhoto
                     src={l.cover}
                     alt={l.nome}
                     loading="lazy"

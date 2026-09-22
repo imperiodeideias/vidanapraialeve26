@@ -1,3 +1,4 @@
+import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { useMemo, useState } from "react";
 import { deliveryFee, type DeliveryRegion } from "@/lib/delivery";
 import { DeliveryForm } from "@/components/DeliveryForm";
@@ -36,7 +37,7 @@ function CartPage() {
         {items.map(({ product: p, quantity }) => {
           const restante = disponivel(p.slug, estoque);
           return <article key={p.slug} className="rounded-2xl border border-border bg-card p-5 flex gap-4 flex-wrap sm:flex-nowrap">
-            <img src={p.img} alt={p.nome} className="size-24 shrink-0 rounded-xl object-cover object-center" />
+            <CatalogPhoto src={p.img} alt={p.nome} className="relative size-24 shrink-0 rounded-xl object-cover object-center" />
             <div className="min-w-0 flex-1">
               <h2 className="text-lg">{orderName(p)}</h2>
               <p className="text-sm mt-2 mb-3">{p.precoCentavos === undefined ? "Preço sob consulta" : money(p.precoCentavos) + " / unidade"}</p>

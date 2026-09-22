@@ -1,3 +1,4 @@
+import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeroPhoto } from "@/components/HeroPhoto";
 import { AddToCart, HeaderCart } from "@/components/Cart";
@@ -332,7 +333,7 @@ function Index() {
                 }`}
               >
                 <div className={`relative overflow-hidden ${i === 0 ? "aspect-[16/10]" : "aspect-[4/5]"}`}>
-                  <img
+                  <CatalogPhoto
                     src={l.img}
                     alt={l.title}
                     loading="lazy"
@@ -407,7 +408,7 @@ function Index() {
                   className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
                 >
                   <div className="relative shrink-0 aspect-[4/3] overflow-hidden">
-                    <img
+                    <CatalogPhoto
                       src={p.img}
                       alt={p.nome}
                       loading="lazy"

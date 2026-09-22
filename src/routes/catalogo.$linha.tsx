@@ -1,3 +1,4 @@
+import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { AddToCart } from "@/components/Cart";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
@@ -101,7 +102,7 @@ function LinhaPage() {
     <SiteChrome>
       {/* HERO */}
       <section className="relative pt-40 pb-16 md:pt-52 md:pb-24 overflow-hidden">
-        <img
+        <CatalogPhoto
           src={linha.cover}
           alt=""
           aria-hidden
@@ -146,7 +147,7 @@ function LinhaPage() {
             {[...produtos].sort((a,b) => Number(a.emBreve) - Number(b.emBreve)).map((p: Produto) => (
               <article key={p.slug} className="card-lift group bg-card rounded-3xl overflow-hidden shadow-sm flex flex-col">
                 <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
-                  <img
+                  <CatalogPhoto
                     src={p.img}
                     alt={p.nome}
                     loading="lazy"
@@ -210,7 +211,7 @@ function LinhaPage() {
                 className="card-lift group relative overflow-hidden rounded-2xl bg-card block"
               >
                 <div className="relative shrink-0 aspect-[4/5] overflow-hidden">
-                  <img src={l.cover} alt={l.nome} loading="lazy" className="absolute inset-0 block h-full w-full object-cover object-center" />
+                  <CatalogPhoto src={l.cover} alt={l.nome} loading="lazy" className="absolute inset-0 block h-full w-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <p className="text-[10px] font-sub uppercase tracking-[0.25em] text-white/70">{l.eyebrow}</p>
