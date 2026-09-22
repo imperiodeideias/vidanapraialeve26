@@ -213,18 +213,6 @@ function Index() {
                 <Instagram className="size-4" /> @vidanapraialeve
               </a>
             </div>
-            <dl className="mt-14 grid grid-cols-3 gap-6 border-t border-border pt-8 max-w-xl">
-              {[
-                { k: String(totalProdutos), v: "opções nos catálogos atuais" },
-                { k: "Local", v: "atendimento em Peruíbe" },
-                { k: "Leve", v: "na rotina e na escolha" },
-              ].map((s) => (
-                <div key={s.v}>
-                  <dt className="font-display text-2xl md:text-3xl text-[color:var(--petrol)]">{s.k}</dt>
-                  <dd className="mt-2 text-xs md:text-sm text-foreground/60 font-light leading-snug">{s.v}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           {/* Colagem */}
