@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { resumirVendas, type VendaItem, type ConsumoItem } from "./admin-sales";
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -11,24 +13,6 @@ async function admin(context: { supabase: SupabaseClient<Database>; userId: stri
 }
 
 type Db = Awaited<ReturnType<typeof admin>>;
-
-async function movimentar(db: Db, slug: string, delta: number, tipo: "entrada" | "venda" | "venda_extra" | "consumo_proprio" | "ajuste", motivo: string | null, userId: string, pedidoId?: string) {
-  const { data: atual, error } = await db.from("produtos_estoque").select("quantidade").eq("slug", slug).maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!atual) throw new Error("Produto não encontrado no estoque.");
-  const nova = atual.quantidade + delta;
-  if (nova < 0) throw new Error("Estoque insuficiente para esta baixa.");
-  const { data: atualizado, error: updateErro } = await db
-    .from("produtos_estoque")
-    .update({ quantidade: nova })
-    .eq("slug", slug)
-    .eq("quantidade", atual.quantidade)
-    .select("slug");
-  if (updateErro) throw new Error(updateErro.message);
-  if (!atualizado?.length) throw new Error("O estoque mudou enquanto salvávamos. Tente de novo.");
-  await db.from("produtos_estoque").update({ controlar_estoque: true }).eq("slug", slug);
-  await db.from("movimentacoes_estoque").insert({ slug, tipo, quantidade: delta, motivo, created_by: userId, pedido_id: pedidoId ?? null });
-}
 
 
 type PerfilRow = { id: string; nome: string; email: string | null; cpf: string | null; telefone: string | null; cep: string | null; rua: string | null; numero: string | null; bairro: string | null; cidade: string | null; estado: string | null };
@@ -83,15 +67,16 @@ export const painel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const db = await admin(context);
-    const [estoque, pedidos, movimentacoes, vendas, extras, perfis] = await Promise.all([
+    const [estoque, pedidos, movimentacoes, vendas, extras, perfis, manuais] = await Promise.all([
       db.from("produtos_estoque").select("*").order("nome"),
       db.from("pedidos").select("*, pedido_itens(*)").order("created_at", { ascending: false }).limit(200),
       db.from("movimentacoes_estoque").select("*").order("created_at", { ascending: false }).limit(60),
       db.from("pedido_itens").select("slug, nome, quantidade, pedidos!inner(status, confirmado_em)").eq("pedidos.status", "confirmado"),
       db.from("movimentacoes_estoque").select("slug, quantidade, created_at").eq("tipo", "venda_extra"),
       db.from("profiles").select("*"),
+      db.from("clientes_manuais").select("*").order("nome"),
     ]);
-    const erro = estoque.error || pedidos.error || movimentacoes.error || vendas.error || extras.error || perfis.error;
+    const erro = estoque.error || pedidos.error || movimentacoes.error || vendas.error || extras.error || perfis.error || manuais.error;
     if (erro) throw new Error(erro.message);
     const nomeDoSlug = new Map((estoque.data ?? []).map((p) => [p.slug, p.nome] as const));
     return {
@@ -110,22 +95,22 @@ export const painel = createServerFn({ method: "GET" })
         confirmado_em: e.created_at as string | null,
       }))),
       clientes: agruparClientes(perfis.data ?? [], pedidos.data ?? []),
+      clientesManuais: manuais.data ?? [],
     };
   });
 
 export const salvarProduto = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string; preco_centavos: number | null; quantidade: number; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean }) => input)
+  .inputValidator((input: { slug: string; preco_centavos: number | null; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean }) => input)
   .handler(async ({ data, context }) => {
     const db = await admin(context);
     const { data: atual, error } = await db.from("produtos_estoque").select("quantidade").eq("slug", data.slug).maybeSingle();
     if (error) throw new Error(error.message);
     if (!atual) throw new Error("Produto não encontrado.");
-    const quantidade = Math.max(0, Math.trunc(Number(data.quantidade) || 0));
+    if ("quantidade" in data) throw new Error("Altere a quantidade somente por uma movimentação de estoque.");
     const { error: updateErro } = await db
       .from("produtos_estoque")
       .update({
-        quantidade,
         preco_centavos: data.preco_centavos === null ? null : Math.max(0, Math.trunc(data.preco_centavos)),
         estoque_minimo: Math.max(0, Math.trunc(Number(data.estoque_minimo) || 0)),
         ativo: !!data.ativo,
@@ -133,45 +118,26 @@ export const salvarProduto = createServerFn({ method: "POST" })
       })
       .eq("slug", data.slug);
     if (updateErro) throw new Error(updateErro.message);
-    if (quantidade !== atual.quantidade) {
-      await db.from("movimentacoes_estoque").insert({
-        slug: data.slug,
-        tipo: "ajuste",
-        quantidade: quantidade - atual.quantidade,
-        motivo: "Ajuste manual no painel",
-        created_by: context.userId,
-      });
-    }
     return { ok: true };
   });
 
 export const registrarMovimento = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string; quantidade: number; tipo: "entrada" | "consumo_proprio" | "venda_extra"; motivo?: string }) => input)
+  .inputValidator(z.object({ slug: z.string().min(1), quantidade: z.number().int().min(1).max(9999), tipo: z.enum(["entrada", "consumo_proprio", "venda_extra"]), motivo: z.string().max(200).optional(), cliente_id: z.string().uuid().nullable().optional() }))
   .handler(async ({ data, context }) => {
     const db = await admin(context);
-    const quantidade = Math.trunc(Number(data.quantidade) || 0);
-    if (quantidade < 1 || quantidade > 9999) throw new Error("Informe uma quantidade válida.");
-    const delta = data.tipo === "entrada" ? quantidade : -quantidade;
-    const padrao = data.tipo === "entrada" ? "Entrada de estoque" : data.tipo === "venda_extra" ? "Venda fora do site" : "Consumo próprio";
-    await movimentar(db, data.slug, delta, data.tipo, data.motivo?.trim().slice(0, 200) || padrao, context.userId);
+    const { error } = await db.rpc("admin_registrar_movimento", { p_slug: data.slug, p_quantidade: data.quantidade, p_tipo: data.tipo, p_motivo: data.motivo?.trim() || null, p_user_id: context.userId, p_cliente_id: data.cliente_id || null });
+    if (error) throw new Error(error.message);
     return { ok: true };
   });
 
 export const confirmarPedido = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => input)
+  .inputValidator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data, context }) => {
     const db = await admin(context);
-    const { data: pedido, error } = await db.from("pedidos").select("id, status, pedido_itens(slug, quantidade)").eq("id", data.id).maybeSingle();
+    const { error } = await db.rpc("admin_confirmar_pedido", { p_id: data.id, p_user_id: context.userId });
     if (error) throw new Error(error.message);
-    if (!pedido) throw new Error("Pedido não encontrado.");
-    if (pedido.status !== "pendente") throw new Error("Este pedido já foi tratado.");
-    for (const item of pedido.pedido_itens as { slug: string; quantidade: number }[]) {
-      await movimentar(db, item.slug, -item.quantidade, "venda", "Venda confirmada", context.userId, pedido.id);
-    }
-    const { error: updateErro } = await db.from("pedidos").update({ status: "confirmado", confirmado_em: new Date().toISOString() }).eq("id", pedido.id).eq("status", "pendente");
-    if (updateErro) throw new Error(updateErro.message);
     return { ok: true };
   });
 
@@ -211,4 +177,49 @@ export const sincronizarCatalogo = createServerFn({ method: "POST" })
     const nomes = produtos.map((p) => ({ slug: p.slug, nome: [p.nome, p.subtitulo].filter(Boolean).join(" — ") }));
     await Promise.all(nomes.filter((n) => conhecidos.has(n.slug)).map((n) => db.from("produtos_estoque").update({ nome: n.nome }).eq("slug", n.slug)));
     return { adicionados: novos.length };
+  });
+
+export const cadastrarClienteManual = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({ nome: z.string().trim().min(2).max(120), telefone: z.string().transform(v => v.replace(/\D/g, "")).refine(v => /^\d{10,13}$/.test(v), "Informe um telefone válido com DDD."), email: z.union([z.string().email(), z.literal("")]).optional(), cpf: z.string().max(14).optional(), endereco: z.string().trim().max(500).optional() }))
+  .handler(async ({ data, context }) => {
+    const db = await admin(context);
+    const telefone = data.telefone.length >= 12 && data.telefone.startsWith("55") ? data.telefone.slice(2) : data.telefone;
+    const { error } = await db.from("clientes_manuais").insert({ nome: data.nome, telefone, email: data.email || null, cpf: data.cpf?.replace(/\D/g, "") || null, endereco: data.endereco || null, created_by: context.userId });
+    if (error) throw new Error(error.code === "23505" ? "Já existe um cliente manual com esse telefone." : error.message);
+    return { ok: true };
+  });
+
+async function todasPaginas<T>(pagina: (inicio: number, fim: number) => PromiseLike<{ data: T[] | null; error: { message: string } | null }>) {
+  const rows: T[] = [];
+  for (let inicio = 0; ; inicio += 500) {
+    const { data, error } = await pagina(inicio, inicio + 499);
+    if (error) throw new Error(error.message);
+    rows.push(...(data ?? []));
+    if (!data || data.length < 500) return rows;
+  }
+}
+export const relatorioVendas = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({ inicio: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), fim: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }))
+  .handler(async ({ data, context }) => {
+    const db = await admin(context);
+    const inicio = new Date(data.inicio + "T00:00:00-03:00");
+    const fim = new Date(data.fim + "T23:59:59.999-03:00");
+    if (!Number.isFinite(+inicio) || !Number.isFinite(+fim) || fim < inicio || +fim - +inicio > 366 * 86400000) throw new Error("Selecione um período válido de até um ano.");
+    const [pedidos, movimentos, estoque] = await Promise.all([
+      todasPaginas((a,b) => db.from("pedidos").select("id, confirmado_em, pedido_itens(slug, nome, quantidade, preco_centavos)").eq("status", "confirmado").gte("confirmado_em", inicio.toISOString()).lte("confirmado_em", fim.toISOString()).order("id").range(a,b)),
+      todasPaginas((a,b) => db.from("movimentacoes_estoque").select("id, slug, tipo, quantidade, created_at, preco_unitario_centavos, cliente_id").in("tipo", ["venda_extra", "consumo_proprio"]).gte("created_at", inicio.toISOString()).lte("created_at", fim.toISOString()).order("id").range(a,b)),
+      db.from("produtos_estoque").select("slug, nome"),
+    ]);
+    if (estoque.error) throw new Error(estoque.error.message);
+    const nomes = new Map((estoque.data ?? []).map(p => [p.slug, p.nome]));
+    const vendas: VendaItem[] = pedidos.flatMap(p => (p.pedido_itens ?? []).map(i => ({ vendaId: p.id, origem: "site" as const, data: p.confirmado_em!, slug: i.slug, nome: i.nome, quantidade: i.quantidade, precoCentavos: i.preco_centavos })));
+    const consumos: ConsumoItem[] = [];
+    for (const m of movimentos) {
+      const item = { data: m.created_at, slug: m.slug, nome: nomes.get(m.slug) || m.slug, quantidade: Math.abs(m.quantidade) };
+      if (m.tipo === "consumo_proprio") consumos.push(item);
+      else vendas.push({ ...item, vendaId: m.id, origem: "extra", precoCentavos: m.preco_unitario_centavos });
+    }
+    return resumirVendas(vendas, consumos, data.inicio, data.fim);
   });

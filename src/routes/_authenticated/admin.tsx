@@ -1,9 +1,12 @@
+import { AdminSales } from "@/components/AdminSales";
+import { AdminStock } from "@/components/AdminStock";
+import { ManualCustomers } from "@/components/ManualCustomers";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { SiteChrome } from "@/components/SiteChrome";
-import { painel, salvarProduto, registrarMovimento, confirmarPedido, cancelarPedido, sincronizarCatalogo, type ClienteResumo } from "@/lib/admin.functions";
+import { painel, confirmarPedido, cancelarPedido, sincronizarCatalogo, type ClienteResumo } from "@/lib/admin.functions";
 import { money } from "@/lib/order";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -22,20 +25,14 @@ export const Route = createFileRoute("/_authenticated/admin")({
 });
 
 type Produto = { slug: string; nome: string; quantidade: number; preco_centavos: number | null; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean };
-const campo = "rounded-lg border border-border bg-white px-2 py-2 text-sm";
-type Movimento = "entrada" | "consumo_proprio" | "venda_extra";
-const botao: Record<Movimento, string> = { entrada: "+ Entrada", consumo_proprio: "− Consumo próprio", venda_extra: "− Venda extra" };
-const rotulo: Record<Movimento, string> = { entrada: "Entrada", consumo_proprio: "Baixa de consumo próprio", venda_extra: "Venda extra" };
-const resumo: Record<Movimento, string> = { entrada: "Adicionar", consumo_proprio: "Retirar (consumo próprio)", venda_extra: "Baixar como venda extra" };
 
 function AdminPage() {
   const buscar = useServerFn(painel);
   const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({ queryKey: ["painel"], queryFn: () => buscar() });
-  const recarregar = () => queryClient.invalidateQueries({ queryKey: ["painel"] });
+  const recarregar = () => { queryClient.invalidateQueries({ queryKey: ["painel"] }); queryClient.invalidateQueries({ queryKey: ["vendas"] }); };
   const [aba, setAba] = useState<"estoque" | "pedidos" | "clientes" | "vendas" | "historico">("estoque");
   const [buscaCliente, setBuscaCliente] = useState("");
-  const [dias, setDias] = useState(30);
   const [busca, setBusca] = useState("");
   const [aviso, setAviso] = useState("");
 
@@ -50,18 +47,6 @@ function AdminPage() {
   const alertas = estoque.filter((p) => p.ativo && p.controlar_estoque && p.quantidade <= p.estoque_minimo);
   const pedidos = data?.pedidos ?? [];
   const pendentes = pedidos.filter((p) => p.status === "pendente");
-
-  const maisVendidos = useMemo(() => {
-    const limite = Date.now() - dias * 24 * 60 * 60 * 1000;
-    const totais = new Map<string, { nome: string; quantidade: number }>();
-    for (const v of data?.vendas ?? []) {
-      if (!v.confirmado_em || new Date(v.confirmado_em).getTime() < limite) continue;
-      const atual = totais.get(v.slug) || { nome: v.nome, quantidade: 0 };
-      atual.quantidade += v.quantidade;
-      totais.set(v.slug, atual);
-    }
-    return [...totais.values()].sort((a, b) => b.quantidade - a.quantidade).slice(0, 15);
-  }, [data, dias]);
 
   const clientesFiltrados = useMemo(() => {
     const termo = buscaCliente.trim().toLowerCase();
@@ -91,17 +76,10 @@ function AdminPage() {
             <Card titulo="Itens em estoque" valor={String(estoque.reduce((s, p) => s + p.quantidade, 0))} />
           </div>
 
-          {!!alertas.length && (
-            <div className="mt-6 rounded-2xl border border-[color:var(--coral)]/40 bg-[color:var(--coral)]/10 p-5">
-              <h2 className="text-lg mb-3">Precisa repor</h2>
-              <ul className="text-sm grid gap-1 sm:grid-cols-2">
-                {alertas.map((p) => <li key={p.slug}>{p.nome} — <strong>{p.quantidade === 0 ? "esgotado" : p.quantidade + " un."}</strong></li>)}
-              </ul>
-            </div>
-          )}
+          <Link to="/admin-reposicao" className="btn-primary mt-6 inline-flex">Produtos para reposição ({alertas.length})</Link>
 
           <div className="mt-10 flex flex-wrap gap-2">
-            {([["estoque", "Estoque"], ["pedidos", "Pedidos"], ["clientes", "Clientes"], ["vendas", "Mais vendidos"], ["historico", "Movimentações"]] as const).map(([id, label]) => (
+            {([["estoque", "Estoque"], ["pedidos", "Pedidos"], ["clientes", "Clientes"], ["vendas", "Vendas"], ["historico", "Movimentações"]] as const).map(([id, label]) => (
               <button key={id} type="button" onClick={() => setAba(id)} className={`rounded-full px-4 py-2 text-sm border ${aba === id ? "bg-[color:var(--petrol)] text-white border-transparent" : "border-border"}`}>{label}</button>
             ))}
           </div>
@@ -109,9 +87,7 @@ function AdminPage() {
           {aba === "estoque" && <div className="mt-6">
             <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar produto" aria-label="Buscar produto" className="w-full max-w-sm rounded-xl border border-border bg-white px-3 py-3 mb-4" />
             {!estoque.length && <p className="text-sm">Nenhum produto no estoque ainda. Use “Sincronizar catálogo”.</p>}
-            <div className="space-y-3">
-              {estoque.filter((p) => p.nome.toLowerCase().includes(busca.toLowerCase())).map((p) => <LinhaProduto key={p.slug} produto={p} onDone={(msg) => { setAviso(msg); recarregar(); }} />)}
-            </div>
+            <AdminStock produtos={estoque.filter(p => p.nome.toLowerCase().includes(busca.toLowerCase()))} clientes={data?.clientesManuais ?? []} onDone={msg => { setAviso(msg); recarregar(); }} />
           </div>}
 
           {aba === "pedidos" && <div className="mt-6 space-y-4">
@@ -121,19 +97,13 @@ function AdminPage() {
 
           {aba === "clientes" && <div className="mt-6">
             <input value={buscaCliente} onChange={(e) => setBuscaCliente(e.target.value)} placeholder="Buscar por nome, telefone, e-mail ou CPF" aria-label="Buscar cliente" className="w-full max-w-md rounded-xl border border-border bg-white px-3 py-3 mb-4" />
+            <ManualCustomers clientes={data?.clientesManuais ?? []} busca={buscaCliente} onDone={msg => { setAviso(msg); recarregar(); }} />
             {!clientesFiltrados.length ? <p className="text-sm">Nenhum cliente encontrado.</p> : <div className="space-y-3">
               {clientesFiltrados.map((c) => <ClienteCard key={c.chave} cliente={c} />)}
             </div>}
           </div>}
 
-          {aba === "vendas" && <div className="mt-6">
-            <div className="flex gap-2 mb-5">
-              {[7, 30, 90].map((d) => <button key={d} type="button" onClick={() => setDias(d)} className={`rounded-full px-4 py-2 text-sm border ${dias === d ? "bg-[color:var(--sage)] text-white border-transparent" : "border-border"}`}>{d} dias</button>)}
-            </div>
-            {!maisVendidos.length ? <p className="text-sm">Nenhuma venda confirmada nesse período. O consumo próprio não entra aqui.</p> : <ol className="space-y-2">
-              {maisVendidos.map((v, i) => <li key={v.nome} className="flex justify-between gap-4 rounded-xl border border-border bg-card px-4 py-3 text-sm"><span>{i + 1}. {v.nome}</span><strong>{v.quantidade} un.</strong></li>)}
-            </ol>}
-          </div>}
+          {aba === "vendas" && <AdminSales />}
 
           {aba === "historico" && <div className="mt-6 space-y-2">
             {!(data?.movimentacoes ?? []).length && <p className="text-sm">Sem movimentações ainda.</p>}
@@ -154,60 +124,6 @@ function Card({ titulo, valor }: { titulo: string; valor: string }) {
   return <div className="rounded-2xl border border-border bg-card p-5"><p className="text-sm text-foreground/70">{titulo}</p><p className="text-3xl mt-2">{valor}</p></div>;
 }
 
-function LinhaProduto({ produto, onDone }: { produto: Produto; onDone: (msg: string) => void }) {
-  const salvar = useServerFn(salvarProduto);
-  const movimentar = useServerFn(registrarMovimento);
-  const [form, setForm] = useState({ quantidade: String(produto.quantidade), preco: produto.preco_centavos === null ? "" : (produto.preco_centavos / 100).toFixed(2), minimo: String(produto.estoque_minimo), ativo: produto.ativo, controlar: produto.controlar_estoque });
-  const [extra, setExtra] = useState("1");
-  const [pendente, setPendente] = useState<Movimento | null>(null);
-  const [motivo, setMotivo] = useState("");
-
-  const salvarMut = useMutation({
-    mutationFn: () => salvar({ data: { slug: produto.slug, quantidade: Number(form.quantidade), preco_centavos: form.preco.trim() === "" ? null : Math.round(Number(form.preco.replace(",", ".")) * 100), estoque_minimo: Number(form.minimo), ativo: form.ativo, controlar_estoque: form.controlar } }),
-    onSuccess: () => onDone(`${produto.nome} atualizado.`),
-    onError: (e: Error) => onDone(e.message),
-  });
-  const movMut = useMutation({
-    mutationFn: (tipo: Movimento) => movimentar({ data: { slug: produto.slug, quantidade: Number(extra), tipo, motivo: motivo.trim() || undefined } }),
-    onSuccess: (_r, tipo) => { setPendente(null); setMotivo(""); onDone(`${rotulo[tipo]} registrada em ${produto.nome}.`); },
-    onError: (e: Error) => onDone(e.message),
-  });
-  const quantidadeMov = Math.max(0, Math.trunc(Number(extra) || 0));
-  const saldoPrevisto = produto.quantidade + (pendente === "entrada" ? quantidadeMov : -quantidadeMov);
-
-  return (
-    <div className="rounded-2xl border border-border bg-card p-4 grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] items-center">
-      <div>
-        <p className="font-semibold">{produto.nome}</p>
-        <div className="mt-3 flex flex-wrap items-end gap-3">
-          <label className="text-xs">Quantidade<input className={campo + " w-24 block mt-1"} inputMode="numeric" value={form.quantidade} onChange={(e) => setForm({ ...form, quantidade: e.target.value })} /></label>
-          <label className="text-xs">Preço (R$)<input className={campo + " w-28 block mt-1"} inputMode="decimal" placeholder="sob consulta" value={form.preco} onChange={(e) => setForm({ ...form, preco: e.target.value })} /></label>
-          <label className="text-xs">Alerta abaixo de<input className={campo + " w-20 block mt-1"} inputMode="numeric" value={form.minimo} onChange={(e) => setForm({ ...form, minimo: e.target.value })} /></label>
-          <label className="text-xs flex items-center gap-2 pb-2"><input type="checkbox" checked={form.ativo} onChange={(e) => setForm({ ...form, ativo: e.target.checked })} /> À venda</label>
-          <label className="text-xs flex items-center gap-2 pb-2"><input type="checkbox" checked={form.controlar} onChange={(e) => setForm({ ...form, controlar: e.target.checked })} /> Controlar estoque</label>
-          <button type="button" onClick={() => salvarMut.mutate()} disabled={salvarMut.isPending} className="btn-primary !px-3 !py-2 text-xs disabled:opacity-50">Salvar</button>
-        </div>
-      </div>
-      <div className="flex flex-col items-stretch gap-2 md:items-end">
-        <div className="flex flex-wrap items-end gap-2 md:justify-end">
-          <label className="text-xs">Qtd.<input className={campo + " w-16 block mt-1"} inputMode="numeric" value={extra} onChange={(e) => { setExtra(e.target.value); setPendente(null); }} /></label>
-          {(["entrada", "consumo_proprio", "venda_extra"] as const).map((tipo) => (
-            <button key={tipo} type="button" onClick={() => { setPendente(tipo); setMotivo(""); }} className={`rounded-lg border px-3 py-2 text-xs ${pendente === tipo ? "border-[color:var(--petrol)] bg-[color:var(--sand)]" : "border-border"}`}>{botao[tipo]}</button>
-          ))}
-        </div>
-        {pendente && <div className="rounded-xl border border-[color:var(--petrol)]/30 bg-[color:var(--sand)]/50 p-3 text-xs md:max-w-xs" role="group" aria-label="Confirmar movimentação">
-          <p>{quantidadeMov < 1 ? "Informe uma quantidade maior que zero." : `${resumo[pendente]} ${quantidadeMov} un. de ${produto.nome} — estoque ficará em ${saldoPrevisto}.`}</p>
-          <input className={campo + " w-full mt-2"} placeholder="Observação (opcional)" maxLength={200} value={motivo} onChange={(e) => setMotivo(e.target.value)} />
-          <div className="mt-2 flex gap-2">
-            <button type="button" onClick={() => movMut.mutate(pendente)} disabled={movMut.isPending || quantidadeMov < 1 || saldoPrevisto < 0} className="btn-primary !px-3 !py-2 text-xs disabled:opacity-50">Confirmar</button>
-            <button type="button" onClick={() => setPendente(null)} className="underline">Cancelar</button>
-          </div>
-          {saldoPrevisto < 0 && <p className="mt-2 text-[color:var(--coral)]">Estoque insuficiente para essa baixa.</p>}
-        </div>}
-      </div>
-    </div>
-  );
-}
 
 type PedidoRow = {
   id: string; cliente_nome: string; cliente_telefone: string | null; cliente_cpf: string | null; endereco: string;

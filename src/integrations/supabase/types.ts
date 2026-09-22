@@ -14,8 +14,16 @@ export type Database = {
   }
   public: {
     Tables: {
+      clientes_manuais: {
+        Row: { id: string; nome: string; telefone: string; email: string | null; cpf: string | null; endereco: string | null; created_at: string; created_by: string | null }
+        Insert: { id?: string; nome: string; telefone: string; email?: string | null; cpf?: string | null; endereco?: string | null; created_at?: string; created_by?: string | null }
+        Update: { nome?: string; telefone?: string; email?: string | null; cpf?: string | null; endereco?: string | null }
+        Relationships: []
+      }
       movimentacoes_estoque: {
         Row: {
+          preco_unitario_centavos: number | null
+          cliente_id: string | null
           created_at: string
           created_by: string | null
           id: string
@@ -26,6 +34,8 @@ export type Database = {
           tipo: Database["public"]["Enums"]["movimentacao_tipo"]
         }
         Insert: {
+          preco_unitario_centavos?: number | null
+          cliente_id?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
@@ -36,6 +46,8 @@ export type Database = {
           tipo: Database["public"]["Enums"]["movimentacao_tipo"]
         }
         Update: {
+          preco_unitario_centavos?: number | null
+          cliente_id?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
@@ -251,6 +263,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_registrar_movimento: { Args: { p_slug: string; p_quantidade: number; p_tipo: string; p_motivo: string | null; p_user_id: string; p_cliente_id?: string | null }; Returns: undefined }
+      admin_confirmar_pedido: { Args: { p_id: string; p_user_id: string }; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
