@@ -210,7 +210,7 @@ function LinhaPage() {
                 params={{ linha: l.slug }}
                 className="card-lift group relative overflow-hidden rounded-2xl bg-card block"
               >
-                <div className="relative shrink-0 aspect-[4/5] overflow-hidden">
+                <div className="relative shrink-0 aspect-[4/3] overflow-hidden">
                   <CatalogPhoto src={l.cover} alt={l.nome} loading="lazy" className="absolute inset-0 block h-full w-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">

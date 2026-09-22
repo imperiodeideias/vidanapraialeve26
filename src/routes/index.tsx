@@ -328,11 +328,9 @@ function Index() {
             {linhas.map((l, i) => (
               <article
                 key={l.slug}
-                className={`card-lift group relative overflow-hidden rounded-3xl bg-card shadow-sm ${
-                  i === 0 ? "lg:col-span-2 lg:row-span-1" : ""
-                }`}
+                className="card-lift group relative flex h-full flex-col overflow-hidden rounded-3xl bg-card shadow-sm"
               >
-                <div className={`relative overflow-hidden ${i === 0 ? "aspect-[16/10]" : "aspect-[4/5]"}`}>
+                <div className="relative aspect-[4/3] overflow-hidden">
                   <CatalogPhoto
                     src={l.img}
                     alt={l.title}
@@ -349,10 +347,10 @@ function Index() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="p-7">
+                <div className="flex flex-1 flex-col p-7">
                   <h3 className="text-2xl leading-tight">{l.title}</h3>
-                  <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
-                  <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-5 inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
+                  <p className="mt-3 min-h-[4.5rem] line-clamp-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
+                  <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
                     Explorar <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>

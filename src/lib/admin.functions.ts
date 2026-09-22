@@ -126,7 +126,7 @@ export const registrarMovimento = createServerFn({ method: "POST" })
   .inputValidator(z.object({ slug: z.string().min(1), quantidade: z.number().int().min(1).max(9999), tipo: z.enum(["entrada", "consumo_proprio", "venda_extra"]), motivo: z.string().max(200).optional(), cliente_id: z.string().uuid().nullable().optional() }))
   .handler(async ({ data, context }) => {
     const db = await admin(context);
-    const { error } = await db.rpc("admin_registrar_movimento", { p_slug: data.slug, p_quantidade: data.quantidade, p_tipo: data.tipo, p_motivo: data.motivo?.trim() || null, p_user_id: context.userId, p_cliente_id: data.cliente_id || null });
+    const { error } = await db.rpc("admin_registrar_movimento", { p_slug: data.slug, p_quantidade: data.quantidade, p_tipo: data.tipo, p_motivo: data.motivo?.trim() || "Movimentação manual", p_user_id: context.userId, p_cliente_id: data.cliente_id || undefined });
     if (error) throw new Error(error.message);
     return { ok: true };
   });
