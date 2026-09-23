@@ -33,8 +33,10 @@ import carneDesfiada from "@/assets/produtos/carne-desfiada.jpg";
 import boloCarne from "@/assets/produtos/bolo-carne.jpg";
 import estrogonofeFrango from "@/assets/produtos/estrogonofe-frango.jpg";
 import nhoqueAbobora from "@/assets/produtos/nhoque-abobora.jpg";
+import crepiocaPeru from "@/assets/produtos/crepioca-peru.jpg";
 import coxinhaFitAsset from "@/assets/produtos/coxinha-fit-nova.jpg.asset.json";
 import tortaLowcarbAsset from "@/assets/produtos/torta-low-carb-nova.webp.asset.json";
+import crepiocaFrango from "@/assets/produtos/crepioca-frango.jpg";
 import empadaFrangoAsset from "@/assets/produtos/empada-frango-nova.jpg.asset.json";
 import empadaPalmitoAsset from "@/assets/produtos/empada-palmito-nova.jpg.asset.json";
 import paoQueijoFitAsset from "@/assets/produtos/pao-de-queijo-fit-novo.jpg.asset.json";
@@ -45,6 +47,8 @@ import brigadeiroCremosoAsset from "@/assets/produtos/brigadeiro-cremoso-novo.jp
 import beijinhoFitAsset from "@/assets/produtos/beijinho-fit-novo.jpg.asset.json";
 import mousseLimaoAsset from "@/assets/produtos/mousse-limao-novo.jpg.asset.json";
 import mixNutsAsset from "@/assets/produtos/mix-nuts-novo.jpg.asset.json";
+import sucoMelanciaAsset from "@/assets/produtos/suco-melancia-novo-horizontal.jpg.asset.json";
+import sucoAbacaxiAsset from "@/assets/produtos/suco-abacaxi-novo.jpg.asset.json";
 import sucoBlueMajikAsset from "@/assets/produtos/suco-blue-majik-novo.jpg.asset.json";
 import sucoSuperGreenAsset from "@/assets/produtos/suco-super-green-novo.jpg.asset.json";
 import sucoDesintoxAsset from "@/assets/produtos/suco-desintox-novo.jpg.asset.json";
@@ -89,6 +93,8 @@ const empadaFrango = empadaFrangoAsset.url;
 const empadaPalmito = empadaPalmitoAsset.url;
 const paoQueijoFit = paoQueijoFitAsset.url;
 const mixNuts = mixNutsAsset.url;
+const sucoMelancia = sucoMelanciaAsset.url;
+const sucoAbacaxi = sucoAbacaxiAsset.url;
 const sucoBlueMajik = sucoBlueMajikAsset.url;
 const sucoSuperGreen = sucoSuperGreenAsset.url;
 const sucoDesintox = sucoDesintoxAsset.url;
@@ -285,6 +291,8 @@ const catalogoCompleto: Linha[] = [
     cor: "coral",
     produtos: [
       { slug: "torta-low-carb", emBreve: false, precoCentavos: 2190, nome: "Torta Low Carb", img: tortaLowcarb, peso: "200g", kcal: 226, proteina: 34, descricao: "Torta de frango e couve flor com farinha de amêndoas. Zero glúten, zero lactose.", tags: ["Low carb", "Sem glúten"] },
+      { slug: "crepioca-frango-requeijao", emBreve: true, precoCentavos: 1990, nome: "Crepioca de Frango", subtitulo: "com requeijão sem lactose", img: crepiocaFrango, peso: "110g", kcal: 190, proteina: 13, descricao: "Crepioca recheada com frango desfiado, milho, ervilha e requeijão sem lactose." },
+      { slug: "crepioca-peito-peru", emBreve: true, nome: "Crepioca de Peito de Peru", img: crepiocaPeru, peso: "110g", kcal: 188, proteina: 15, descricao: "Crepioca com peito de peru, queijo fresco sem lactose e molho de tomate natural." },
       { slug: "empada-frango", emBreve: false, precoCentavos: 1990, nome: "Empada de Frango", img: empadaFrango, peso: "140g", kcal: 368, proteina: 29, descricao: "Empada de massa de farinha de aveia recheada com frango, milho e ervilha." },
       { slug: "empada-palmito", emBreve: false, precoCentavos: 1990, nome: "Empada de Palmito", img: empadaPalmito, peso: "140g", kcal: 295, proteina: 15, descricao: "Empada de farinha de aveia recheada com palmito e molho de tomate." },
       { slug: "coxinha-de-frango-fit", emBreve: false, precoCentavos: 2190, nome: "Coxinha de Frango Fit", img: coxinhaFit, peso: "200g (4 un.)", kcal: 155, proteina: 10, descricao: "Coxinha de farinha de arroz e mandioca com recheio cremoso de frango. Sem glúten.", tags: ["Sem glúten"] },
@@ -343,6 +351,8 @@ const catalogoCompleto: Linha[] = [
       { tipo: "Kit Detox", slug: "kit-detox-1-dia", emBreve: true, precoCentavos: 11490, nome: "Kit Detox 1 Dia", subtitulo: "com 7 sucos", img: sucoBlueMajik, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik." },
       { tipo: "Kit Detox", slug: "kit-detox-3-dias", emBreve: true, precoCentavos: 31590, nome: "Kit Detox 3 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoSuperGreen, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
       { tipo: "Kit Detox", slug: "kit-detox-5-dias", emBreve: true, precoCentavos: 46590, nome: "Kit Detox 5 Dias", subtitulo: "com 7 sucos, mix de nuts e marmitas", img: sucoVitalmax, descricao: "Sucos detox suchá, vitalmax, imuno, relax, desintox, super green e blue majik, mix de nuts e marmitinhas de sua preferência." },
+      { slug: "suco-melancia", emBreve: true, precoCentavos: 1390, nome: "Suco de Melancia", subtitulo: "prensado a frio", img: sucoMelancia, peso: "300ml", kcal: 100, descricao: "Melancia prensada a frio. Hidratação e frescor em cada gole.", tags: ["Prensado a frio"] },
+      { slug: "suco-abacaxi", emBreve: true, precoCentavos: 1490, nome: "Suco de Abacaxi", img: sucoAbacaxi, peso: "300ml", kcal: 152, descricao: "Abacaxi prensado a frio, doçura natural." },
       { slug: "suco-maca", emBreve: true, nome: "Suco de Maçã", img: sucoMaca, peso: "300ml", descricao: "Maçã prensada a frio, sem adição de açúcar." },
       { slug: "suco-blue-majik", emBreve: false, precoCentavos: 1890, nome: "Suco Blue Majik", img: sucoBlueMajik, peso: "300ml", kcal: 114, descricao: "Abacaxi, água de coco, hortelã, spirulina azul, gengibre e cravo." },
       { slug: "suco-super-green", emBreve: false, precoCentavos: 1890, nome: "Suco Super Green", img: sucoSuperGreen, peso: "300ml", kcal: 88, descricao: "Maçã, couve, pepino, gengibre, limão, salsão, marapuama e spirulina." },
@@ -358,6 +368,10 @@ const catalogoCompleto: Linha[] = [
 const categoriasOcultas = new Set(["nuts", "pizzas"]);
 const produtosOcultos = new Set([
   "suco-maca",
+  "crepioca-frango-requeijao",
+  "crepioca-peito-peru",
+  "suco-melancia",
+  "suco-abacaxi",
 ]);
 export const linhas: Linha[] = catalogoCompleto
   .filter(linha => !categoriasOcultas.has(linha.slug))
