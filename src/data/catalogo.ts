@@ -80,6 +80,9 @@ import caldoCouveFlor from "@/assets/produtos/caldo-couve-flor.jpg";
 import sopaFuncional from "@/assets/produtos/sopa-funcional.jpg";
 import lentilhasPomodoro from "@/assets/produtos/lentilhas-pomodoro.jpg";
 import escondidinhoBanana from "@/assets/produtos/escondidinho-banana.jpg";
+import frangoCubosMandioquinhaAsset from "@/assets/produtos/frango-cubos-mandioquinha-novo.png.asset.json";
+import patinhoBatataDoceAsset from "@/assets/produtos/patinho-moido-batata-doce-novo.png.asset.json";
+import nhoqueMandioquinhaAsset from "@/assets/produtos/nhoque-mandioquinha-novo.png.asset.json";
 
 const brownieFit = brownieFitAsset.url;
 const brigadeiroCremoso = brigadeiroCremosoAsset.url;
@@ -107,6 +110,9 @@ const categoriaPeixes = categoriaPeixesAsset.url;
 const categoriaMaromba = categoriaMarombaAsset.url;
 const categoriaSopas = categoriaSopasAsset.url;
 const categoriaVegs = categoriaVegsAsset.url;
+const frangoCubosMandioquinha = frangoCubosMandioquinhaAsset.url;
+const patinhoBatataDoce = patinhoBatataDoceAsset.url;
+const nhoqueMandioquinhaNovo = nhoqueMandioquinhaAsset.url;
 
 
 export type Produto = {
@@ -205,7 +211,7 @@ const catalogoCompleto: Linha[] = [
     cor: "coral",
     produtos: [
       { slug: "nhoque-abobora-cabotia", emBreve: false, precoCentavos: 2390, nome: "Nhoque de Abóbora Cabotiá", subtitulo: "ao sugo com patinho moído", img: nhoqueAbobora, peso: "300g", kcal: 104, proteina: 4.5, descricao: "Nhoque de abóbora cabotiá com sugo natural e patinho moído.", tags: ["Sem glúten"] },
-      { slug: "nhoque-mandioquinha-ragu", emBreve: false, precoCentavos: 2490, nome: "Nhoque de Mandioquinha", subtitulo: "com ragu de carne", img: nhoqueMandioquinha, peso: "300g", kcal: 51, descricao: "Nhoque delicado de mandioquinha com ragu suave de patinho.", tags: ["Sem glúten"] },
+      { slug: "nhoque-mandioquinha-ragu", emBreve: false, precoCentavos: 2490, nome: "Nhoque de Mandioquinha", subtitulo: "com ragu de carne", img: nhoqueMandioquinhaNovo, peso: "300g", kcal: 51, descricao: "Nhoque delicado de mandioquinha com ragu suave de patinho.", tags: ["Sem glúten"] },
       { slug: "panqueca-frango-mussarela", emBreve: false, precoCentavos: 2390, nome: "Panqueca de Frango", subtitulo: "ao sugo com mussarela sem lactose", img: panquecaFrango, peso: "300g", kcal: 124, proteina: 11, descricao: "Panqueca sem glúten recheada com frango, ao sugo e mussarela sem lactose.", tags: ["Sem glúten"] },
       { slug: "penne-sem-gluten-molho-branco", emBreve: true, precoCentavos: 2390, nome: "Penne sem Glúten", subtitulo: "ao molho branco com frango, ervilha e milho", img: penneMolhoBranco, peso: "300g", descricao: "Macarrão sem glúten ao molho branco de leite e requeijão zero lactose com peito de frango, ervilha e milho.", tags: ["Sem glúten"] },
       { slug: "lasanha-bolonhesa-peito-de-peru", emBreve: true, nome: "Lasanha à Bolonhesa com Peito de Peru", img: lasanhaPeitoPeru, peso: "300g", kcal: 202, proteina: 10, descricao: "Lasanha sem glúten com massa de mix de farinhas, molho de tomate, patinho moído, peito de peru e mussarela zero lactose.", tags: ["Sem glúten"] },
@@ -238,9 +244,9 @@ const catalogoCompleto: Linha[] = [
     cor: "petrol",
     produtos: [
       { slug: "frango-em-cubos-batata-doce", emBreve: true, precoCentavos: 2490, nome: "Frango em Cubos", subtitulo: "com purê de batata doce", img: frangoCubos, peso: "400g", kcal: 196, proteina: 26, descricao: "Peito de frango em cubos com purê cremoso de batata doce. Alto valor proteico.", tags: ["High protein", "Sem glúten"] },
-      { slug: "frango-em-cubos-mandioquinha", emBreve: true, precoCentavos: 2990, nome: "Frango em Cubos", subtitulo: "com purê de mandioquinha", img: frangoCubos, peso: "400g", descricao: "Frango em cubos com purê de mandioquinha." },
+      { slug: "frango-em-cubos-mandioquinha", emBreve: true, precoCentavos: 2990, nome: "Frango em Cubos", subtitulo: "com purê de mandioquinha", img: frangoCubosMandioquinha, peso: "400g", descricao: "Frango em cubos com purê de mandioquinha." },
       { slug: "patinho-moido-mandioquinha", emBreve: true, precoCentavos: 3690, nome: "Patinho Moído", subtitulo: "com purê de mandioquinha", img: patinhoMoido, peso: "400g", kcal: 147, proteina: 17, descricao: "Patinho moído magro com purê de mandioquinha. Ideal pré e pós treino.", tags: ["High protein", "Sem glúten"] },
-      { slug: "patinho-moido-batata-doce", emBreve: true, precoCentavos: 3290, nome: "Patinho Moído", subtitulo: "com purê de batata doce", img: patinhoMoido, peso: "400g", descricao: "Patinho moído com purê de batata doce." },
+      { slug: "patinho-moido-batata-doce", emBreve: true, precoCentavos: 3290, nome: "Patinho Moído", subtitulo: "com purê de batata doce", img: patinhoBatataDoce, peso: "400g", descricao: "Patinho moído com purê de batata doce." },
     ],
   },
   {
@@ -336,9 +342,9 @@ const catalogoCompleto: Linha[] = [
   },
   {
     slug: "sucos",
-    nome: "Sucos",
-    eyebrow: "Sucos",
-    headline: "Sucos",
+    nome: "Sucos Funcionais",
+    eyebrow: "Sucos Funcionais",
+    headline: "Sucos Funcionais",
     descricao: "Sucos naturais prensados a frio e funcionais para cada momento.",
     cover: sucoBlueMajik,
     cor: "sage",
@@ -361,7 +367,13 @@ const catalogoCompleto: Linha[] = [
 ];
 
 const categoriasOcultas = new Set(["nuts", "pizzas"]);
-const produtosOcultos = new Set(["suco-maca"]);
+const produtosOcultos = new Set([
+  "suco-maca",
+  "crepioca-frango-requeijao",
+  "crepioca-peito-peru",
+  "suco-melancia",
+  "suco-abacaxi",
+]);
 export const linhas: Linha[] = catalogoCompleto
   .filter(linha => !categoriasOcultas.has(linha.slug))
   .map(linha => ({ ...linha, produtos: linha.produtos.filter(produto => !produtosOcultos.has(produto.slug)) }));
