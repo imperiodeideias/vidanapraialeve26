@@ -52,6 +52,7 @@ export type Database = {
           cliente_id: string | null
           created_at: string
           created_by: string | null
+          custo_unitario_centavos: number | null
           id: string
           motivo: string | null
           pedido_id: string | null
@@ -64,6 +65,7 @@ export type Database = {
           cliente_id?: string | null
           created_at?: string
           created_by?: string | null
+          custo_unitario_centavos?: number | null
           id?: string
           motivo?: string | null
           pedido_id?: string | null
@@ -76,6 +78,7 @@ export type Database = {
           cliente_id?: string | null
           created_at?: string
           created_by?: string | null
+          custo_unitario_centavos?: number | null
           id?: string
           motivo?: string | null
           pedido_id?: string | null
@@ -104,6 +107,7 @@ export type Database = {
       pedido_itens: {
         Row: {
           created_at: string
+          custo_unitario_centavos: number | null
           id: string
           nome: string
           pedido_id: string
@@ -113,6 +117,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          custo_unitario_centavos?: number | null
           id?: string
           nome: string
           pedido_id: string
@@ -122,6 +127,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          custo_unitario_centavos?: number | null
           id?: string
           nome?: string
           pedido_id?: string
@@ -186,6 +192,32 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      produtos_custos: {
+        Row: {
+          custo_centavos: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          custo_centavos: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          custo_centavos?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "produtos_custos_slug_fkey"
+            columns: ["slug"]
+            isOneToOne: true
+            referencedRelation: "produtos_estoque"
+            referencedColumns: ["slug"]
+          },
+        ]
       }
       produtos_estoque: {
         Row: {
