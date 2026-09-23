@@ -23,7 +23,7 @@ function Reposicao() {
     {isLoading?<p>Carregando…</p>:error?<p role="alert">{error.message}</p>:<>
       <p className="mb-6">{produtos.length} produto(s) para reposição.</p>
       {!produtos.length && <p>Nenhum produto precisa de reposição no momento.</p>}
-      <AdminStock produtos={produtos} clientes={data?.clientesManuais ?? []} onDone={msg=>{setAviso(msg);cache.invalidateQueries({queryKey:["painel"]});cache.invalidateQueries({queryKey:["vendas"]});}}/>
+      <AdminStock produtos={produtos} custos={data?.custos ?? {}} clientes={data?.clientesManuais ?? []} onDone={msg=>{setAviso(msg);cache.invalidateQueries({queryKey:["painel"]});cache.invalidateQueries({queryKey:["vendas"]});}}/>
     </>}
   </section></SiteChrome>;
 }

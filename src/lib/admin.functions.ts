@@ -67,7 +67,7 @@ export const painel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const db = await admin(context);
-    const [estoque, pedidos, movimentacoes, vendas, extras, perfis, manuais] = await Promise.all([
+    const [estoque, pedidos, movimentacoes, vendas, extras, perfis, manuais, custos] = await Promise.all([
       db.from("produtos_estoque").select("*").order("nome"),
       db.from("pedidos").select("*, pedido_itens(*)").order("created_at", { ascending: false }).limit(200),
       db.from("movimentacoes_estoque").select("*").order("created_at", { ascending: false }).limit(60),
@@ -75,12 +75,14 @@ export const painel = createServerFn({ method: "GET" })
       db.from("movimentacoes_estoque").select("slug, quantidade, created_at").eq("tipo", "venda_extra"),
       db.from("profiles").select("*"),
       db.from("clientes_manuais").select("*").order("nome"),
+      db.from("produtos_custos").select("slug, custo_centavos"),
     ]);
-    const erro = estoque.error || pedidos.error || movimentacoes.error || vendas.error || extras.error || perfis.error || manuais.error;
+    const erro = custos.error || estoque.error || pedidos.error || movimentacoes.error || vendas.error || extras.error || perfis.error || manuais.error;
     if (erro) throw new Error(erro.message);
     const nomeDoSlug = new Map((estoque.data ?? []).map((p) => [p.slug, p.nome] as const));
     return {
       estoque: estoque.data ?? [],
+      custos: Object.fromEntries((custos.data ?? []).map((c) => [c.slug, c.custo_centavos])) as Record<string, number>,
       pedidos: pedidos.data ?? [],
       movimentacoes: movimentacoes.data ?? [],
       vendas: (vendas.data ?? []).map((v) => ({
@@ -101,7 +103,7 @@ export const painel = createServerFn({ method: "GET" })
 
 export const salvarProduto = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string; preco_centavos: number | null; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean }) => input)
+  .inputValidator((input: { slug: string; preco_centavos: number | null; estoque_minimo: number; ativo: boolean; controlar_estoque: boolean; custo_centavos?: number | null }) => input)
   .handler(async ({ data, context }) => {
     const db = await admin(context);
     const { data: atual, error } = await db.from("produtos_estoque").select("quantidade").eq("slug", data.slug).maybeSingle();
@@ -118,6 +120,12 @@ export const salvarProduto = createServerFn({ method: "POST" })
       })
       .eq("slug", data.slug);
     if (updateErro) throw new Error(updateErro.message);
+    if (data.custo_centavos !== undefined) {
+      const r = data.custo_centavos === null
+        ? await db.from("produtos_custos").delete().eq("slug", data.slug)
+        : await db.from("produtos_custos").upsert({ slug: data.slug, custo_centavos: Math.max(0, Math.trunc(data.custo_centavos)) });
+      if (r.error) throw new Error(r.error.message);
+    }
     return { ok: true };
   });
 
@@ -207,19 +215,22 @@ export const relatorioVendas = createServerFn({ method: "GET" })
     const inicio = new Date(data.inicio + "T00:00:00-03:00");
     const fim = new Date(data.fim + "T23:59:59.999-03:00");
     if (!Number.isFinite(+inicio) || !Number.isFinite(+fim) || fim < inicio || +fim - +inicio > 366 * 86400000) throw new Error("Selecione um período válido de até um ano.");
-    const [pedidos, movimentos, estoque] = await Promise.all([
-      todasPaginas((a,b) => db.from("pedidos").select("id, confirmado_em, pedido_itens(slug, nome, quantidade, preco_centavos)").eq("status", "confirmado").gte("confirmado_em", inicio.toISOString()).lte("confirmado_em", fim.toISOString()).order("id").range(a,b)),
-      todasPaginas((a,b) => db.from("movimentacoes_estoque").select("id, slug, tipo, quantidade, created_at, preco_unitario_centavos, cliente_id").in("tipo", ["venda_extra", "consumo_proprio"]).gte("created_at", inicio.toISOString()).lte("created_at", fim.toISOString()).order("id").range(a,b)),
+    const [pedidos, movimentos, estoque, custosAtuais] = await Promise.all([
+      todasPaginas((a,b) => db.from("pedidos").select("id, confirmado_em, pedido_itens(slug, nome, quantidade, preco_centavos, custo_unitario_centavos)").eq("status", "confirmado").gte("confirmado_em", inicio.toISOString()).lte("confirmado_em", fim.toISOString()).order("id").range(a,b)),
+      todasPaginas((a,b) => db.from("movimentacoes_estoque").select("id, slug, tipo, quantidade, created_at, preco_unitario_centavos, custo_unitario_centavos, cliente_id").in("tipo", ["venda_extra", "consumo_proprio"]).gte("created_at", inicio.toISOString()).lte("created_at", fim.toISOString()).order("id").range(a,b)),
       db.from("produtos_estoque").select("slug, nome"),
+      db.from("produtos_custos").select("slug, custo_centavos"),
     ]);
     if (estoque.error) throw new Error(estoque.error.message);
+    if (custosAtuais.error) throw new Error(custosAtuais.error.message);
+    const custoAtual = new Map((custosAtuais.data ?? []).map(c => [c.slug, c.custo_centavos]));
     const nomes = new Map((estoque.data ?? []).map(p => [p.slug, p.nome]));
-    const vendas: VendaItem[] = pedidos.flatMap(p => (p.pedido_itens ?? []).map(i => ({ vendaId: p.id, origem: "site" as const, data: p.confirmado_em!, slug: i.slug, nome: i.nome, quantidade: i.quantidade, precoCentavos: i.preco_centavos })));
+    const vendas: VendaItem[] = pedidos.flatMap(p => (p.pedido_itens ?? []).map(i => ({ vendaId: p.id, origem: "site" as const, data: p.confirmado_em!, slug: i.slug, nome: i.nome, quantidade: i.quantidade, precoCentavos: i.preco_centavos, custoCentavos: i.custo_unitario_centavos ?? custoAtual.get(i.slug) ?? null })));
     const consumos: ConsumoItem[] = [];
     for (const m of movimentos) {
       const item = { data: m.created_at, slug: m.slug, nome: nomes.get(m.slug) || m.slug, quantidade: Math.abs(m.quantidade) };
       if (m.tipo === "consumo_proprio") consumos.push(item);
-      else vendas.push({ ...item, vendaId: m.id, origem: "extra", precoCentavos: m.preco_unitario_centavos });
+      else vendas.push({ ...item, vendaId: m.id, origem: "extra", precoCentavos: m.preco_unitario_centavos, custoCentavos: m.custo_unitario_centavos ?? custoAtual.get(m.slug) ?? null });
     }
     return resumirVendas(vendas, consumos, data.inicio, data.fim);
   });

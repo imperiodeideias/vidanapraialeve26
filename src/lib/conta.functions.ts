@@ -18,7 +18,7 @@ export const meuPerfil = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const [perfil, pedidos, papel] = await Promise.all([
       context.supabase.from("profiles").select("*").eq("id", context.userId).maybeSingle(),
-      context.supabase.from("pedidos").select("*, pedido_itens(*)").order("created_at", { ascending: false }).limit(30),
+      context.supabase.from("pedidos").select("*, pedido_itens(id, pedido_id, slug, nome, quantidade, preco_centavos, created_at)").order("created_at", { ascending: false }).limit(30),
       context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
     ]);
     if (perfil.error) throw new Error(perfil.error.message);

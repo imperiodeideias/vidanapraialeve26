@@ -16,3 +16,7 @@ test('date boundaries use Brazil time, including final day and zero-sale dates',
  assert.equal(r.totalVendas,1);assert.equal(r.dias.length,2);assert.equal(r.dias[0].unidades,2);assert.equal(r.dias[1].unidades,0);
 });
 test('empty period returns zero totals',()=>{ const r=resumirVendas([],[],'2026-09-22','2026-09-22');assert.equal(r.totalVendas,0);assert.equal(r.valor,0);assert.deepEqual(r.maisVendidos,[]); });
+test('profit uses recorded cost and flags missing cost',()=>{
+ const r=resumirVendas([{...base,custoCentavos:1390},{...base,vendaId:'x',slug:'b',quantidade:1}],[],'2026-09-22','2026-09-22');
+ assert.equal(r.lucro,(2390-1390)*2);assert.equal(r.unidadesSemCusto,1);assert.equal(r.dias[0].lucro,2000);
+});
