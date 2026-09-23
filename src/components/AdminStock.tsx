@@ -11,7 +11,7 @@ const botao: Record<Movimento, string> = { entrada: "+ Entrada", consumo_proprio
 const rotulo: Record<Movimento, string> = { entrada: "Entrada", consumo_proprio: "Baixa de consumo próprio", venda_extra: "Venda extra" };
 const resumo: Record<Movimento, string> = { entrada: "Adicionar", consumo_proprio: "Retirar (consumo próprio)", venda_extra: "Baixar como venda extra" };
 
-export function AdminStock({ produtos, clientes, onDone }: { produtos: Produto[]; clientes: ClienteManual[]; onDone: (msg: string) => void }) {
+export function AdminStock({ produtos, clientes, custos, onDone }: { produtos: Produto[]; clientes: ClienteManual[]; custos: Record<string, number>; onDone: (msg: string) => void }) {
   const categorias = new Map(linhas.flatMap(l => l.produtos.map(p => [p.slug, l.nome] as const)));
   const grupos = new Map<string, Produto[]>();
   for (const p of produtos) {
@@ -20,20 +20,23 @@ export function AdminStock({ produtos, clientes, onDone }: { produtos: Produto[]
   }
   return <div className="space-y-8">{[...grupos].sort(([a],[b])=>a.localeCompare(b,"pt-BR")).map(([nome,items])=><section key={nome}>
     <h2 className="text-2xl border-b border-border pb-3 mb-4">{nome} <span className="text-sm text-foreground/60">({items.length})</span></h2>
-    <div className="space-y-3">{items.map(p=><LinhaProduto key={p.slug} produto={p} clientes={clientes} onDone={onDone}/>)}</div>
+    <div className="space-y-3">{items.map(p=><LinhaProduto key={p.slug} produto={p} custo={custos[p.slug] ?? null} clientes={clientes} onDone={onDone}/>)}</div>
   </section>)}</div>;
 }
-function LinhaProduto({ produto, clientes, onDone }: { produto: Produto; clientes: ClienteManual[]; onDone: (msg: string) => void }) {
+function LinhaProduto({ produto, custo, clientes, onDone }: { produto: Produto; custo: number | null; clientes: ClienteManual[]; onDone: (msg: string) => void }) {
   const salvar = useServerFn(salvarProduto);
   const movimentar = useServerFn(registrarMovimento);
-  const [form, setForm] = useState({ preco: produto.preco_centavos === null ? "" : (produto.preco_centavos / 100).toFixed(2), minimo: String(produto.estoque_minimo), ativo: produto.ativo, controlar: produto.controlar_estoque });
+  const [form, setForm] = useState({ preco: produto.preco_centavos === null ? "" : (produto.preco_centavos / 100).toFixed(2), minimo: String(produto.estoque_minimo), ativo: produto.ativo, controlar: produto.controlar_estoque, custo: custo === null ? "" : (custo / 100).toFixed(2) });
+  const centavos = (v: string) => v.trim() === "" ? null : Math.round(Number(v.replace(",", ".")) * 100);
+  const precoN = centavos(form.preco), custoN = centavos(form.custo);
+  const margem = precoN !== null && custoN !== null && Number.isFinite(precoN) && Number.isFinite(custoN) ? precoN - custoN : null;
   const [clienteId, setClienteId] = useState("");
   const [extra, setExtra] = useState("1");
   const [pendente, setPendente] = useState<Movimento | null>(null);
   const [motivo, setMotivo] = useState("");
 
   const salvarMut = useMutation({
-    mutationFn: () => salvar({ data: { slug: produto.slug, preco_centavos: form.preco.trim() === "" ? null : Math.round(Number(form.preco.replace(",", ".")) * 100), estoque_minimo: Number(form.minimo), ativo: form.ativo, controlar_estoque: form.controlar } }),
+    mutationFn: () => salvar({ data: { slug: produto.slug, preco_centavos: precoN, custo_centavos: custoN, estoque_minimo: Number(form.minimo), ativo: form.ativo, controlar_estoque: form.controlar } }),
     onSuccess: () => onDone(`${produto.nome} atualizado.`),
     onError: (e: Error) => onDone(e.message),
   });
@@ -52,6 +55,8 @@ function LinhaProduto({ produto, clientes, onDone }: { produto: Produto; cliente
         <div className="mt-3 flex flex-wrap items-end gap-3">
           <label className="text-xs">Quantidade<input className={campo + " w-24 block mt-1"} inputMode="numeric" value={produto.quantidade} readOnly aria-readonly="true" title="Use os botões de movimentação para alterar o saldo" /></label>
           <label className="text-xs">Preço (R$)<input className={campo + " w-28 block mt-1"} inputMode="decimal" placeholder="sob consulta" value={form.preco} onChange={(e) => setForm({ ...form, preco: e.target.value })} /></label>
+          <label className="text-xs">Custo (R$)<input className={campo + " w-28 block mt-1"} inputMode="decimal" placeholder="—" value={form.custo} onChange={(e) => setForm({ ...form, custo: e.target.value })} /></label>
+          <p className="text-xs pb-2">Lucro/un.<strong className={"block mt-1 text-sm " + (margem !== null && margem < 0 ? "text-[color:var(--coral)]" : "")}>{margem === null ? "—" : `${(margem / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}${precoN ? ` (${Math.round((margem / precoN) * 100)}%)` : ""}`}</strong></p>
           <label className="text-xs">Alerta abaixo de<input className={campo + " w-20 block mt-1"} inputMode="numeric" value={form.minimo} onChange={(e) => setForm({ ...form, minimo: e.target.value })} /></label>
           <label className="text-xs flex items-center gap-2 pb-2"><input type="checkbox" checked={form.ativo} onChange={(e) => setForm({ ...form, ativo: e.target.checked })} /> À venda</label>
           <label className="text-xs flex items-center gap-2 pb-2"><input type="checkbox" checked={form.controlar} onChange={(e) => setForm({ ...form, controlar: e.target.checked })} /> Controlar estoque</label>

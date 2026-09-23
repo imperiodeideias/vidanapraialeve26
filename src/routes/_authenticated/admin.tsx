@@ -87,7 +87,7 @@ function AdminPage() {
           {aba === "estoque" && <div className="mt-6">
             <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar produto" aria-label="Buscar produto" className="w-full max-w-sm rounded-xl border border-border bg-white px-3 py-3 mb-4" />
             {!estoque.length && <p className="text-sm">Nenhum produto no estoque ainda. Use “Sincronizar catálogo”.</p>}
-            <AdminStock produtos={estoque.filter(p => p.nome.toLowerCase().includes(busca.toLowerCase()))} clientes={data?.clientesManuais ?? []} onDone={msg => { setAviso(msg); recarregar(); }} />
+            <AdminStock produtos={estoque.filter(p => p.nome.toLowerCase().includes(busca.toLowerCase()))} clientes={data?.clientesManuais ?? []} custos={data?.custos ?? {}} onDone={msg => { setAviso(msg); recarregar(); }} />
           </div>}
 
           {aba === "pedidos" && <div className="mt-6 space-y-4">
