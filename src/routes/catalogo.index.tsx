@@ -44,7 +44,7 @@ const normalizar = (t: string) => t.normalize("NFD").replace(/[\u0300-\u036f]/g,
 
 function CatalogoIndex() {
   const totalProdutos = linhas.reduce((s, l) => s + l.produtos.length, 0);
-  const { estoque } = useEstoque();
+  const { estoque, carregando } = useEstoque();
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("todas");
   const [modo, setModo] = useState<"disponiveis" | "em-breve">("disponiveis");
@@ -55,7 +55,7 @@ function CatalogoIndex() {
   const qtdDisp = base.filter(p => !p.emBreve).length;
   const qtdBreve = base.length - qtdDisp;
   const resultados = base.filter(p => (modo === "disponiveis" ? !p.emBreve : p.emBreve));
-  const chip = (ativo: boolean) => `rounded-full px-4 py-2 font-sub text-[11px] uppercase tracking-[0.18em] transition-colors ${ativo ? "bg-[color:var(--petrol)] text-[color:var(--offwhite)]" : "bg-[color:var(--sand)]/60 text-foreground/70 hover:bg-[color:var(--sand)]"}`;
+  const chip = (ativo: boolean) => `min-h-11 rounded-full px-4 py-2 font-sub text-[11px] uppercase tracking-[0.18em] transition-colors ${ativo ? "bg-[color:var(--petrol)] text-[color:var(--offwhite)]" : "bg-[color:var(--sand)]/60 text-foreground/70 hover:bg-[color:var(--sand)]"}`;
   return (
     <SiteChrome>
       {/* HERO */}
@@ -96,7 +96,7 @@ function CatalogoIndex() {
             {resultados.length} {resultados.length === 1 ? "produto encontrado" : "produtos encontrados"}{resultados.length === 0 ? ". Tente outro termo, categoria ou disponibilidade." : ""}
           </p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {resultados.map(p => <ProductCard key={p.slug} produto={p} categoria={p.linhaNome} />)}
+            {resultados.map(p => <ProductCard key={p.slug} produto={p} categoria={p.linhaNome} estoque={estoque} carregando={carregando} />)}
           </div>
         </div>
       </section>
@@ -118,6 +118,8 @@ function CatalogoIndex() {
                     src={l.cover}
                     alt={l.nome}
                     loading="lazy"
+                    width={1000}
+                    height={750}
                     className="absolute inset-0 block h-full w-full object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 via-[color:var(--deep)]/20 to-transparent" />

@@ -12,7 +12,15 @@ import { disponivel, precoDe } from "@/lib/estoque";
 import { criarPedido } from "@/lib/loja.functions";
 
 export const Route = createFileRoute("/carrinho")({
-  head: () => ({ meta: [{ title: "Seu pedido — Vida na Praia Leve" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [
+    { title: "Seu pedido — Vida na Praia Leve" },
+    { name: "description", content: "Confira os produtos, calcule a entrega pelo CEP e envie sua solicitação à Vida na Praia Leve." },
+    { property: "og:title", content: "Seu pedido — Vida na Praia Leve" },
+    { property: "og:description", content: "Confira os produtos e calcule a entrega antes de enviar sua solicitação." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+    { name: "robots", content: "noindex" },
+  ] }),
   component: CartPage,
 });
 function CartPage() {
@@ -32,6 +40,7 @@ function CartPage() {
   return <SiteChrome><section className="container-x pt-32 pb-28">
     <span className="eyebrow">Confira antes de enviar</span>
     <h1 className="text-4xl mt-4 mb-8">Seu pedido</h1>
+    <p className="-mt-4 mb-8 text-sm text-foreground/70">Entrega agendada a combinar. Atendimento de segunda a sábado, das 9h às 18h. Pagamento por PIX, dinheiro, débito ou crédito.</p>
     {!ready ? <p>Carregando seu carrinho…</p> : !items.length ? <div className="rounded-3xl bg-card p-8 border border-border"><p className="mb-6">Seu carrinho está vazio. Escolha seus produtos favoritos para começar.</p><Link to="/catalogo" className="btn-primary">Explorar catálogo</Link></div> : <div className="grid gap-8 lg:grid-cols-[1fr_360px] items-start">
       <div className="space-y-4">
         {items.map(({ product: p, quantity }) => {

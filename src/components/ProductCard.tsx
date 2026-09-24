@@ -6,10 +6,12 @@ import { ComingSoonBanner } from "@/components/ComingSoonBanner";
 import { ProductPrice } from "@/components/ProductPrice";
 import { AddToCart } from "@/components/Cart";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import type { EstoqueMap } from "@/lib/estoque";
+import { Button } from "@/components/ui/button";
 
-type Props = { produto: Produto; categoria?: string; headingLevel?: "h2" | "h3" };
+type Props = { produto: Produto; categoria?: string; headingLevel?: "h2" | "h3"; estoque?: EstoqueMap; carregando?: boolean };
 
-export function ProductCard({ produto: p, categoria, headingLevel = "h3" }: Props) {
+export function ProductCard({ produto: p, categoria, headingLevel = "h3", estoque, carregando }: Props) {
   const [aberto, setAberto] = useState(false);
   const H = headingLevel;
   return (
@@ -24,16 +26,16 @@ export function ProductCard({ produto: p, categoria, headingLevel = "h3" }: Prop
         {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
         {p.peso && <p className="mt-2 text-xs font-sub uppercase tracking-[0.15em] text-foreground/60">{p.peso}</p>}
         <div className="flex-1" />
-        <ProductPrice produto={p} />
-        <button type="button" onClick={() => setAberto(true)} className="mt-3 self-start text-sm underline underline-offset-4 text-[color:var(--petrol)] hover:text-[color:var(--coral)]">
+        <ProductPrice produto={p} estoque={estoque} carregando={carregando} />
+        <Button variant="link" type="button" onClick={() => setAberto(true)} className="mt-1 min-h-11 self-start px-0 text-sm text-[color:var(--petrol)] hover:text-[color:var(--coral)]">
           Ver detalhes
-        </button>
-        {p.emBreve ? <p className="mt-5 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} />}
+        </Button>
+        {p.emBreve ? <p className="mt-5 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} estoque={estoque} />}
       </div>
       <Dialog open={aberto} onOpenChange={setAberto}>
         <DialogContent className="w-[calc(100%-2rem)] max-w-xl max-h-[90dvh] overflow-y-auto rounded-3xl p-0">
           <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-            <CatalogPhoto src={p.img} alt={p.nome} className="absolute inset-0 h-full w-full object-cover" />
+            <CatalogPhoto src={p.img} alt={p.nome} loading="lazy" width={1000} height={750} className="absolute inset-0 h-full w-full object-cover" />
           </div>
           <div className="p-7">
             {categoria && <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{categoria}</span>}
@@ -55,8 +57,8 @@ export function ProductCard({ produto: p, categoria, headingLevel = "h3" }: Prop
                 {p.tags.map(t => <span key={t} className="text-[10px] font-sub uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border border-[color:var(--sage)]/40 text-[color:var(--sage)]">{t}</span>)}
               </div>
             )}
-            <ProductPrice produto={p} />
-            {p.emBreve ? <p className="mt-5 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} />}
+            <ProductPrice produto={p} estoque={estoque} carregando={carregando} />
+            {p.emBreve ? <p className="mt-5 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} estoque={estoque} />}
           </div>
         </DialogContent>
       </Dialog>

@@ -3,9 +3,11 @@ import { HeaderCart } from "@/components/Cart";
 import { Link } from "@tanstack/react-router";
 import { resumoEntrega } from "@/lib/delivery";
 import { useEffect, useState, type ReactNode } from "react";
-import { Menu, X, Instagram, MessageCircle, Mail, MapPin, User } from "lucide-react";
+import { Menu, Instagram, MessageCircle, Mail, MapPin, User } from "lucide-react";
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
 import logoLightAsset from "@/assets/logo-vnpl-light.png.asset.json";
+import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 type Props = { children: ReactNode; transparentUntilScroll?: boolean };
 
@@ -45,7 +47,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
       >
         <div className="container-x flex items-center justify-between py-4">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logoSrc} alt="Vida na Praia Leve" className="h-11 w-auto" />
+            <img src={logoSrc} alt="Vida na Praia Leve" width={160} height={100} className="h-11 w-auto" />
           </Link>
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
             {navItems.map((n) =>
@@ -66,46 +68,29 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             </Link>
             <HeaderCart />
           </div>
-          <button
-            className={`lg:hidden ${textLight ? "text-white" : "text-foreground"}`}
-            onClick={() => setMenuOpen(true)}
-            aria-label="Abrir menu"
-          >
-            <Menu className="size-6" />
-          </button>
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild><Button variant="ghost" size="icon" className={`size-11 lg:hidden ${textLight ? "text-white" : "text-foreground"}`} aria-label="Abrir menu"><Menu className="size-6" /></Button></SheetTrigger>
+            <SheetContent side="right" className="w-full max-w-none px-6 pt-24 sm:max-w-sm">
+              <SheetTitle className="sr-only">Menu principal</SheetTitle>
+              <nav className="flex flex-col gap-2 text-2xl font-display" aria-label="Menu principal">
+                {navItems.map((n) => <SheetClose asChild key={n.l}>{n.to !== undefined ? <Link to={n.to} className="flex min-h-12 items-center">{n.l}</Link> : <a href={n.href} className="flex min-h-12 items-center">{n.l}</a>}</SheetClose>)}
+                <div className="mt-6 flex items-center gap-4"><HeaderCart onClick={() => setMenuOpen(false)} /></div>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </header>
-
-      {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-background">
-          <div className="container-x flex items-center justify-between py-4">
-            <img src={logoAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
-            <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
-          </div>
-          <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {navItems.map((n) =>
-              n.to !== undefined ? (
-                <Link key={n.l} to={n.to} onClick={() => setMenuOpen(false)}>{n.l}</Link>
-              ) : (
-                <a key={n.l} href={n.href} onClick={() => setMenuOpen(false)}>{n.l}</a>
-              ),
-            )}
-            <div className="flex items-center gap-4 mt-6">
-              <HeaderCart onClick={() => setMenuOpen(false)} />
-            </div>
-          </nav>
-        </div>
-      )}
 
       <main className="flex-1"><div className="mt-20 bg-[color:var(--petrol)] text-white text-center px-4 py-3 text-sm">{resumoEntrega}</div>{children}</main>
 
       <footer className="bg-[color:var(--deep)] text-[color:var(--offwhite)] pt-20 pb-10">
         <div className="container-x grid gap-12 lg:grid-cols-4">
           <div className="lg:col-span-2 max-w-md">
-            <img src={logoLightAsset.url} alt="Vida na Praia Leve" className="h-12 w-auto mb-6" />
+            <img src={logoLightAsset.url} alt="Vida na Praia Leve" width={160} height={100} loading="lazy" className="h-12 w-auto mb-6" />
             <p className="font-light text-white/70 leading-relaxed">
               Vida na Praia Leve — alimentação saudável, praticidade e leveza. Um jeito novo de viver.
             </p>
+            <p className="mt-4 text-sm leading-relaxed text-white/70">Entrega agendada a combinar. Atendimento de segunda a sábado, das 9h às 18h. Pagamento por PIX, dinheiro, débito ou crédito.</p>
             <FooterContacts />
           </div>
           <div>
