@@ -97,6 +97,8 @@ function LinhaPage() {
   const { estoque } = useEstoque();
   const outrasLinhas = linhas.filter((l) => l.slug !== linha.slug).slice(0, 4);
   const produtos: Produto[] = linha.produtos.map((p: Produto) => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
+  const disponiveis = produtos.filter(p => !p.emBreve);
+  const emBreve = produtos.filter(p => p.emBreve);
 
   return (
     <SiteChrome>
@@ -125,17 +127,17 @@ function LinhaPage() {
             {linha.descricao}
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-6 text-sm font-sub uppercase tracking-[0.2em] text-white/80">
-            <span>{linha.produtos.length} {linha.produtos.length === 1 ? "produto" : "produtos"}</span>
+            <span>{disponiveis.length} {disponiveis.length === 1 ? "disponível" : "disponíveis"} · {produtos.length} no total</span>
             <span className="h-px w-8 bg-white/30" />
-            <a href="/catalogo" className="hover:text-white transition-colors inline-flex items-center gap-2">
-              Fazer pedido <ArrowRight className="size-3.5" />
+            <a href="#produtos" className="hover:text-white transition-colors inline-flex items-center gap-2">
+              Ver produtos e preços <ArrowRight className="size-3.5" />
             </a>
           </div>
         </div>
       </section>
 
       {/* PRODUTOS */}
-      <section className="py-20 md:py-28 bg-[color:var(--sand)]/30">
+      <section id="produtos" className="scroll-mt-24 py-20 md:py-28 bg-[color:var(--sand)]/30">
         <div className="container-x">
           <div className="flex items-center justify-between mb-12">
             <Link to="/catalogo" className="inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-foreground/70 hover:text-[color:var(--coral)] transition-colors">
@@ -143,55 +145,21 @@ function LinhaPage() {
             </Link>
           </div>
 
+          {disponiveis.length === 0 && <p className="mb-8 text-foreground/70">Nenhum produto desta categoria está disponível no momento.</p>}
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[...produtos].sort((a,b) => Number(a.emBreve) - Number(b.emBreve)).map((p: Produto) => (
-              <article key={p.slug} className="card-lift group bg-card rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
-                  <CatalogPhoto
-                    src={p.img}
-                    alt={p.nome}
-                    loading="lazy"
-                    className="absolute inset-0 block h-full w-full object-cover object-center"
-                  />
-                </div>
-                {p.emBreve && <ComingSoonBanner />}
-                <div className="p-6 flex flex-col flex-1">
-                  <h2 className="text-xl leading-tight">{p.nome}</h2>
-                  {p.peso && <p className="mt-2 text-xs text-foreground/60">{p.peso}</p>}
-                  {p.subtitulo && <p className="mt-1 text-sm text-foreground/60 font-light">{p.subtitulo}</p>}
-                  <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed flex-1">{p.descricao}</p>
-                  <ProductPrice produto={p} />
-
-                  {(p.kcal || p.proteina) && (
-                    <div className="mt-5 flex items-center gap-4 text-xs font-sub uppercase tracking-[0.15em] text-foreground/60">
-                      {p.kcal && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <Flame className="size-3.5 text-[color:var(--coral)]" /> {p.kcal} kcal
-                        </span>
-                      )}
-                      {p.proteina && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <Beef className="size-3.5 text-[color:var(--petrol)]" /> {p.proteina}g proteína
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {p.tags && p.tags.length > 0 && (
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {p.tags.map((t: string) => (
-                        <span key={t} className="text-[10px] font-sub uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border border-[color:var(--sage)]/40 text-[color:var(--sage)]">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {p.emBreve ? <p className="mt-6 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} />}
-                </div>
-              </article>
-            ))}
+            {disponiveis.map((p) => <ProductCard key={p.slug} produto={p} headingLevel="h2" />)}
           </div>
+
+          {emBreve.length > 0 && (
+            <details className="mt-14 group/breve">
+              <summary className="cursor-pointer list-none inline-flex items-center gap-2 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)]">
+                Ver itens em breve ({emBreve.length}) <ChevronDown className="size-4 transition-transform group-open/breve:rotate-180" />
+              </summary>
+              <div className="mt-8 grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {emBreve.map((p) => <ProductCard key={p.slug} produto={p} headingLevel="h2" />)}
+              </div>
+            </details>
+          )}
         </div>
       </section>
 
