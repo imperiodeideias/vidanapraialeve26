@@ -32,6 +32,7 @@ function CartPage() {
   return <SiteChrome><section className="container-x pt-32 pb-28">
     <span className="eyebrow">Confira antes de enviar</span>
     <h1 className="text-4xl mt-4 mb-8">Seu pedido</h1>
+    <p className="-mt-4 mb-8 text-sm text-foreground/70">Entrega agendada a combinar. Atendimento de segunda a sábado, das 9h às 18h. Pagamento por PIX, dinheiro, débito ou crédito.</p>
     {!ready ? <p>Carregando seu carrinho…</p> : !items.length ? <div className="rounded-3xl bg-card p-8 border border-border"><p className="mb-6">Seu carrinho está vazio. Escolha seus produtos favoritos para começar.</p><Link to="/catalogo" className="btn-primary">Explorar catálogo</Link></div> : <div className="grid gap-8 lg:grid-cols-[1fr_360px] items-start">
       <div className="space-y-4">
         {items.map(({ product: p, quantity }) => {

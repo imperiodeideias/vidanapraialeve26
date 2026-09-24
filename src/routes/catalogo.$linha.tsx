@@ -92,7 +92,7 @@ function LinhaNotFound() {
 
 function LinhaPage() {
   const { linha } = Route.useLoaderData();
-  const { estoque } = useEstoque();
+  const { estoque, carregando } = useEstoque();
   const outrasLinhas = linhas.filter((l) => l.slug !== linha.slug).slice(0, 4);
   const produtos: Produto[] = linha.produtos.map((p: Produto) => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
   const disponiveis = produtos.filter(p => !p.emBreve);
@@ -106,6 +106,8 @@ function LinhaPage() {
           src={linha.cover}
           alt=""
           aria-hidden
+          width={1200}
+          height={900}
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--deep)]/60 via-[color:var(--deep)]/50 to-[color:var(--deep)]/85" />
@@ -145,7 +147,7 @@ function LinhaPage() {
 
           {disponiveis.length === 0 && <p className="mb-8 text-foreground/70">Nenhum produto desta categoria está disponível no momento.</p>}
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {disponiveis.map((p) => <ProductCard key={p.slug} produto={p} headingLevel="h2" />)}
+            {disponiveis.map((p) => <ProductCard key={p.slug} produto={p} headingLevel="h2" estoque={estoque} carregando={carregando} />)}
           </div>
 
           {emBreve.length > 0 && (
@@ -154,7 +156,7 @@ function LinhaPage() {
                 Ver itens em breve ({emBreve.length}) <ChevronDown className="size-4 transition-transform group-open/breve:rotate-180" />
               </summary>
               <div className="mt-8 grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {emBreve.map((p) => <ProductCard key={p.slug} produto={p} headingLevel="h2" />)}
+                {emBreve.map((p) => <ProductCard key={p.slug} produto={p} headingLevel="h2" estoque={estoque} carregando={carregando} />)}
               </div>
             </details>
           )}
@@ -177,7 +179,7 @@ function LinhaPage() {
                 className="card-lift group relative overflow-hidden rounded-2xl bg-card block"
               >
                 <div className="relative shrink-0 aspect-[4/3] overflow-hidden">
-                  <CatalogPhoto src={l.cover} alt={l.nome} loading="lazy" className="absolute inset-0 block h-full w-full object-cover object-center" />
+                  <CatalogPhoto src={l.cover} alt={l.nome} loading="lazy" width={1000} height={750} className="absolute inset-0 block h-full w-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/80 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <p className="text-[10px] font-sub uppercase tracking-[0.25em] text-white/70">{l.eyebrow}</p>

@@ -2,10 +2,9 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, ShoppingBag, ShoppingCart } from "lucide-react";
 import { linhas, type Produto } from "@/data/catalogo";
-import { cleanCart, type Quantities } from "@/lib/order";
+import { cleanCart, money, whatsappNumber, type Quantities } from "@/lib/order";
 import { useEstoque } from "@/hooks/useEstoque";
 import { disponivel, precoDe, type EstoqueMap } from "@/lib/estoque";
-import { money, whatsappNumber } from "@/lib/order";
 import { Button } from "@/components/ui/button";
 
 export const cartProducts = linhas.flatMap(l => l.produtos);

@@ -90,6 +90,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             <p className="font-light text-white/70 leading-relaxed">
               Vida na Praia Leve — alimentação saudável, praticidade e leveza. Um jeito novo de viver.
             </p>
+            <p className="mt-4 text-sm leading-relaxed text-white/70">Entrega agendada a combinar. Atendimento de segunda a sábado, das 9h às 18h. Pagamento por PIX, dinheiro, débito ou crédito.</p>
             <FooterContacts />
           </div>
           <div>
