@@ -1,6 +1,6 @@
 import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { useMemo, useState } from "react";
-import { deliveryFee, type DeliveryRegion } from "@/lib/delivery";
+import { deliveryFee, resumoEntrega, type DeliveryRegion } from "@/lib/delivery";
 import { DeliveryForm } from "@/components/DeliveryForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -53,12 +53,12 @@ function CartPage() {
       <aside className="rounded-3xl bg-[color:var(--sand)]/50 p-6 border border-border lg:sticky lg:top-28">
         <h2 className="text-2xl mb-6">Resumo do pedido</h2>
         <dl className="space-y-4">
-          <div className="flex justify-between gap-4"><dt>{pending ? "Subtotal com preço" : "Total dos produtos"}</dt><dd className="font-semibold">{money(total)}</dd></div>
-          <div className="flex justify-between gap-4"><dt>Frete{region.city ? ` (${region.city}-${region.state})` : ""}</dt><dd>{shipping === null ? "A confirmar" : shipping === 0 ? "Grátis" : money(shipping)}</dd></div>
-          <div className="border-t border-border pt-4"><dt>Total final com frete</dt><dd className="mt-1 font-semibold">{grandTotal === null ? "A confirmar após preencher o endereço e os preços" : money(grandTotal)}</dd></div>
+          <div className="flex justify-between gap-4"><dt>{pending ? "Subtotal (itens com preço)" : "Subtotal"}</dt><dd className="font-semibold">{money(total)}</dd></div>
+          <div className="flex justify-between gap-4"><dt>Entrega{region.city ? ` (${region.city}-${region.state})` : ""}</dt><dd>{shipping === null ? (region.city ? "—" : "Informe o CEP") : shipping === 0 ? "Grátis" : money(shipping)}</dd></div>
+          <div className="border-t border-border pt-4"><dt>Total</dt><dd className="mt-1 font-semibold">{grandTotal === null ? (pending ? "Confirmado pela loja na conversa" : "Informe seu CEP para calcular a entrega") : money(grandTotal)}</dd></div>
         </dl>
         {pending && <p className="text-sm mt-4">Há itens com preço sob consulta. Seus valores serão confirmados na conversa.</p>}
-        <p className="text-sm mt-5 mb-6 text-foreground/70">Peruíbe: R$ 8,90, com frete grátis acima de R$ 200 em produtos. Pedro de Toledo, Ana Dias e Itariri: R$ 18,90.</p>
+        <p className="text-sm mt-5 mb-6 text-foreground/70">{resumoEntrega}</p>
         {indisponiveis.length ? <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">Ajuste os itens sem estoque antes de enviar o pedido.</p> : <DeliveryForm onRegionChange={setRegion} getUrl={async dados => {
           const resumo = orderSummary(produtos, quantities, { name: dados.name, address: dados.address, region: dados.region });
           await registrar({ data: {
@@ -72,7 +72,7 @@ function CartPage() {
           } });
           return resumo.url;
         }} />}
-        <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com os itens e valores preenchidos. Toque em enviar para concluir a solicitação. A loja confirmará seu pedido e dará baixa no estoque.</p>
+        <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com seu pedido preenchido. Enviar a mensagem é uma solicitação: a loja confirmará a disponibilidade e o pedido.</p>
       </aside>
     </div>}
   </section></SiteChrome>;
