@@ -1,9 +1,6 @@
 import { CatalogPhoto } from "@/components/CatalogPhoto";
-import { AddToCart } from "@/components/Cart";
-import { ComingSoonBanner } from "@/components/ComingSoonBanner";
-import { ProductPrice } from "@/components/ProductPrice";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, ChevronLeft, ChevronDown, Flame, Beef } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronDown } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
 import { ProductCard } from "@/components/ProductCard";
 import { getLinha, linhas, type Produto } from "@/data/catalogo";

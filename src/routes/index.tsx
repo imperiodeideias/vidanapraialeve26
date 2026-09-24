@@ -252,65 +252,8 @@ function Index() {
           </div>
         </div>
       </section>
-
-
-      {/* MARQUEE VALUES */}
-      <section className="bg-[color:var(--deep)] text-[color:var(--offwhite)] py-6 overflow-hidden">
-        <div className="flex marquee gap-16 whitespace-nowrap font-sub uppercase tracking-[0.35em] text-xs">
-          {Array.from({ length: 2 }).flatMap((_, i) => (
-            ["Vida", "· Leveza ·", "Saúde", "· Praia ·", "Natureza", "· Bem-estar ·", "Qualidade", "· Praticidade ·", "Sofisticação", "· Vida na Praia Leve ·"].map((w, j) => (
-              <span key={`${i}-${j}`} className="text-white/70">{w}</span>
-            ))
-          ))}
-        </div>
-      </section>
-
-      {/* SOBRE */}
-      <section id="sobre" className="py-28 md:py-40">
-        <div className="container-x grid gap-16 lg:grid-cols-12 lg:gap-20 items-center">
-          <div className="lg:col-span-5 order-2 lg:order-1">
-            <div className="relative">
-              <img
-                src={aboutImg}
-                alt="Pessoas reunidas à mesa compartilhando refeições e sucos"
-
-                loading="lazy"
-                width={1122}
-                height={1402}
-                className="rounded-3xl w-full h-auto shadow-[0_40px_80px_-30px_rgba(6,30,38,0.35)] object-cover"
-              />
-              <div className="absolute -bottom-8 -right-4 md:-right-10 bg-[color:var(--sand)] rounded-2xl p-6 max-w-[240px] shadow-xl">
-                <p className="font-script text-3xl text-[color:var(--petrol)] leading-none">leveza</p>
-                <p className="mt-2 text-sm text-[color:var(--deep)]/70 font-light">
-                  em cada refeição, em cada dia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-7 order-1 lg:order-2">
-            <span className="eyebrow">Sobre nós</span>
-            <h2 className="mt-5 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-              Muito mais do que refeições. <span className="text-[color:var(--sage)]">Um jeito de viver.</span>
-            </h2>
-            <p className="mt-8 text-lg font-light text-foreground/70 leading-relaxed max-w-xl">
-              A Vida na Praia Leve nasceu para descomplicar a alimentação saudável. Cuidamos de cada detalhe — do ingrediente ao entregador — para que você tenha mais tempo, mais energia e mais leveza no que realmente importa.
-            </p>
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {[
-                { t: "Missão", d: "Levar praticidade e saúde para a rotina de cada cliente." },
-                { t: "Visão", d: "Ser referência nacional em alimentação saudável e lifestyle." },
-                { t: "Propósito", d: "Inspirar uma vida mais leve, com sabor e propósito." },
-              ].map((b) => (
-                <div key={b.t} className="border-t border-border pt-5">
-                  <p className="font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--coral)]">{b.t}</p>
-                  <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{b.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
+@@ENTREGA@@
+@@DESTAQUES@@
       {/* LINHAS DE PRODUTOS */}
       <section id="linhas" className="py-24 md:py-32 bg-[color:var(--sand)]/40">
         <div className="container-x">
@@ -362,101 +305,6 @@ function Index() {
           </div>
         </div>
       </section>
-
-      {/* SABORES */}
-      <section id="sabores" className="py-24 md:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl">
-            <span className="eyebrow">Cardápio por categoria</span>
-            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-              Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
-            </h2>
-            <p className="mt-6 text-foreground/65 font-light text-lg">
-              Explore o catálogo completo. Busque um produto ou escolha uma categoria.
-            </p>
-          </div>
-
-          <div className="mt-8 max-w-xl">
-            <label htmlFor="busca-produtos" className="block mb-2 font-sub text-sm">Buscar prato ou produto</label>
-            <input id="busca-produtos" type="search" value={busca} onChange={e => { setBusca(e.target.value); setFiltro("todos"); }} placeholder="Ex.: frango, suco, empada..." className="w-full rounded-xl border border-border bg-white px-4 py-3" />
-          </div>
-          <div className="mt-10 flex flex-wrap gap-2.5">
-            {saboresFiltros.map((f) => (
-              <button
-                key={f.slug}
-                onClick={() => setFiltro(f.slug)}
-                aria-pressed={filtro === f.slug}
-                className={`rounded-full px-4 py-2 font-sub text-[11px] uppercase tracking-[0.18em] transition-colors ${
-                  filtro === f.slug
-                    ? "bg-[color:var(--petrol)] text-[color:var(--offwhite)]"
-                    : "bg-[color:var(--sand)]/60 text-foreground/70 hover:bg-[color:var(--sand)]"
-                }`}
-              >
-                {f.nome}
-              </button>
-            ))}
-          </div>
-
-          <p role="status" className="mt-5 text-sm text-foreground/65">{resultados.length} produtos encontrados{resultados.length === 0 ? ". Tente outro termo ou categoria." : ""}</p>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {resultados
-              .map((p) => (
-                <article
-                  key={p.slug}
-                  className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
-                >
-                  <div className="relative shrink-0 aspect-[4/3] overflow-hidden">
-                    <CatalogPhoto
-                      src={p.img}
-                      alt={p.nome}
-                      loading="lazy"
-                      width={1000}
-                      height={750}
-                      className="absolute inset-0 block h-full w-full object-cover object-center"
-                    />
-                  </div>
-                  {p.emBreve && <ComingSoonBanner />}
-                  <div className="p-6">
-                    <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{p.linhaNome}</span>
-                    <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
-                    {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
-                    <ProductPrice produto={p} />
-                    <AddToCart produto={p} />
-                  </div>
-                </article>
-              ))}
-          </div>
-
-          <div className="mt-14 flex justify-center">
-            <Link to="/catalogo" className="btn-ghost text-foreground">
-              Ver os {totalProdutos} produtos <ChevronRight className="size-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* DIFERENCIAIS */}
-
-      <section className="py-24 md:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl mb-16">
-            <span className="eyebrow">Nossos diferenciais</span>
-            <h2 className="mt-4 text-4xl md:text-5xl leading-[1.05]">Feito com cuidado, entregue com carinho.</h2>
-          </div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {diferenciais.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="group">
-                <div className="size-14 rounded-2xl bg-[color:var(--sand)] flex items-center justify-center text-[color:var(--petrol)] transition-transform group-hover:scale-105">
-                  <Icon className="size-6" />
-                </div>
-                <h3 className="mt-6 text-xl">{title}</h3>
-                <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* COMO FUNCIONA */}
       <section id="como" className="relative py-28 md:py-40 overflow-hidden">
         <img src={beachImg} alt="" aria-hidden loading="lazy" width={1920} height={912} className="absolute inset-0 h-full w-full object-cover" />
@@ -479,7 +327,6 @@ function Index() {
           </div>
         </div>
       </section>
-
       {/* DEPOIMENTOS */}
       <section className="py-24 md:py-32">
         <div className="container-x">
@@ -501,7 +348,82 @@ function Index() {
           </div>
         </div>
       </section>
+      {/* SOBRE */}
+      <section id="sobre" className="py-28 md:py-40">
+        <div className="container-x grid gap-16 lg:grid-cols-12 lg:gap-20 items-center">
+          <div className="lg:col-span-5 order-2 lg:order-1">
+            <div className="relative">
+              <img
+                src={aboutImg}
+                alt="Pessoas reunidas à mesa compartilhando refeições e sucos"
 
+                loading="lazy"
+                width={1122}
+                height={1402}
+                className="rounded-3xl w-full h-auto shadow-[0_40px_80px_-30px_rgba(6,30,38,0.35)] object-cover"
+              />
+              <div className="absolute -bottom-8 -right-4 md:-right-10 bg-[color:var(--sand)] rounded-2xl p-6 max-w-[240px] shadow-xl">
+                <p className="font-script text-3xl text-[color:var(--petrol)] leading-none">leveza</p>
+                <p className="mt-2 text-sm text-[color:var(--deep)]/70 font-light">
+                  em cada refeição, em cada dia.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="lg:col-span-7 order-1 lg:order-2">
+            <span className="eyebrow">Sobre nós</span>
+            <h2 className="mt-5 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+              Muito mais do que refeições. <span className="text-[color:var(--sage)]">Um jeito de viver.</span>
+            </h2>
+            <p className="mt-8 text-lg font-light text-foreground/70 leading-relaxed max-w-xl">
+              A Vida na Praia Leve nasceu para descomplicar a alimentação saudável. Cuidamos de cada detalhe — do ingrediente ao entregador — para que você tenha mais tempo, mais energia e mais leveza no que realmente importa.
+            </p>
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[
+                { t: "Missão", d: "Levar praticidade e saúde para a rotina de cada cliente." },
+                { t: "Visão", d: "Ser referência nacional em alimentação saudável e lifestyle." },
+                { t: "Propósito", d: "Inspirar uma vida mais leve, com sabor e propósito." },
+              ].map((b) => (
+                <div key={b.t} className="border-t border-border pt-5">
+                  <p className="font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--coral)]">{b.t}</p>
+                  <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{b.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* MARQUEE VALUES */}
+      <section className="bg-[color:var(--deep)] text-[color:var(--offwhite)] py-6 overflow-hidden">
+        <div className="flex marquee gap-16 whitespace-nowrap font-sub uppercase tracking-[0.35em] text-xs">
+          {Array.from({ length: 2 }).flatMap((_, i) => (
+            ["Vida", "· Leveza ·", "Saúde", "· Praia ·", "Natureza", "· Bem-estar ·", "Qualidade", "· Praticidade ·", "Sofisticação", "· Vida na Praia Leve ·"].map((w, j) => (
+              <span key={`${i}-${j}`} className="text-white/70">{w}</span>
+            ))
+          ))}
+        </div>
+      </section>
+      {/* DIFERENCIAIS */}
+
+      <section className="py-24 md:py-32">
+        <div className="container-x">
+          <div className="max-w-2xl mb-16">
+            <span className="eyebrow">Nossos diferenciais</span>
+            <h2 className="mt-4 text-4xl md:text-5xl leading-[1.05]">Feito com cuidado, entregue com carinho.</h2>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {diferenciais.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="group">
+                <div className="size-14 rounded-2xl bg-[color:var(--sand)] flex items-center justify-center text-[color:var(--petrol)] transition-transform group-hover:scale-105">
+                  <Icon className="size-6" />
+                </div>
+                <h3 className="mt-6 text-xl">{title}</h3>
+                <p className="mt-3 text-sm text-foreground/65 font-light leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* MARCAS PARCEIRAS */}
       <section id="blog" className="py-20 bg-[color:var(--sand)]/40">
         <div className="container-x">
@@ -527,7 +449,6 @@ function Index() {
           </div>
         </div>
       </section>
-
       {/* NEWSLETTER */}
       <section id="pedir" className="py-28 md:py-40">
         <div className="container-x">
@@ -546,7 +467,6 @@ function Index() {
           </div>
         </div>
       </section>
-
       {/* FOOTER */}
       <footer className="bg-[color:var(--deep)] text-[color:var(--offwhite)] pt-20 pb-10">
         <div className="container-x grid gap-14 lg:grid-cols-12">
