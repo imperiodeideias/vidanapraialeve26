@@ -1,4 +1,4 @@
-import { CartProvider, CartLink } from "@/components/Cart";
+import { CartProvider, CartLink, FloatingWhatsApp } from "@/components/Cart";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -126,7 +126,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider><Outlet /><CartLink /></CartProvider>
+      <CartProvider><Outlet /><CartLink /><FloatingWhatsApp /></CartProvider>
     </QueryClientProvider>
   );
 }
