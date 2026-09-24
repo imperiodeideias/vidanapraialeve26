@@ -12,7 +12,15 @@ import { disponivel, precoDe } from "@/lib/estoque";
 import { criarPedido } from "@/lib/loja.functions";
 
 export const Route = createFileRoute("/carrinho")({
-  head: () => ({ meta: [{ title: "Seu pedido — Vida na Praia Leve" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [
+    { title: "Seu pedido — Vida na Praia Leve" },
+    { name: "description", content: "Confira os produtos, calcule a entrega pelo CEP e envie sua solicitação à Vida na Praia Leve." },
+    { property: "og:title", content: "Seu pedido — Vida na Praia Leve" },
+    { property: "og:description", content: "Confira os produtos e calcule a entrega antes de enviar sua solicitação." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+    { name: "robots", content: "noindex" },
+  ] }),
   component: CartPage,
 });
 function CartPage() {
