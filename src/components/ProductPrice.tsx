@@ -21,7 +21,7 @@ export function ProductPrice({ produto }: { produto: Produto }) {
         </p>
       )}
       {emEstoque !== undefined && emEstoque > 0 && emEstoque <= 2 && (
-        <p className="mt-1 text-xs text-[color:var(--coral)]">Últimas {emEstoque} unidades</p>
+        <p className="mt-1 text-xs text-[color:var(--coral)]">{emEstoque === 1 ? "Última unidade" : `Últimas ${emEstoque} unidades`}</p>
       )}
     </div>
   );
