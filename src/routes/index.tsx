@@ -1,9 +1,9 @@
 import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeroPhoto } from "@/components/HeroPhoto";
-import { AddToCart, HeaderCart } from "@/components/Cart";
-import { ComingSoonBanner } from "@/components/ComingSoonBanner";
-import { ProductPrice } from "@/components/ProductPrice";
+import { HeaderCart } from "@/components/Cart";
+import { ProductCard } from "@/components/ProductCard";
+import { CIDADES_ATENDIDAS, resumoEntrega } from "@/lib/delivery";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -45,9 +45,12 @@ const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
 const sabores = catalogoLinhas.flatMap((l) =>
   l.produtos.map((p) => ({ ...p, linhaSlug: l.slug, linhaNome: l.nome })),
 );
-const saboresFiltros = [
-  { slug: "todos", nome: "Todos" },
-  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.nome })),
+const navHome = [
+  ["Início", "/"],
+  ["Catálogo", "/catalogo"],
+  ["Kit Detox", "/catalogo/kits-detox"],
+  ["Como funciona", "#como"],
+  ["Sobre", "#sobre"],
 ];
 
 
@@ -79,7 +82,7 @@ const diferenciais = [
 ];
 
 const passos = [
-  { n: "01", t: "Escolha", d: "Monte seu pedido ou assine um plano." },
+  { n: "01", t: "Escolha", d: "Monte seu pedido no site e envie pelo WhatsApp." },
   { n: "02", t: "Receba", d: "Entregamos congelado, com toda a segurança." },
   { n: "03", t: "Aqueça", d: "Pronto em minutos, no micro-ondas." },
   { n: "04", t: "Aproveite", d: "Coma bem, viva leve, tenha mais tempo." },
@@ -95,14 +98,11 @@ const depoimentos = [
 function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [filtro, setFiltro] = useState("todos");
-  const [busca, setBusca] = useState("");
   const { estoque } = useEstoque();
-  const normalizar = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  const resultados = sabores
-    .map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }))
-    .filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim())))
-    .sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
+  const comStatus = sabores.map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
+  // Um destaque por categoria (rodízio), só com itens disponíveis.
+  const destaques = estoque ? catalogoLinhas.flatMap(l => comStatus.filter(p => p.linhaSlug === l.slug && !p.emBreve).slice(0, 2)).slice(0, 8) : [];
+  const disponiveisPorLinha = (slug: string) => comStatus.filter(p => p.linhaSlug === slug && !p.emBreve).length;
 
 
 
@@ -123,7 +123,7 @@ function Index() {
       >
         <div className="bg-[color:var(--deep)] text-[color:var(--offwhite)]">
           <div className="container-x flex items-center justify-center gap-3 py-2 text-[10px] sm:text-[11px] font-sub uppercase tracking-[0.25em]">
-            <span className="text-white text-center">Pedidos acima de R$ 200: frete grátis em Peruíbe-SP</span>
+            <span className="text-white text-center">Frete grátis em Peruíbe acima de R$ 200</span>
             <span className="hidden sm:inline text-[color:var(--coral)]">•</span>
             <a
               href="https://www.instagram.com/vidanapraialeve/"
@@ -140,12 +140,7 @@ function Index() {
             <img src={logoAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
           </a>
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
-            {[
-              ["Sobre", "#sobre"],
-              ["Categorias", "#linhas"],
-              ["Sabores", "#sabores"],
-              ["Como funciona", "#como"],
-            ].map(([l, h]) => (
+            {navHome.map(([l, h]) => (
               <a key={h} href={h} className="text-foreground/80 transition-colors hover:text-accent">
                 {l}
               </a>
@@ -173,7 +168,7 @@ function Index() {
             <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {[["Sobre","#sobre"],["Categorias","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
+            {navHome.map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <div className="flex items-center gap-4 mt-6">
@@ -199,12 +194,12 @@ function Index() {
               <span className="font-script text-[color:var(--coral)] text-6xl sm:text-7xl lg:text-[92px] leading-none">pelo prato.</span>
             </h1>
             <p className="mt-8 max-w-xl font-light text-lg text-foreground/70 leading-relaxed">
-              Refeições, sucos, lanches e doces escolhidos para quem quer praticidade, sabor e bem-estar — sem transformar a alimentação em uma obrigação.
+              Refeições congeladas prontas para aquecer, além de sucos, lanches e doces. Entregamos em Peruíbe, Pedro de Toledo, Ana Dias e Itariri.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <a href="#sabores" className="btn-primary bg-[color:var(--coral)] shadow-[0_20px_50px_-18px_rgba(230,126,95,0.7)] hover:!bg-[color:var(--coral)]">
-                Explorar sabores <ArrowRight className="size-4" />
-              </a>
+              <Link to="/catalogo" className="btn-primary bg-[color:var(--coral)] shadow-[0_20px_50px_-18px_rgba(230,126,95,0.7)] hover:!bg-[color:var(--coral)]">
+                Ver cardápio e preços <ArrowRight className="size-4" />
+              </Link>
               <a
                 href="https://www.instagram.com/vidanapraialeve/"
                 target="_blank"
@@ -252,8 +247,31 @@ function Index() {
           </div>
         </div>
       </section>
-@@ENTREGA@@
-@@DESTAQUES@@
+      {/* ENTREGA */}
+      <section aria-label="Entrega" className="bg-[color:var(--petrol)] text-[color:var(--offwhite)]">
+        <div className="container-x grid gap-4 py-6 md:grid-cols-3 md:items-center text-sm">
+          <p className="inline-flex items-start gap-2"><Truck className="size-4 mt-0.5 shrink-0" /> <span><strong className="font-semibold">Entregamos em</strong> {CIDADES_ATENDIDAS.join(", ").replace(/, ([^,]*)$/, " e $1")} (SP).</span></p>
+          <p className="inline-flex items-start gap-2"><MapPin className="size-4 mt-0.5 shrink-0" /> {resumoEntrega}</p>
+          <p className="inline-flex items-start gap-2"><MessageCircle className="size-4 mt-0.5 shrink-0" /> Você envia a solicitação pelo WhatsApp e a loja confirma o pedido.</p>
+        </div>
+      </section>
+      {/* DESTAQUES DISPONIVEIS */}
+      <section id="destaques" className="py-24 md:py-32">
+        <div className="container-x">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div className="max-w-2xl">
+              <span className="eyebrow">Disponíveis agora</span>
+              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
+              </h2>
+            </div>
+            <Link to="/catalogo" className="btn-ghost self-start md:self-end text-foreground">Ver cardápio completo <ChevronRight className="size-4" /></Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {destaques.map(p => <ProductCard key={p.slug} produto={p} categoria={p.linhaNome} />)}
+          </div>
+        </div>
+      </section>
       {/* LINHAS DE PRODUTOS */}
       <section id="linhas" className="py-24 md:py-32 bg-[color:var(--sand)]/40">
         <div className="container-x">
@@ -268,7 +286,7 @@ function Index() {
           </div>
 
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {linhas.map((l, i) => (
+            {linhas.map((l) => (
               <article
                 key={l.slug}
                 className="card-lift group relative flex h-full flex-col overflow-hidden rounded-3xl bg-card shadow-sm"
@@ -286,8 +304,8 @@ function Index() {
                   <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
                     {l.tag}
                   </span>
-                  <span className="absolute top-5 right-6 font-display text-3xl text-white/70">
-                    {String(i + 1).padStart(2, "0")}
+                  <span className="absolute bottom-4 left-5 rounded-full bg-[color:var(--deep)]/75 px-3 py-1 text-[11px] font-sub uppercase tracking-[0.18em] text-white">
+                    {disponiveisPorLinha(l.slug)} {disponiveisPorLinha(l.slug) === 1 ? "disponível" : "disponíveis"}
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-7">
@@ -425,7 +443,7 @@ function Index() {
         </div>
       </section>
       {/* MARCAS PARCEIRAS */}
-      <section id="blog" className="py-20 bg-[color:var(--sand)]/40">
+      <section id="marcas" className="py-20 bg-[color:var(--sand)]/40">
         <div className="container-x">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5">
@@ -479,7 +497,7 @@ function Index() {
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
-              { t: "Explore", l: [["Sobre", "/#sobre"], ["Categorias", "/#linhas"], ["Sabores", "/#sabores"], ["Blog", "/#blog"]] },
+              { t: "Explore", l: [["Sobre", "/#sobre"], ["Categorias", "/#linhas"], ["Cardápio e preços", "/catalogo"]] },
               { t: "Sua compra", l: [["Como funciona", "/#como"], ["Catálogo completo", "/catalogo"], ["Kit Detox", "/catalogo/kits-detox"], ["Meu carrinho", "/carrinho"]] },
               { t: "Contato", l: [["WhatsApp", contactLinks.whatsapp], ["Instagram", contactLinks.instagram], ["contato@vidanapraialeve.com.br", contactLinks.email], ["Consultar entrega em Peruíbe", contactLinks.whatsapp]] },
             ].map((c) => (
