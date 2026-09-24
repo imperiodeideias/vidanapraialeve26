@@ -1,6 +1,7 @@
 import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeaderCart } from "@/components/Cart";
 import { Link } from "@tanstack/react-router";
+import { resumoEntrega } from "@/lib/delivery";
 import { useEffect, useState, type ReactNode } from "react";
 import { Menu, X, Instagram, MessageCircle, Mail, MapPin, User } from "lucide-react";
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
@@ -15,9 +16,9 @@ type NavItem =
 const navItems: NavItem[] = [
   { l: "Início", to: "/" },
   { l: "Catálogo", to: "/catalogo" },
-  { l: "Sobre", href: "/#sobre" },
   { l: "Kit Detox", href: "/catalogo/kits-detox" },
   { l: "Como funciona", href: "/#como" },
+  { l: "Sobre", href: "/#sobre" },
 ];
 
 export function SiteChrome({ children, transparentUntilScroll = false }: Props) {
@@ -96,7 +97,7 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
         </div>
       )}
 
-      <main className="flex-1"><div className="mt-20 bg-[color:var(--petrol)] text-white text-center px-4 py-3 text-sm">Peruíbe: frete R$ 8,90 e grátis acima de R$ 200. Pedro de Toledo, Ana Dias e Itariri: R$ 18,90.</div>{children}</main>
+      <main className="flex-1"><div className="mt-20 bg-[color:var(--petrol)] text-white text-center px-4 py-3 text-sm">{resumoEntrega}</div>{children}</main>
 
       <footer className="bg-[color:var(--deep)] text-[color:var(--offwhite)] pt-20 pb-10">
         <div className="container-x grid gap-12 lg:grid-cols-4">
@@ -112,8 +113,10 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
             <ul className="space-y-3 text-sm text-white/80">
               <li><Link to="/" className="hover:text-white">Início</Link></li>
               <li><Link to="/catalogo" className="hover:text-white">Catálogo</Link></li>
-              <li><a href="/#sobre" className="hover:text-white">Sobre</a></li>
               <li><a href="/catalogo/kits-detox" className="hover:text-white">Kit Detox</a></li>
+              <li><a href="/#como" className="hover:text-white">Como funciona</a></li>
+              <li><a href="/#sobre" className="hover:text-white">Sobre</a></li>
+              <li><Link to="/carrinho" className="hover:text-white">Meu carrinho</Link></li>
             </ul>
           </div>
           <div>

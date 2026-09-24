@@ -81,20 +81,20 @@ export function DeliveryForm({ getUrl, onRegionChange }: { getUrl: (dados: Dados
       setEnviando(false);
     }
   }}>
+    <div><label htmlFor="pedido-cep" className="block text-sm mb-2">CEP de entrega</label><input id="pedido-cep" autoComplete="postal-code" inputMode="numeric" required pattern="[0-9]{5}-[0-9]{3}" maxLength={9} value={cep.length > 5 ? cep.slice(0,5) + "-" + cep.slice(5) : cep} onChange={e => { ++version.current; setPostalRegion(null); setCep(e.target.value.replace(/\D/g, "").slice(0,8)); setFields({ street: "", number: "", district: "", city: "", state: "" }); setOpened(""); }} className={inputClass} /></div>
     <div><label htmlFor="pedido-nome" className="block text-sm mb-2">Seu nome</label><input id="pedido-nome" autoComplete="name" required minLength={2} maxLength={120} value={name} onChange={e => { setName(e.target.value); setOpened(""); }} className={inputClass} /></div>
     <div><label htmlFor="pedido-telefone" className="block text-sm mb-2">Telefone / WhatsApp</label><input id="pedido-telefone" autoComplete="tel" inputMode="tel" required maxLength={30} value={phone} onChange={e => { setPhone(e.target.value); setOpened(""); }} className={inputClass} /></div>
     <div><label htmlFor="pedido-cpf" className="block text-sm mb-2">CPF (opcional)</label><input id="pedido-cpf" inputMode="numeric" maxLength={14} value={cpf} onChange={e => { setCpf(e.target.value); setOpened(""); }} className={inputClass} /></div>
-    <div><label htmlFor="pedido-cep" className="block text-sm mb-2">CEP</label><input id="pedido-cep" autoComplete="postal-code" inputMode="numeric" required pattern="[0-9]{5}-[0-9]{3}" maxLength={9} value={cep.length > 5 ? cep.slice(0,5) + "-" + cep.slice(5) : cep} onChange={e => { ++version.current; setPostalRegion(null); setCep(e.target.value.replace(/\D/g, "").slice(0,8)); setFields({ street: "", number: "", district: "", city: "", state: "" }); setOpened(""); }} className={inputClass} /></div>
     <p role="status" className="text-xs text-foreground/65">{status}</p>
     {([
       ["street", "Endereço", "address-line1"], ["number", "Número", "off"],
       ["district", "Bairro", "address-level3"], ["city", "Cidade", "address-level2"],
     ] as const).map(([key, label, autocomplete]) => <div key={key}><label htmlFor={"pedido-" + key} className="block text-sm mb-2">{label}</label><input id={"pedido-" + key} autoComplete={autocomplete} required maxLength={160} disabled={loading} value={fields[key]} onChange={e => { setFields(old => ({ ...old, [key]: e.target.value })); setOpened(""); }} className={inputClass} /></div>)}
-    <div><label htmlFor="pedido-state" className="block text-sm mb-2">Estado</label><select id="pedido-state" autoComplete="address-level1" required disabled={loading} value={fields.state} onChange={e => { setFields(old => ({ ...old, state: e.target.value })); setOpened(""); }} className={inputClass}><option value="">Selecione</option>{"AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(" ").map(uf => <option key={uf}>{uf}</option>)}</select></div>
-    <p className="text-xs text-foreground/65">Entregamos em Peruíbe, Pedro de Toledo, Ana Dias e Itariri (SP). Nome e endereço serão incluídos no WhatsApp.</p>
+    <div><label htmlFor="pedido-state" className="block text-sm mb-2">Estado</label><select id="pedido-state" autoComplete="address-level1" required disabled={loading} value={fields.state} onChange={e => { setFields(old => ({ ...old, state: e.target.value })); setOpened(""); }} className={inputClass}><option value="">Selecione</option><option value="SP">SP</option>{fields.state && fields.state !== "SP" && <option value={fields.state}>{fields.state}</option>}</select></div>
+    <p className="text-xs text-foreground/65">Entregamos em Peruíbe, Pedro de Toledo, Ana Dias e Itariri (SP). Nome e endereço serão incluídos na mensagem do WhatsApp.</p>
     {blocked && <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">Infelizmente não atendemos a sua região.</p>}
     {erro && <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">{erro}</p>}
-    <button type="submit" disabled={loading || blocked || enviando} className="btn-primary w-full text-center !px-4 disabled:opacity-50">{enviando ? "Registrando pedido…" : "Enviar pedido pelo WhatsApp"}</button>
+    <button type="submit" disabled={loading || blocked || enviando} className="btn-primary w-full text-center !px-4 disabled:opacity-50">{enviando ? "Registrando pedido…" : "Enviar solicitação pelo WhatsApp"}</button>
     {opened && <button type="button" onClick={() => setModalOpen(true)} className="w-full underline text-sm">Conferir envio do pedido</button>}
   </form>
   <Dialog open={modalOpen} onOpenChange={setModalOpen}>
