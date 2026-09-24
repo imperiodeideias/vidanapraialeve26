@@ -21,6 +21,7 @@ import {
   Menu,
   X,
   Star,
+  User,
 } from "lucide-react";
 
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
@@ -40,7 +41,6 @@ const whatsappPedidoUrl = "https://wa.me/551333662961?text=" + encodeURIComponen
   "Olá, estou no site da Vida na Praia Leve e gostaria de fazer um pedido"
 );
 
-const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
 
 const sabores = catalogoLinhas.flatMap((l) =>
   l.produtos.map((p) => ({ ...p, linhaSlug: l.slug, linhaNome: l.nome })),
@@ -147,6 +147,9 @@ function Index() {
             ))}
           </nav>
           <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
+            <Link to="/conta" title="Minha conta" aria-label="Minha conta" className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-current/20 text-[color:var(--petrol)] hover:bg-[color:var(--sand)] transition-colors">
+              <User className="size-5" aria-hidden="true" />
+            </Link>
             <HeaderCart />
           </div>
           <button
