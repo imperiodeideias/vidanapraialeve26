@@ -19,7 +19,6 @@ import {
   MapPin,
   Mail,
   Menu,
-  X,
   Star,
   User,
 } from "lucide-react";
@@ -35,11 +34,11 @@ import { emBreveDe } from "@/lib/estoque";
 import pHero from "@/assets/hero-prato-blue-majik.webp";
 import pHero2 from "@/assets/hero-lanche-vitalmax.webp";
 import pHero3 from "@/assets/hero-doces.webp";
-
-
-const whatsappPedidoUrl = "https://wa.me/551333662961?text=" + encodeURIComponent(
-  "Olá, estou no site da Vida na Praia Leve e gostaria de fazer um pedido"
-);
+import pHeroMobile from "@/assets/hero-prato-720.webp.asset.json";
+import pHero2Mobile from "@/assets/hero-lanche-480.webp.asset.json";
+import pHero3Mobile from "@/assets/hero-doces-480.webp.asset.json";
+import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 
 const sabores = catalogoLinhas.flatMap((l) =>
@@ -98,7 +97,7 @@ const depoimentos = [
 function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { estoque } = useEstoque();
+  const { estoque, carregando } = useEstoque();
   const comStatus = sabores.map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
   // Um destaque por categoria (rodízio), só com itens disponíveis.
   const destaques = estoque ? catalogoLinhas.flatMap(l => comStatus.filter(p => p.linhaSlug === l.slug && !p.emBreve).slice(0, 2)).slice(0, 8) : [];
@@ -137,7 +136,7 @@ function Index() {
         </div>
         <div className="container-x flex items-center justify-between py-3.5">
           <a href="#top" className="flex items-center gap-3">
-            <img src={logoAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
+            <img src={logoAsset.url} alt="Vida na Praia Leve" width={160} height={100} className="h-11 w-auto" />
           </a>
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
             {navHome.map(([l, h]) => (
@@ -152,40 +151,24 @@ function Index() {
             </Link>
             <HeaderCart />
           </div>
-          <button
-            className="lg:hidden text-foreground"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Abrir menu"
-          >
-            <Menu className="size-6" />
-          </button>
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild><Button variant="ghost" size="icon" className="size-11 text-foreground lg:hidden" aria-label="Abrir menu"><Menu className="size-6" /></Button></SheetTrigger>
+            <SheetContent side="right" className="w-full max-w-none px-6 pt-24 sm:max-w-sm">
+              <SheetTitle className="sr-only">Menu principal</SheetTitle>
+              <nav className="flex flex-col gap-2 text-2xl font-display" aria-label="Menu principal">
+                {navHome.map(([l,h]) => <SheetClose asChild key={h}><a href={h} className="flex min-h-12 items-center">{l}</a></SheetClose>)}
+                <div className="mt-6 flex items-center gap-4"><HeaderCart onClick={() => setMenuOpen(false)} /></div>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </header>
 
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-background">
-          <div className="container-x flex items-center justify-between py-4">
-            <img src={logoAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
-            <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
-          </div>
-          <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {navHome.map(([l,h])=>(
-              <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
-            ))}
-            <div className="flex items-center gap-4 mt-6">
-              <HeaderCart onClick={() => setMenuOpen(false)} />
-            </div>
-          </nav>
-        </div>
-      )}
-
       {/* HERO */}
-      <section id="top" className="relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
+      <section id="top" className="relative overflow-hidden pt-32 pb-12 sm:pt-36 sm:pb-16 md:pt-44 md:pb-28">
         <div className="pointer-events-none absolute -top-40 -right-32 size-[560px] rounded-full bg-[color:var(--sage)]/20 blur-3xl" />
         <div className="pointer-events-none absolute bottom-0 -left-32 size-[420px] rounded-full bg-[color:var(--coral)]/10 blur-3xl" />
-        <div className="relative container-x grid items-center gap-16 lg:grid-cols-12 lg:gap-10">
+        <div className="relative container-x grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-10">
           {/* Texto */}
           <div className="lg:col-span-6 animate-fade-up">
             <span className="inline-flex items-center gap-2.5 font-sub uppercase tracking-[0.25em] text-[11px] text-[color:var(--petrol)]">
@@ -220,17 +203,20 @@ function Index() {
               <div className="absolute inset-x-6 top-0 bottom-24 rounded-full bg-[color:var(--sage)]/25" />
               <HeroPhoto
                 src={pHero}
+                mobileSrc={pHeroMobile.url}
                 eager
                 alt="Suco Blue Majik com salmão ao molho de maracujá, arroz negro e brócolis"
                 className="blob-a absolute left-[10%] top-[2%] w-[80%] aspect-square  bg-[color:var(--sand)] shadow-[0_40px_80px_-30px_rgba(6,30,38,0.45)] ring-8 ring-background"
               />
               <HeroPhoto
                 src={pHero2}
+                mobileSrc={pHero2Mobile.url}
                 alt="Suco Vital Max com lanche de frango e pães de queijo"
                 className="blob-b animate-floaty absolute left-0 bottom-[6%] w-[38%] aspect-square  bg-[color:var(--sand)] shadow-xl ring-8 ring-background"
               />
               <HeroPhoto
                 src={pHero3}
+                mobileSrc={pHero3Mobile.url}
                 alt="Doces fit: mousse de limão, brigadeiro, beijinho e brownie"
                 className="absolute right-0 bottom-0 w-[36%] aspect-square rounded-full  bg-[color:var(--sand)] shadow-xl ring-8 ring-background"
               />
@@ -271,7 +257,7 @@ function Index() {
             <Link to="/catalogo" className="btn-ghost self-start md:self-end text-foreground">Ver cardápio completo <ChevronRight className="size-4" /></Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {destaques.map(p => <ProductCard key={p.slug} produto={p} categoria={p.linhaNome} />)}
+            {carregando ? Array.from({ length: 4 }).map((_, i) => <div key={i} className="aspect-[3/4] animate-pulse rounded-3xl bg-muted" aria-hidden="true" />) : destaques.map(p => <ProductCard key={p.slug} produto={p} categoria={p.linhaNome} estoque={estoque} carregando={carregando} />)}
           </div>
         </div>
       </section>
@@ -457,7 +443,7 @@ function Index() {
               </p>
             </div>
             <div className="lg:col-span-7 flex flex-wrap items-center gap-10 lg:justify-end">
-              <img src={logoLfwAsset.url} alt="Light Food Way" loading="lazy" className="h-16 w-auto opacity-90" />
+              <img src={logoLfwAsset.url} alt="Light Food Way" loading="lazy" width={220} height={120} className="h-16 w-auto opacity-90" />
               <div className="text-center px-6 py-4 rounded-2xl border border-dashed border-foreground/20">
                 <p className="font-script text-3xl text-[color:var(--sage)]">em breve</p>
                 <p className="text-[10px] font-sub uppercase tracking-[0.25em] text-foreground/50 mt-1">Novas marcas</p>
@@ -492,10 +478,11 @@ function Index() {
       <footer className="bg-[color:var(--deep)] text-[color:var(--offwhite)] pt-20 pb-10">
         <div className="container-x grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <img src={logoLightAsset.url} alt="Vida na Praia Leve" className="h-14 w-auto" />
-            <p className="mt-6 text-white/65 font-light max-w-sm">
+            <img src={logoLightAsset.url} alt="Vida na Praia Leve" loading="lazy" width={160} height={100} className="h-14 w-auto" />
+            <p className="mt-6 text-white/70 font-light max-w-sm">
               Alimentação saudável, prática e deliciosa. Uma marca brasileira de lifestyle para você viver com mais leveza.
             </p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">Entrega agendada a combinar. Atendimento de segunda a sábado, das 9h às 18h. Pagamento por PIX, dinheiro, débito ou crédito.</p>
             <FooterContacts />
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
@@ -522,19 +509,6 @@ function Index() {
           </div>
         </div>
       </footer>
-
-      {/* WhatsApp flutuante */}
-      <a
-        href={whatsappPedidoUrl}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Fale conosco pelo WhatsApp"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center size-14 rounded-full bg-[#25D366] text-white shadow-[0_12px_40px_-12px_rgba(37,211,102,0.7)] hover:scale-110 transition-transform duration-300"
-      >
-        <svg className="size-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403c-.514.056-.97.43-1.136.916-.198.56.04 1.166.53 1.49.49.323 1.13.29 1.58-.084.45-.373.62-.99.42-1.55-.2-.56-.74-.91-1.394-.772M12.048 2C6.516 2 2 6.486 2 12.016c0 2.13.663 4.132 1.806 5.79L2.6 21.416l3.675-1.177A9.96 9.96 0 0 0 12.048 22c5.532 0 10.048-4.486 10.048-10.016S17.58 2 12.048 2z"/>
-        </svg>
-      </a>
     </div>
   );
 }
