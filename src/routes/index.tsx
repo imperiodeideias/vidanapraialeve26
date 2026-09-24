@@ -1,9 +1,9 @@
 import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { FooterContacts, contactLinks } from "@/components/FooterContacts";
 import { HeroPhoto } from "@/components/HeroPhoto";
-import { AddToCart, HeaderCart } from "@/components/Cart";
-import { ComingSoonBanner } from "@/components/ComingSoonBanner";
-import { ProductPrice } from "@/components/ProductPrice";
+import { HeaderCart } from "@/components/Cart";
+import { ProductCard } from "@/components/ProductCard";
+import { CIDADES_ATENDIDAS, resumoEntrega } from "@/lib/delivery";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ import {
   Menu,
   X,
   Star,
+  User,
 } from "lucide-react";
 
 import logoAsset from "@/assets/logo-vnpl.png.asset.json";
@@ -40,14 +41,16 @@ const whatsappPedidoUrl = "https://wa.me/551333662961?text=" + encodeURIComponen
   "Olá, estou no site da Vida na Praia Leve e gostaria de fazer um pedido"
 );
 
-const totalProdutos = catalogoLinhas.reduce((n, l) => n + l.produtos.length, 0);
 
 const sabores = catalogoLinhas.flatMap((l) =>
   l.produtos.map((p) => ({ ...p, linhaSlug: l.slug, linhaNome: l.nome })),
 );
-const saboresFiltros = [
-  { slug: "todos", nome: "Todos" },
-  ...catalogoLinhas.map((l) => ({ slug: l.slug, nome: l.nome })),
+const navHome = [
+  ["Início", "/"],
+  ["Catálogo", "/catalogo"],
+  ["Kit Detox", "/catalogo/kits-detox"],
+  ["Como funciona", "#como"],
+  ["Sobre", "#sobre"],
 ];
 
 
@@ -79,7 +82,7 @@ const diferenciais = [
 ];
 
 const passos = [
-  { n: "01", t: "Escolha", d: "Monte seu pedido ou assine um plano." },
+  { n: "01", t: "Escolha", d: "Monte seu pedido no site e envie pelo WhatsApp." },
   { n: "02", t: "Receba", d: "Entregamos congelado, com toda a segurança." },
   { n: "03", t: "Aqueça", d: "Pronto em minutos, no micro-ondas." },
   { n: "04", t: "Aproveite", d: "Coma bem, viva leve, tenha mais tempo." },
@@ -95,14 +98,11 @@ const depoimentos = [
 function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [filtro, setFiltro] = useState("todos");
-  const [busca, setBusca] = useState("");
   const { estoque } = useEstoque();
-  const normalizar = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  const resultados = sabores
-    .map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }))
-    .filter(p => (filtro === "todos" || p.linhaSlug === filtro) && normalizar([p.nome, p.subtitulo, p.descricao, p.tipo, p.linhaNome].filter(Boolean).join(" ")).includes(normalizar(busca.trim())))
-    .sort((a,b) => Number(a.emBreve) - Number(b.emBreve));
+  const comStatus = sabores.map(p => ({ ...p, emBreve: emBreveDe(p.slug, p.emBreve, estoque) }));
+  // Um destaque por categoria (rodízio), só com itens disponíveis.
+  const destaques = estoque ? catalogoLinhas.flatMap(l => comStatus.filter(p => p.linhaSlug === l.slug && !p.emBreve).slice(0, 2)).slice(0, 8) : [];
+  const disponiveisPorLinha = (slug: string) => comStatus.filter(p => p.linhaSlug === slug && !p.emBreve).length;
 
 
 
@@ -123,7 +123,7 @@ function Index() {
       >
         <div className="bg-[color:var(--deep)] text-[color:var(--offwhite)]">
           <div className="container-x flex items-center justify-center gap-3 py-2 text-[10px] sm:text-[11px] font-sub uppercase tracking-[0.25em]">
-            <span className="text-white text-center">Pedidos acima de R$ 200: frete grátis em Peruíbe-SP</span>
+            <span className="text-white text-center">Frete grátis em Peruíbe acima de R$ 200</span>
             <span className="hidden sm:inline text-[color:var(--coral)]">•</span>
             <a
               href="https://www.instagram.com/vidanapraialeve/"
@@ -140,18 +140,16 @@ function Index() {
             <img src={logoAsset.url} alt="Vida na Praia Leve" className="h-11 w-auto" />
           </a>
           <nav className="hidden lg:flex items-center gap-9 font-sub text-[13px] uppercase tracking-[0.18em]">
-            {[
-              ["Sobre", "#sobre"],
-              ["Categorias", "#linhas"],
-              ["Sabores", "#sabores"],
-              ["Como funciona", "#como"],
-            ].map(([l, h]) => (
+            {navHome.map(([l, h]) => (
               <a key={h} href={h} className="text-foreground/80 transition-colors hover:text-accent">
                 {l}
               </a>
             ))}
           </nav>
           <div className="flex items-center gap-3 ml-auto lg:ml-0 mr-4 lg:mr-0">
+            <Link to="/conta" title="Minha conta" aria-label="Minha conta" className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-current/20 text-[color:var(--petrol)] hover:bg-[color:var(--sand)] transition-colors">
+              <User className="size-5" aria-hidden="true" />
+            </Link>
             <HeaderCart />
           </div>
           <button
@@ -173,7 +171,7 @@ function Index() {
             <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu"><X className="size-6" /></button>
           </div>
           <nav className="container-x mt-10 flex flex-col gap-6 text-2xl font-display">
-            {[["Sobre","#sobre"],["Categorias","#linhas"],["Sabores","#sabores"],["Como funciona","#como"]].map(([l,h])=>(
+            {navHome.map(([l,h])=>(
               <a key={h} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>
             ))}
             <div className="flex items-center gap-4 mt-6">
@@ -199,12 +197,12 @@ function Index() {
               <span className="font-script text-[color:var(--coral)] text-6xl sm:text-7xl lg:text-[92px] leading-none">pelo prato.</span>
             </h1>
             <p className="mt-8 max-w-xl font-light text-lg text-foreground/70 leading-relaxed">
-              Refeições, sucos, lanches e doces escolhidos para quem quer praticidade, sabor e bem-estar — sem transformar a alimentação em uma obrigação.
+              Refeições congeladas prontas para aquecer, além de sucos, lanches e doces. Entregamos em Peruíbe, Pedro de Toledo, Ana Dias e Itariri.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <a href="#sabores" className="btn-primary bg-[color:var(--coral)] shadow-[0_20px_50px_-18px_rgba(230,126,95,0.7)] hover:!bg-[color:var(--coral)]">
-                Explorar sabores <ArrowRight className="size-4" />
-              </a>
+              <Link to="/catalogo" className="btn-primary bg-[color:var(--coral)] shadow-[0_20px_50px_-18px_rgba(230,126,95,0.7)] hover:!bg-[color:var(--coral)]">
+                Ver cardápio e preços <ArrowRight className="size-4" />
+              </Link>
               <a
                 href="https://www.instagram.com/vidanapraialeve/"
                 target="_blank"
@@ -252,19 +250,125 @@ function Index() {
           </div>
         </div>
       </section>
-
-
-      {/* MARQUEE VALUES */}
-      <section className="bg-[color:var(--deep)] text-[color:var(--offwhite)] py-6 overflow-hidden">
-        <div className="flex marquee gap-16 whitespace-nowrap font-sub uppercase tracking-[0.35em] text-xs">
-          {Array.from({ length: 2 }).flatMap((_, i) => (
-            ["Vida", "· Leveza ·", "Saúde", "· Praia ·", "Natureza", "· Bem-estar ·", "Qualidade", "· Praticidade ·", "Sofisticação", "· Vida na Praia Leve ·"].map((w, j) => (
-              <span key={`${i}-${j}`} className="text-white/70">{w}</span>
-            ))
-          ))}
+      {/* ENTREGA */}
+      <section aria-label="Entrega" className="bg-[color:var(--petrol)] text-[color:var(--offwhite)]">
+        <div className="container-x grid gap-4 py-6 md:grid-cols-3 md:items-center text-sm">
+          <p className="inline-flex items-start gap-2"><Truck className="size-4 mt-0.5 shrink-0" /> <span><strong className="font-semibold">Entregamos em</strong> {CIDADES_ATENDIDAS.join(", ").replace(/, ([^,]*)$/, " e $1")} (SP).</span></p>
+          <p className="inline-flex items-start gap-2"><MapPin className="size-4 mt-0.5 shrink-0" /> {resumoEntrega}</p>
+          <p className="inline-flex items-start gap-2"><MessageCircle className="size-4 mt-0.5 shrink-0" /> Você envia a solicitação pelo WhatsApp e a loja confirma o pedido.</p>
         </div>
       </section>
+      {/* DESTAQUES DISPONIVEIS */}
+      <section id="destaques" className="py-24 md:py-32">
+        <div className="container-x">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div className="max-w-2xl">
+              <span className="eyebrow">Disponíveis agora</span>
+              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
+              </h2>
+            </div>
+            <Link to="/catalogo" className="btn-ghost self-start md:self-end text-foreground">Ver cardápio completo <ChevronRight className="size-4" /></Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {destaques.map(p => <ProductCard key={p.slug} produto={p} categoria={p.linhaNome} />)}
+          </div>
+        </div>
+      </section>
+      {/* LINHAS DE PRODUTOS */}
+      <section id="linhas" className="py-24 md:py-32 bg-[color:var(--sand)]/40">
+        <div className="container-x">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+            <div className="max-w-2xl">
+              <span className="eyebrow">Categorias</span>
+              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                Um cardápio para <span className="font-script text-[color:var(--coral)]">cada momento</span> da sua vida.
+              </h2>
+            </div>
+            <Link to="/catalogo" className="btn-ghost self-start md:self-end text-foreground">Ver catálogo completo <ChevronRight className="size-4" /></Link>
+          </div>
 
+          <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {linhas.map((l) => (
+              <article
+                key={l.slug}
+                className="card-lift group relative flex h-full flex-col overflow-hidden rounded-3xl bg-card shadow-sm"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <CatalogPhoto
+                    src={l.img}
+                    alt={l.title}
+                    loading="lazy"
+                    width={1000}
+                    height={1200}
+                    className="absolute inset-0 block h-full w-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/70 via-[color:var(--deep)]/10 to-transparent" />
+                  <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
+                    {l.tag}
+                  </span>
+                  <span className="absolute bottom-4 left-5 rounded-full bg-[color:var(--deep)]/75 px-3 py-1 text-[11px] font-sub uppercase tracking-[0.18em] text-white">
+                    {disponiveisPorLinha(l.slug)} {disponiveisPorLinha(l.slug) === 1 ? "disponível" : "disponíveis"}
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col p-7">
+                  <h3 className="text-2xl leading-tight">{l.title}</h3>
+                  <p className="mt-3 min-h-[4.5rem] line-clamp-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
+                  <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
+                    Explorar <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </article>
+
+            ))}
+
+
+          </div>
+        </div>
+      </section>
+      {/* COMO FUNCIONA */}
+      <section id="como" className="relative py-28 md:py-40 overflow-hidden">
+        <img src={beachImg} alt="" aria-hidden loading="lazy" width={1920} height={912} className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-[color:var(--deep)]/70" />
+        <div className="relative container-x text-[color:var(--offwhite)]">
+          <div className="max-w-2xl">
+            <span className="eyebrow !text-[color:var(--sand)]">Como funciona</span>
+            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+              Em quatro passos, <span className="font-script text-[color:var(--coral)]">simples assim</span>.
+            </h2>
+          </div>
+          <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {passos.map((p) => (
+              <div key={p.n} className="border-t border-white/25 pt-6">
+                <p className="font-display text-5xl text-[color:var(--sand)]">{p.n}</p>
+                <p className="mt-6 font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--coral)]">{p.t}</p>
+                <p className="mt-3 text-white/75 font-light">{p.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* DEPOIMENTOS */}
+      <section className="py-24 md:py-32">
+        <div className="container-x">
+          <div className="max-w-2xl mb-16">
+            <span className="eyebrow">Quem prova, ama</span>
+            <h2 className="mt-4 text-4xl md:text-5xl leading-[1.05]">Histórias de quem escolheu viver mais leve.</h2>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {depoimentos.map((d) => (
+              <figure key={d.n} className="rounded-3xl bg-card border border-border p-8 card-lift">
+                <div className="flex text-[color:var(--coral)]">{Array.from({length:5}).map((_,i)=><Star key={i} className="size-4 fill-current"/>)}</div>
+                <blockquote className="mt-6 text-lg leading-relaxed font-light text-foreground/85">"{d.t}"</blockquote>
+                <figcaption className="mt-8 pt-6 border-t border-border">
+                  <p className="font-display text-lg">{d.n}</p>
+                  <p className="text-xs font-sub uppercase tracking-[0.2em] text-foreground/50 mt-1">{d.c}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* SOBRE */}
       <section id="sobre" className="py-28 md:py-40">
         <div className="container-x grid gap-16 lg:grid-cols-12 lg:gap-20 items-center">
@@ -310,131 +414,16 @@ function Index() {
           </div>
         </div>
       </section>
-
-      {/* LINHAS DE PRODUTOS */}
-      <section id="linhas" className="py-24 md:py-32 bg-[color:var(--sand)]/40">
-        <div className="container-x">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-            <div className="max-w-2xl">
-              <span className="eyebrow">Categorias</span>
-              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                Um cardápio para <span className="font-script text-[color:var(--coral)]">cada momento</span> da sua vida.
-              </h2>
-            </div>
-            <Link to="/catalogo" className="btn-ghost self-start md:self-end text-foreground">Ver catálogo completo <ChevronRight className="size-4" /></Link>
-          </div>
-
-          <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {linhas.map((l, i) => (
-              <article
-                key={l.slug}
-                className="card-lift group relative flex h-full flex-col overflow-hidden rounded-3xl bg-card shadow-sm"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <CatalogPhoto
-                    src={l.img}
-                    alt={l.title}
-                    loading="lazy"
-                    width={1000}
-                    height={1200}
-                    className="absolute inset-0 block h-full w-full object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--deep)]/70 via-[color:var(--deep)]/10 to-transparent" />
-                  <span className="absolute top-5 left-5 rounded-full bg-white/85 backdrop-blur px-3.5 py-1.5 text-[11px] font-sub uppercase tracking-[0.2em] text-[color:var(--petrol)]">
-                    {l.tag}
-                  </span>
-                  <span className="absolute top-5 right-6 font-display text-3xl text-white/70">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-7">
-                  <h3 className="text-2xl leading-tight">{l.title}</h3>
-                  <p className="mt-3 min-h-[4.5rem] line-clamp-3 text-sm text-foreground/65 font-light leading-relaxed">{l.desc}</p>
-                  <Link to="/catalogo/$linha" params={{ linha: l.slug }} className="mt-auto inline-flex items-center gap-2 pt-5 font-sub uppercase tracking-[0.2em] text-xs text-[color:var(--petrol)] hover:text-[color:var(--coral)] transition-colors">
-                    Explorar <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </article>
-
-            ))}
-
-
-          </div>
+      {/* MARQUEE VALUES */}
+      <section className="bg-[color:var(--deep)] text-[color:var(--offwhite)] py-6 overflow-hidden">
+        <div className="flex marquee gap-16 whitespace-nowrap font-sub uppercase tracking-[0.35em] text-xs">
+          {Array.from({ length: 2 }).flatMap((_, i) => (
+            ["Vida", "· Leveza ·", "Saúde", "· Praia ·", "Natureza", "· Bem-estar ·", "Qualidade", "· Praticidade ·", "Sofisticação", "· Vida na Praia Leve ·"].map((w, j) => (
+              <span key={`${i}-${j}`} className="text-white/70">{w}</span>
+            ))
+          ))}
         </div>
       </section>
-
-      {/* SABORES */}
-      <section id="sabores" className="py-24 md:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl">
-            <span className="eyebrow">Cardápio por categoria</span>
-            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-              Gostoso primeiro. <span className="font-script text-[color:var(--coral)]">Leve sempre.</span>
-            </h2>
-            <p className="mt-6 text-foreground/65 font-light text-lg">
-              Explore o catálogo completo. Busque um produto ou escolha uma categoria.
-            </p>
-          </div>
-
-          <div className="mt-8 max-w-xl">
-            <label htmlFor="busca-produtos" className="block mb-2 font-sub text-sm">Buscar prato ou produto</label>
-            <input id="busca-produtos" type="search" value={busca} onChange={e => { setBusca(e.target.value); setFiltro("todos"); }} placeholder="Ex.: frango, suco, empada..." className="w-full rounded-xl border border-border bg-white px-4 py-3" />
-          </div>
-          <div className="mt-10 flex flex-wrap gap-2.5">
-            {saboresFiltros.map((f) => (
-              <button
-                key={f.slug}
-                onClick={() => setFiltro(f.slug)}
-                aria-pressed={filtro === f.slug}
-                className={`rounded-full px-4 py-2 font-sub text-[11px] uppercase tracking-[0.18em] transition-colors ${
-                  filtro === f.slug
-                    ? "bg-[color:var(--petrol)] text-[color:var(--offwhite)]"
-                    : "bg-[color:var(--sand)]/60 text-foreground/70 hover:bg-[color:var(--sand)]"
-                }`}
-              >
-                {f.nome}
-              </button>
-            ))}
-          </div>
-
-          <p role="status" className="mt-5 text-sm text-foreground/65">{resultados.length} produtos encontrados{resultados.length === 0 ? ". Tente outro termo ou categoria." : ""}</p>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {resultados
-              .map((p) => (
-                <article
-                  key={p.slug}
-                  className="card-lift group overflow-hidden rounded-3xl bg-card border border-border"
-                >
-                  <div className="relative shrink-0 aspect-[4/3] overflow-hidden">
-                    <CatalogPhoto
-                      src={p.img}
-                      alt={p.nome}
-                      loading="lazy"
-                      width={1000}
-                      height={750}
-                      className="absolute inset-0 block h-full w-full object-cover object-center"
-                    />
-                  </div>
-                  {p.emBreve && <ComingSoonBanner />}
-                  <div className="p-6">
-                    <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{p.linhaNome}</span>
-                    <h3 className="mt-2.5 text-lg leading-tight">{p.nome}</h3>
-                    {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
-                    <ProductPrice produto={p} />
-                    <AddToCart produto={p} />
-                  </div>
-                </article>
-              ))}
-          </div>
-
-          <div className="mt-14 flex justify-center">
-            <Link to="/catalogo" className="btn-ghost text-foreground">
-              Ver os {totalProdutos} produtos <ChevronRight className="size-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* DIFERENCIAIS */}
 
       <section className="py-24 md:py-32">
@@ -456,54 +445,8 @@ function Index() {
           </div>
         </div>
       </section>
-
-      {/* COMO FUNCIONA */}
-      <section id="como" className="relative py-28 md:py-40 overflow-hidden">
-        <img src={beachImg} alt="" aria-hidden loading="lazy" width={1920} height={912} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-[color:var(--deep)]/70" />
-        <div className="relative container-x text-[color:var(--offwhite)]">
-          <div className="max-w-2xl">
-            <span className="eyebrow !text-[color:var(--sand)]">Como funciona</span>
-            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-              Em quatro passos, <span className="font-script text-[color:var(--coral)]">simples assim</span>.
-            </h2>
-          </div>
-          <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {passos.map((p) => (
-              <div key={p.n} className="border-t border-white/25 pt-6">
-                <p className="font-display text-5xl text-[color:var(--sand)]">{p.n}</p>
-                <p className="mt-6 font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--coral)]">{p.t}</p>
-                <p className="mt-3 text-white/75 font-light">{p.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DEPOIMENTOS */}
-      <section className="py-24 md:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl mb-16">
-            <span className="eyebrow">Quem prova, ama</span>
-            <h2 className="mt-4 text-4xl md:text-5xl leading-[1.05]">Histórias de quem escolheu viver mais leve.</h2>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {depoimentos.map((d) => (
-              <figure key={d.n} className="rounded-3xl bg-card border border-border p-8 card-lift">
-                <div className="flex text-[color:var(--coral)]">{Array.from({length:5}).map((_,i)=><Star key={i} className="size-4 fill-current"/>)}</div>
-                <blockquote className="mt-6 text-lg leading-relaxed font-light text-foreground/85">"{d.t}"</blockquote>
-                <figcaption className="mt-8 pt-6 border-t border-border">
-                  <p className="font-display text-lg">{d.n}</p>
-                  <p className="text-xs font-sub uppercase tracking-[0.2em] text-foreground/50 mt-1">{d.c}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* MARCAS PARCEIRAS */}
-      <section id="blog" className="py-20 bg-[color:var(--sand)]/40">
+      <section id="marcas" className="py-20 bg-[color:var(--sand)]/40">
         <div className="container-x">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5">
@@ -527,7 +470,6 @@ function Index() {
           </div>
         </div>
       </section>
-
       {/* NEWSLETTER */}
       <section id="pedir" className="py-28 md:py-40">
         <div className="container-x">
@@ -546,7 +488,6 @@ function Index() {
           </div>
         </div>
       </section>
-
       {/* FOOTER */}
       <footer className="bg-[color:var(--deep)] text-[color:var(--offwhite)] pt-20 pb-10">
         <div className="container-x grid gap-14 lg:grid-cols-12">
@@ -559,7 +500,7 @@ function Index() {
           </div>
           <div className="lg:col-span-8 grid gap-10 sm:grid-cols-3">
             {[
-              { t: "Explore", l: [["Sobre", "/#sobre"], ["Categorias", "/#linhas"], ["Sabores", "/#sabores"], ["Blog", "/#blog"]] },
+              { t: "Explore", l: [["Sobre", "/#sobre"], ["Categorias", "/#linhas"], ["Cardápio e preços", "/catalogo"]] },
               { t: "Sua compra", l: [["Como funciona", "/#como"], ["Catálogo completo", "/catalogo"], ["Kit Detox", "/catalogo/kits-detox"], ["Meu carrinho", "/carrinho"]] },
               { t: "Contato", l: [["WhatsApp", contactLinks.whatsapp], ["Instagram", contactLinks.instagram], ["contato@vidanapraialeve.com.br", contactLinks.email], ["Consultar entrega em Peruíbe", contactLinks.whatsapp]] },
             ].map((c) => (
