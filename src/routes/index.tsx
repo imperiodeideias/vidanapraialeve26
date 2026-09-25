@@ -90,8 +90,8 @@ const passos = [
 
 const depoimentos = [
   { n: "Soraia", c: "Peruíbe, SP", t: "Meu almoço deixou de ser um problema. Sabor incrível e me sinto muito mais leve." },
-  { n: "Andrey", c: "Peruíbe, SP", t: "Como atleta amador, o kit Performance mudou minha rotina. Recuperação melhor e mais energia." },
-  { n: "Edna", c: "Peruíbe, SP", t: "As crianças amam. E a gente ganha tempo pra viver o que importa." },
+  { n: "Andrey", c: "Peruíbe, SP", t: "Como atleta amador, essas comidinhas mudaram minha rotina. Recuperação melhor e mais energia." },
+  { n: "Edna", c: "Peruíbe, SP", t: "Os pratos são muito saborosos... E não preciso mais cozinhar quando não quero!" },
 ];
 
 function Index() {
