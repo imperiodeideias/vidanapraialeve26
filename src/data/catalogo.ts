@@ -304,7 +304,7 @@ const catalogoCompleto: Linha[] = [
     nome: "Doces",
     eyebrow: "Doces",
     headline: "Doces",
-    descricao: "Sobremesas sem açúcar refinado, sem lactose e sem culpa.",
+    descricao: "Sobremesas sem açúcar refinado, sem lactose, para adoçar a rotina com leveza.",
     cover: brownieFit,
     cor: "coral",
     produtos: [
