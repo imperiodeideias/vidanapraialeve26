@@ -18,14 +18,14 @@ export function ProductCard({ produto: p, categoria, headingLevel = "h3", estoqu
   const ficha = informacaoDoProduto(p.slug);
   return (
     <article className="card-lift group bg-card rounded-3xl overflow-hidden border border-border flex flex-col">
-      <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
+      <button type="button" onClick={() => setAberto(true)} aria-label={`Ver detalhes de ${p.nome}`} aria-haspopup="dialog" className="relative block w-full shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
         <CatalogPhoto src={p.img} alt={p.nome} loading="lazy" width={1000} height={750} className="absolute inset-0 block h-full w-full object-cover object-center" />
-      </div>
+      </button>
       {p.emBreve && <ComingSoonBanner />}
       <div className="p-6 flex flex-col flex-1">
         {categoria && <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{categoria}</span>}
-        <H className="mt-2 text-lg leading-tight">{p.nome}</H>
-        {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug">{p.subtitulo}</p>}
+        <H className="mt-2 text-lg leading-tight"><button type="button" onClick={() => setAberto(true)} aria-haspopup="dialog" className="text-left cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm">{p.nome}</button></H>
+        {p.subtitulo && <p className="mt-1.5 text-sm text-foreground/60 font-light leading-snug"><button type="button" onClick={() => setAberto(true)} aria-haspopup="dialog" className="text-left cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm">{p.subtitulo}</button></p>}
         {p.peso && <p className="mt-2 text-xs font-sub uppercase tracking-[0.15em] text-foreground/60">{p.peso}</p>}
         <div className="flex-1" />
         <ProductPrice produto={p} estoque={estoque} carregando={carregando} />
