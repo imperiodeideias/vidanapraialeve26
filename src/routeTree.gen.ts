@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrocasECancelamentoRouteImport } from './routes/trocas-e-cancelamento'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -19,6 +21,16 @@ import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAdminReposicaoRouteImport } from './routes/_authenticated/admin-reposicao'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
+const TrocasECancelamentoRoute = TrocasECancelamentoRouteImport.update({
+  id: '/trocas-e-cancelamento',
+  path: '/trocas-e-cancelamento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
+  id: '/politica-de-privacidade',
+  path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CarrinhoRoute = CarrinhoRouteImport.update({
   id: '/carrinho',
   path: '/carrinho',
@@ -69,6 +81,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/carrinho': typeof CarrinhoRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/trocas-e-cancelamento': typeof TrocasECancelamentoRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-reposicao': typeof AuthenticatedAdminReposicaoRoute
   '/conta': typeof AuthenticatedContaRoute
@@ -79,6 +93,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/carrinho': typeof CarrinhoRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/trocas-e-cancelamento': typeof TrocasECancelamentoRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-reposicao': typeof AuthenticatedAdminReposicaoRoute
   '/conta': typeof AuthenticatedContaRoute
@@ -91,6 +107,8 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/carrinho': typeof CarrinhoRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/trocas-e-cancelamento': typeof TrocasECancelamentoRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/admin-reposicao': typeof AuthenticatedAdminReposicaoRoute
   '/_authenticated/conta': typeof AuthenticatedContaRoute
@@ -103,6 +121,8 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/carrinho'
+    | '/politica-de-privacidade'
+    | '/trocas-e-cancelamento'
     | '/admin'
     | '/admin-reposicao'
     | '/conta'
@@ -113,6 +133,8 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/carrinho'
+    | '/politica-de-privacidade'
+    | '/trocas-e-cancelamento'
     | '/admin'
     | '/admin-reposicao'
     | '/conta'
@@ -124,6 +146,8 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/carrinho'
+    | '/politica-de-privacidade'
+    | '/trocas-e-cancelamento'
     | '/_authenticated/admin'
     | '/_authenticated/admin-reposicao'
     | '/_authenticated/conta'
@@ -136,12 +160,28 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   CarrinhoRoute: typeof CarrinhoRoute
+  PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  TrocasECancelamentoRoute: typeof TrocasECancelamentoRoute
   CatalogoLinhaRoute: typeof CatalogoLinhaRoute
   CatalogoIndexRoute: typeof CatalogoIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trocas-e-cancelamento': {
+      id: '/trocas-e-cancelamento'
+      path: '/trocas-e-cancelamento'
+      fullPath: '/trocas-e-cancelamento'
+      preLoaderRoute: typeof TrocasECancelamentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-privacidade': {
+      id: '/politica-de-privacidade'
+      path: '/politica-de-privacidade'
+      fullPath: '/politica-de-privacidade'
+      preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/carrinho': {
       id: '/carrinho'
       path: '/carrinho'
@@ -228,6 +268,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   CarrinhoRoute: CarrinhoRoute,
+  PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  TrocasECancelamentoRoute: TrocasECancelamentoRoute,
   CatalogoLinhaRoute: CatalogoLinhaRoute,
   CatalogoIndexRoute: CatalogoIndexRoute,
 }

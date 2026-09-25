@@ -503,8 +503,11 @@ function Index() {
           </div>
         </div>
         <div className="container-x mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-white/50 font-light">
-          <p>© {new Date().getFullYear()} Vida na Praia Leve. Todos os direitos reservados.</p>
-          <p>Distribuidora oficial Light Food Way</p>
+          <p>© {new Date().getFullYear()} Vida na Praia Leve — CNPJ 22.635.784/0001-67. Todos os direitos reservados.</p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link to="/politica-de-privacidade" className="hover:text-white">Política de Privacidade</Link>
+            <Link to="/trocas-e-cancelamento" className="hover:text-white">Trocas e Cancelamento</Link>
+          </div>
           <div className="flex gap-6">
             <a href={contactLinks.location} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><MapPin className="size-3.5" /> Peruíbe-SP</a>
           </div>

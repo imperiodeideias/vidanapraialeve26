@@ -114,7 +114,11 @@ export function SiteChrome({ children, transparentUntilScroll = false }: Props) 
           </div>
         </div>
         <div className="container-x mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50 font-sub uppercase tracking-[0.2em]">
-          <p>© {new Date().getFullYear()} Vida na Praia Leve. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Vida na Praia Leve — CNPJ 22.635.784/0001-67. Todos os direitos reservados.</p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <Link to="/politica-de-privacidade" className="hover:text-white">Política de Privacidade</Link>
+            <Link to="/trocas-e-cancelamento" className="hover:text-white">Trocas e Cancelamento</Link>
+          </div>
           <p>Distribuidora oficial Light Food Way</p>
         </div>
       </footer>
