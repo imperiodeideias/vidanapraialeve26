@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ProductInformation, informacaoDoProduto } from "@/components/ProductInformation";
 import type { Produto } from "@/data/catalogo";
 import { CatalogPhoto } from "@/components/CatalogPhoto";
@@ -13,6 +13,7 @@ type Props = { produto: Produto; categoria?: string; headingLevel?: "h2" | "h3";
 
 export function ProductCard({ produto: p, categoria, headingLevel = "h3", estoque, carregando }: Props) {
   const [aberto, setAberto] = useState(false);
+  const tituloRef = useRef<HTMLHeadingElement>(null);
   const H = headingLevel;
   const ficha = informacaoDoProduto(p.slug);
   return (
@@ -34,13 +35,19 @@ export function ProductCard({ produto: p, categoria, headingLevel = "h3", estoqu
         {p.emBreve ? <p className="mt-5 text-sm text-foreground/60">Disponível em breve</p> : <AddToCart produto={p} estoque={estoque} />}
       </div>
       <Dialog open={aberto} onOpenChange={setAberto}>
-        <DialogContent className="w-[calc(100%-2rem)] max-w-xl max-h-[90dvh] overflow-y-auto rounded-3xl p-0">
+        <DialogContent
+          className="block w-[calc(100%-2rem)] max-w-xl max-h-[90dvh] overflow-y-auto rounded-3xl p-0"
+          onOpenAutoFocus={(event) => {
+            event.preventDefault();
+            tituloRef.current?.focus({ preventScroll: true });
+          }}
+        >
           <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
             <CatalogPhoto src={p.img} alt={p.nome} loading="lazy" width={1000} height={750} className="absolute inset-0 h-full w-full object-cover" />
           </div>
           <div className="p-7">
             {categoria && <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{categoria}</span>}
-            <DialogTitle className="mt-2 text-2xl leading-tight">{p.nome}</DialogTitle>
+            <DialogTitle ref={tituloRef} tabIndex={-1} className="mt-2 text-2xl leading-tight outline-none">{p.nome}</DialogTitle>
             {p.subtitulo && <p className="mt-1 text-foreground/60">{p.subtitulo}</p>}
             <DialogDescription className="mt-4 text-foreground/75 leading-relaxed">{ficha ? "Ingredientes e informação nutricional conforme o rótulo fornecido." : p.descricao}</DialogDescription>
             <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
