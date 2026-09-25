@@ -177,7 +177,7 @@ function Index() {
             <h1 className="mt-6 text-5xl leading-[1.02] sm:text-6xl lg:text-[76px]">
               Sua rotina mais leve começa
               <br />
-              <span className="font-script text-[color:var(--coral)] text-6xl sm:text-7xl lg:text-[92px] leading-none">pelo prato.</span>
+              <span className="font-script text-[color:var(--coral)] text-6xl sm:text-7xl lg:text-[92px] leading-none">pelo prato...</span>
             </h1>
             <p className="mt-8 max-w-xl font-light text-lg text-foreground/70 leading-relaxed">
               Refeições congeladas prontas para aquecer, além de sucos, lanches e doces. Entregamos em Peruíbe, Pedro de Toledo, Ana Dias e Itariri.
