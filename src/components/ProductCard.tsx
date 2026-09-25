@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Beef, Flame } from "lucide-react";
+import { ProductInformation, informacaoDoProduto } from "@/components/ProductInformation";
 import type { Produto } from "@/data/catalogo";
 import { CatalogPhoto } from "@/components/CatalogPhoto";
 import { ComingSoonBanner } from "@/components/ComingSoonBanner";
@@ -14,6 +14,7 @@ type Props = { produto: Produto; categoria?: string; headingLevel?: "h2" | "h3";
 export function ProductCard({ produto: p, categoria, headingLevel = "h3", estoque, carregando }: Props) {
   const [aberto, setAberto] = useState(false);
   const H = headingLevel;
+  const ficha = informacaoDoProduto(p.slug);
   return (
     <article className="card-lift group bg-card rounded-3xl overflow-hidden border border-border flex flex-col">
       <div className="relative shrink-0 aspect-[4/3] overflow-hidden bg-[color:var(--sand)]/50">
@@ -41,18 +42,13 @@ export function ProductCard({ produto: p, categoria, headingLevel = "h3", estoqu
             {categoria && <span className="font-sub uppercase tracking-[0.2em] text-[10px] text-[color:var(--coral)]">{categoria}</span>}
             <DialogTitle className="mt-2 text-2xl leading-tight">{p.nome}</DialogTitle>
             {p.subtitulo && <p className="mt-1 text-foreground/60">{p.subtitulo}</p>}
-            <DialogDescription className="mt-4 text-foreground/75 leading-relaxed">{p.descricao}</DialogDescription>
+            <DialogDescription className="mt-4 text-foreground/75 leading-relaxed">{ficha ? "Ingredientes e informação nutricional conforme o rótulo fornecido." : p.descricao}</DialogDescription>
             <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
               {p.peso && <div><dt className="text-foreground/55 text-xs uppercase tracking-[0.15em]">Peso / volume</dt><dd className="mt-1">{p.peso}</dd></div>}
               {p.pedidoMinimo && <div><dt className="text-foreground/55 text-xs uppercase tracking-[0.15em]">Pedido mínimo</dt><dd className="mt-1">{p.pedidoMinimo} unidades</dd></div>}
             </dl>
-            {(p.kcal || p.proteina) && (
-              <div className="mt-5 flex flex-wrap gap-4 text-xs font-sub uppercase tracking-[0.15em] text-foreground/70">
-                {p.kcal && <span className="inline-flex items-center gap-1.5"><Flame className="size-3.5 text-[color:var(--coral)]" /> {p.kcal} kcal</span>}
-                {p.proteina && <span className="inline-flex items-center gap-1.5"><Beef className="size-3.5 text-[color:var(--petrol)]" /> {p.proteina}g proteína</span>}
-              </div>
-            )}
-            {p.tags && p.tags.length > 0 && (
+            <ProductInformation slug={p.slug} />
+            {!ficha && p.tags && p.tags.length > 0 && (
               <div className="mt-5 flex flex-wrap gap-2">
                 {p.tags.map(t => <span key={t} className="text-[10px] font-sub uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border border-[color:var(--sage)]/40 text-[color:var(--sage)]">{t}</span>)}
               </div>
