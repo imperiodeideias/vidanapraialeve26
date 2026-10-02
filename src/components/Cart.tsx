@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export const cartProducts = linhas.flatMap(l => l.produtos);
 const storageKey = "vnpl-pedido-v1";
-const Context = createContext<{ quantities: Quantities; ready: boolean; add: (slug: string, q: number) => void; set: (slug: string, q: number) => void } | null>(null);
+const Context = createContext<{ quantities: Quantities; ready: boolean; add: (slug: string, q: number) => void; set: (slug: string, q: number) => void; clear: () => void } | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [quantities, update] = useState<Quantities>({});
   const [ready, setReady] = useState(false);
@@ -29,7 +29,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [quantities, ready]);
   const set = (slug: string, q: number) => update(old => cleanCart({ ...old, [slug]: q }, cartProducts));
   const add = (slug: string, q: number) => update(old => cleanCart({ ...old, [slug]: (old[slug] || 0) + q }, cartProducts));
-  return <Context.Provider value={{ quantities, ready, add, set }}>{children}</Context.Provider>;
+  const clear = () => update({});
+  return <Context.Provider value={{ quantities, ready, add, set, clear }}>{children}</Context.Provider>;
 }
 export function useCart() {
   const cart = useContext(Context);

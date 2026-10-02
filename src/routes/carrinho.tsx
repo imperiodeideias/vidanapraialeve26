@@ -1,5 +1,5 @@
 import { CatalogPhoto } from "@/components/CatalogPhoto";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { deliveryFee, resumoEntrega, type DeliveryRegion } from "@/lib/delivery";
 import { DeliveryForm } from "@/components/DeliveryForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -23,11 +23,22 @@ export const Route = createFileRoute("/carrinho")({
   ] }),
   component: CartPage,
 });
+type PedidoEnviado = {
+  nome: string;
+  endereco: string;
+  itens: { nome: string; quantidade: number; precoCentavos?: number }[];
+  subtotal: number;
+  entrega: number | null;
+  total: number | null;
+  cidade: string;
+};
 function CartPage() {
-  const { quantities, set, ready } = useCart();
+  const { quantities, set, ready, clear } = useCart();
   const { estoque } = useEstoque();
   const registrar = useServerFn(criarPedido);
   const [region, setRegion] = useState<DeliveryRegion>({ city: "", state: "" });
+  const [enviado, setEnviado] = useState<PedidoEnviado | null>(null);
+  const resumoPendente = useRef<PedidoEnviado | null>(null);
   const produtos = useMemo(() => cartProducts.map(p => ({ ...p, precoCentavos: precoDe(p.slug, p.precoCentavos, estoque) })), [estoque]);
   const { items, total, pending } = orderSummary(produtos, quantities);
   const fee = deliveryFee(total, region);
@@ -41,7 +52,23 @@ function CartPage() {
     <span className="eyebrow">Confira antes de enviar</span>
     <h1 className="text-4xl mt-4 mb-8">Seu pedido</h1>
     <p className="-mt-4 mb-8 text-sm text-foreground/70">Entrega agendada a combinar. Atendimento de segunda a sábado, das 9h às 18h. Pagamento por PIX, dinheiro, débito ou crédito.</p>
-    {!ready ? <p>Carregando seu carrinho…</p> : !items.length ? <div className="rounded-3xl bg-card p-8 border border-border"><p className="mb-6">Seu carrinho está vazio. Escolha seus produtos favoritos para começar.</p><Link to="/catalogo" className="btn-primary">Explorar catálogo</Link></div> : <div className="grid gap-8 lg:grid-cols-[1fr_360px] items-start">
+    {enviado ? <div className="rounded-3xl bg-card p-8 border border-border max-w-2xl">
+      <h2 className="text-2xl mb-2">Pedido enviado com sucesso!</h2>
+      <p className="text-sm text-foreground/70 mb-6">A loja confirmará a disponibilidade e o agendamento da entrega pelo WhatsApp.</p>
+      <ul className="space-y-3 mb-6">
+        {enviado.itens.map(item => <li key={item.nome} className="flex justify-between gap-4 text-sm">
+          <span>{item.quantidade} × {item.nome}</span>
+          <span className="shrink-0 font-semibold">{item.precoCentavos === undefined ? "Preço sob consulta" : money(item.precoCentavos * item.quantidade)}</span>
+        </li>)}
+      </ul>
+      <dl className="space-y-3 border-t border-border pt-4 text-sm">
+        <div className="flex justify-between gap-4"><dt>Subtotal</dt><dd className="font-semibold">{money(enviado.subtotal)}</dd></div>
+        <div className="flex justify-between gap-4"><dt>Entrega{enviado.cidade ? ` (${enviado.cidade})` : ""}</dt><dd>{enviado.entrega === null ? "A confirmar" : enviado.entrega === 0 ? "Grátis" : money(enviado.entrega)}</dd></div>
+        <div className="flex justify-between gap-4 text-base"><dt className="font-semibold">Total</dt><dd className="font-semibold">{enviado.total === null ? "A confirmar pela loja" : money(enviado.total)}</dd></div>
+      </dl>
+      <p className="text-sm mt-6"><span className="font-semibold">{enviado.nome}</span><br />{enviado.endereco}</p>
+      <Link to="/catalogo" className="btn-primary inline-block mt-8">Voltar ao catálogo</Link>
+    </div> : !ready ? <p>Carregando seu carrinho…</p> : !items.length ? <div className="rounded-3xl bg-card p-8 border border-border"><p className="mb-6">Seu carrinho está vazio. Escolha seus produtos favoritos para começar.</p><Link to="/catalogo" className="btn-primary">Explorar catálogo</Link></div> : <div className="grid gap-8 lg:grid-cols-[1fr_360px] items-start">
       <div className="space-y-4">
         {items.map(({ product: p, quantity }) => {
           const restante = disponivel(p.slug, estoque);
@@ -68,7 +95,7 @@ function CartPage() {
         </dl>
         {pending && <p className="text-sm mt-4">Há itens com preço sob consulta. Seus valores serão confirmados na conversa.</p>}
         <p className="text-sm mt-5 mb-6 text-foreground/70">{resumoEntrega}</p>
-        {indisponiveis.length ? <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">Ajuste os itens sem estoque antes de enviar o pedido.</p> : <DeliveryForm onRegionChange={setRegion} getUrl={async dados => {
+        {indisponiveis.length ? <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">Ajuste os itens sem estoque antes de enviar o pedido.</p> : <DeliveryForm onRegionChange={setRegion} onSent={() => { setEnviado(resumoPendente.current); clear(); }} getUrl={async dados => {
           const resumo = orderSummary(produtos, quantities, { name: dados.name, address: dados.address, region: dados.region });
           await registrar({ data: {
             nome: dados.name,
@@ -79,6 +106,15 @@ function CartPage() {
             frete_centavos: deliveryFee(resumo.total, dados.region) ?? 0,
             itens: items.map(({ product, quantity }) => ({ slug: product.slug, quantidade: quantity })),
           } });
+          resumoPendente.current = {
+            nome: dados.name,
+            endereco: dados.address,
+            cidade: dados.region.city,
+            itens: items.map(({ product, quantity }) => ({ nome: orderName(product), quantidade: quantity, precoCentavos: product.precoCentavos })),
+            subtotal: resumo.total,
+            entrega: resumo.shipping,
+            total: resumo.grandTotal,
+          };
           return resumo.url;
         }} />}
         <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com seu pedido preenchido. Enviar a mensagem é uma solicitação: a loja confirmará a disponibilidade e o pedido.</p>

@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type DadosPedido = { name: string; address: string; region: DeliveryRegion; phone: string; cpf: string; email: string };
 
-export function DeliveryForm({ getUrl, onRegionChange }: { getUrl: (dados: DadosPedido) => Promise<string>; onRegionChange: (region: DeliveryRegion) => void }) {
+export function DeliveryForm({ getUrl, onRegionChange, onSent }: { getUrl: (dados: DadosPedido) => Promise<string>; onRegionChange: (region: DeliveryRegion) => void; onSent?: () => void }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [cpf, setCpf] = useState("");
@@ -104,7 +104,7 @@ export function DeliveryForm({ getUrl, onRegionChange }: { getUrl: (dados: Dados
       <DialogTitle className="text-3xl sm:text-4xl leading-tight mt-4">{sent ? "Pedido enviado com sucesso!" : "Finalize seu pedido no WhatsApp"}</DialogTitle>
       <DialogDescription className="text-lg sm:text-xl mt-3">{sent ? "Aguarde nosso contato." : "Toque em enviar no WhatsApp. Depois, confirme o envio abaixo."}</DialogDescription>
       {sent ? <button type="button" className="btn-primary justify-center mt-6" onClick={() => setModalOpen(false)}>Voltar ao site</button> : <div className="grid gap-4 mt-6">
-        <button type="button" className="btn-primary justify-center" onClick={() => setSent(true)}>Já enviei no WhatsApp</button>
+        <button type="button" className="btn-primary justify-center" onClick={() => { setSent(true); onSent?.(); }}>Já enviei no WhatsApp</button>
         <a href={opened} target="_blank" rel="noopener noreferrer" className="underline">Abrir WhatsApp novamente</a>
       </div>}
     </DialogContent>
