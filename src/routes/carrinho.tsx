@@ -94,7 +94,7 @@ function CartPage() {
         </dl>
         {pending && <p className="text-sm mt-4">Há itens com preço sob consulta. Seus valores serão confirmados na conversa.</p>}
         <p className="text-sm mt-5 mb-6 text-foreground/70">{resumoEntrega}</p>
-        {indisponiveis.length ? <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">Ajuste os itens sem estoque antes de enviar o pedido.</p> : <DeliveryForm onRegionChange={setRegion} getUrl={async dados => {
+        {indisponiveis.length ? <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">Ajuste os itens sem estoque antes de enviar o pedido.</p> : <DeliveryForm onRegionChange={setRegion} onSent={() => clear()} getUrl={async dados => {
           const resumo = orderSummary(produtos, quantities, { name: dados.name, address: dados.address, region: dados.region });
           await registrar({ data: {
             nome: dados.name,
@@ -105,6 +105,15 @@ function CartPage() {
             frete_centavos: deliveryFee(resumo.total, dados.region) ?? 0,
             itens: items.map(({ product, quantity }) => ({ slug: product.slug, quantidade: quantity })),
           } });
+          setEnviado({
+            nome: dados.name,
+            endereco: dados.address,
+            cidade: dados.region.city,
+            itens: items.map(({ product, quantity }) => ({ nome: orderName(product), quantidade: quantity, precoCentavos: product.precoCentavos })),
+            subtotal: resumo.total,
+            entrega: resumo.shipping,
+            total: resumo.grandTotal,
+          });
           return resumo.url;
         }} />}
         <p className="text-xs mt-4 text-foreground/60">O WhatsApp abrirá com seu pedido preenchido. Enviar a mensagem é uma solicitação: a loja confirmará a disponibilidade e o pedido.</p>
