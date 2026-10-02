@@ -17,6 +17,9 @@ import {
   Instagram,
   MessageCircle,
   MapPin,
+  QrCode,
+  Banknote,
+  CreditCard,
   Mail,
   Menu,
   Star,
@@ -333,6 +336,14 @@ function Index() {
                 <p className="mt-3 text-white/75 font-light">{p.d}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-12 rounded-2xl border border-white/25 bg-white/5 px-6 py-6 sm:px-8">
+            <p className="font-sub uppercase tracking-[0.25em] text-xs text-[color:var(--sand)]">Formas de pagamento</p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-light text-white/80">
+              <span className="inline-flex items-center gap-2"><QrCode className="size-4 text-[color:var(--coral)]" /> PIX</span>
+              <span className="inline-flex items-center gap-2"><Banknote className="size-4 text-[color:var(--coral)]" /> Dinheiro</span>
+              <span className="inline-flex items-center gap-2"><CreditCard className="size-4 text-[color:var(--coral)]" /> Cartão de débito ou crédito</span>
+            </div>
           </div>
         </div>
       </section>
