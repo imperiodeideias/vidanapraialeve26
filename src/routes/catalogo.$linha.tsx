@@ -65,8 +65,8 @@ export const Route = createFileRoute("/catalogo/$linha")({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Início", item: "https://vidanapraialeve.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: "Catálogo", item: "https://vidanapraialeve.lovable.app/catalogo" },
+              { "@type": "ListItem", position: 1, name: "Início", item: "https://vidanapraialeve.com.br/" },
+              { "@type": "ListItem", position: 2, name: "Catálogo", item: "https://vidanapraialeve.com.br/catalogo" },
               { "@type": "ListItem", position: 3, name: l.nome, item: url },
             ],
           }),
