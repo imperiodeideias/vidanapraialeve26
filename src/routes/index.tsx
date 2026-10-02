@@ -62,9 +62,11 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Refeições congeladas, sucos prensados, lanches e doces em Peruíbe. Praticidade, sabor e bem-estar para deixar sua rotina mais leve." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://vidanapraialeve.com.br/" },
+      { property: "og:image", content: "https://vidanapraialeve.com.br/__l5e/assets-v1/129ba087-2ad7-41f9-8df8-0924b1dd2f68/og-vnpl.jpg" },
+      { name: "twitter:image", content: "https://vidanapraialeve.com.br/__l5e/assets-v1/129ba087-2ad7-41f9-8df8-0924b1dd2f68/og-vnpl.jpg" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://vidanapraialeve.com.br/" }],
   }),
   component: Index,
 });

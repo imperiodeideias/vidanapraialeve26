@@ -76,8 +76,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Vida na Praia Leve - Leve uma vida mais leve" },
       { name: "twitter:description", content: "Refeições saudáveis congeladas, sucos detox, snacks funcionais e kits para transformar sua rotina. Praticidade premium com sabor de casa." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8713acac-684c-41d3-9860-9e20d8b3486b/id-preview-6cf18aee--f67036b7-8b51-4744-8062-374910cfdbc3.lovable.app-1783717435288.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8713acac-684c-41d3-9860-9e20d8b3486b/id-preview-6cf18aee--f67036b7-8b51-4744-8062-374910cfdbc3.lovable.app-1783717435288.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
