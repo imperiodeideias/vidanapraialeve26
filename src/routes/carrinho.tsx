@@ -1,5 +1,5 @@
 import { CatalogPhoto } from "@/components/CatalogPhoto";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { deliveryFee, resumoEntrega, type DeliveryRegion } from "@/lib/delivery";
 import { DeliveryForm } from "@/components/DeliveryForm";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -38,6 +38,7 @@ function CartPage() {
   const registrar = useServerFn(criarPedido);
   const [region, setRegion] = useState<DeliveryRegion>({ city: "", state: "" });
   const [enviado, setEnviado] = useState<PedidoEnviado | null>(null);
+  const resumoPendente = useRef<PedidoEnviado | null>(null);
   const produtos = useMemo(() => cartProducts.map(p => ({ ...p, precoCentavos: precoDe(p.slug, p.precoCentavos, estoque) })), [estoque]);
   const { items, total, pending } = orderSummary(produtos, quantities);
   const fee = deliveryFee(total, region);
@@ -105,7 +106,7 @@ function CartPage() {
             frete_centavos: deliveryFee(resumo.total, dados.region) ?? 0,
             itens: items.map(({ product, quantity }) => ({ slug: product.slug, quantidade: quantity })),
           } });
-          setEnviado({
+          resumoPendente.current = {
             nome: dados.name,
             endereco: dados.address,
             cidade: dados.region.city,
