@@ -15,11 +15,13 @@ export const Route = createFileRoute("/catalogo/")({
       { name: "description", content: "Explore todas as linhas Vida na Praia Leve: caseirinhos, aves, carnes, peixes, massas, sopas, salgados fit, sobremesas e sucos." },
       { property: "og:title", content: "Catálogo completo — Vida na Praia Leve" },
       { property: "og:description", content: "Refeições, sucos, snacks e sobremesas saudáveis. Encontre a linha ideal para você." },
-      { property: "og:url", content: "https://vidanapraialeve.lovable.app/catalogo" },
+      { property: "og:url", content: "https://vidanapraialeve.com.br/catalogo" },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://vidanapraialeve.com.br/__l5e/assets-v1/129ba087-2ad7-41f9-8df8-0924b1dd2f68/og-vnpl.jpg" },
+      { name: "twitter:image", content: "https://vidanapraialeve.com.br/__l5e/assets-v1/129ba087-2ad7-41f9-8df8-0924b1dd2f68/og-vnpl.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://vidanapraialeve.lovable.app/catalogo" }],
+    links: [{ rel: "canonical", href: "https://vidanapraialeve.com.br/catalogo" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -31,7 +33,7 @@ export const Route = createFileRoute("/catalogo/")({
           hasPart: linhas.map((l) => ({
             "@type": "CollectionPage",
             name: l.nome,
-            url: `https://vidanapraialeve.lovable.app/catalogo/${l.slug}`,
+            url: `https://vidanapraialeve.com.br/catalogo/${l.slug}`,
           })),
         }),
       },

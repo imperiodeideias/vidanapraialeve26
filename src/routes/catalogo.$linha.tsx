@@ -23,7 +23,7 @@ export const Route = createFileRoute("/catalogo/$linha")({
       };
     }
     const l = loaderData.linha;
-    const url = `https://vidanapraialeve.lovable.app/catalogo/${params.linha}`;
+    const url = `https://vidanapraialeve.com.br/catalogo/${params.linha}`;
     return {
       meta: [
         { title: `${l.nome} — Catálogo Vida na Praia Leve` },
@@ -32,9 +32,9 @@ export const Route = createFileRoute("/catalogo/$linha")({
         { property: "og:description", content: l.descricao },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        { property: "og:image", content: `https://vidanapraialeve.lovable.app${l.cover}` },
+        { property: "og:image", content: `https://vidanapraialeve.com.br${l.cover}` },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: `https://vidanapraialeve.lovable.app${l.cover}` },
+        { name: "twitter:image", content: `https://vidanapraialeve.com.br${l.cover}` },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
