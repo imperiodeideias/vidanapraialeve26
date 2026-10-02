@@ -9,35 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CarrinhoRouteImport } from './routes/carrinho'
-import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as TrocasECancelamentoRouteImport } from './routes/trocas-e-cancelamento'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedAdminReposicaoRouteImport } from './routes/_authenticated/admin-reposicao'
-import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as CarrinhoRouteImport } from './routes/carrinho'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as CatalogoIndexRouteImport } from './routes/catalogo.index'
 import { Route as CatalogoLinhaRouteImport } from './routes/catalogo.$linha'
+import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
+import { Route as AuthenticatedAdminReposicaoRouteImport } from './routes/_authenticated/admin-reposicao'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CarrinhoRoute = CarrinhoRouteImport.update({
-  id: '/carrinho',
-  path: '/carrinho',
+const TrocasECancelamentoRoute = TrocasECancelamentoRouteImport.update({
+  id: '/trocas-e-cancelamento',
+  path: '/trocas-e-cancelamento',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
@@ -45,26 +31,24 @@ const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
   path: '/politica-de-privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TrocasECancelamentoRoute = TrocasECancelamentoRouteImport.update({
-  id: '/trocas-e-cancelamento',
-  path: '/trocas-e-cancelamento',
+const CarrinhoRoute = CarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminReposicaoRoute =
-  AuthenticatedAdminReposicaoRouteImport.update({
-    id: '/admin-reposicao',
-    path: '/admin-reposicao',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
-  id: '/conta',
-  path: '/conta',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogoIndexRoute = CatalogoIndexRouteImport.update({
   id: '/catalogo/',
@@ -75,6 +59,22 @@ const CatalogoLinhaRoute = CatalogoLinhaRouteImport.update({
   id: '/catalogo/$linha',
   path: '/catalogo/$linha',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminReposicaoRoute =
+  AuthenticatedAdminReposicaoRouteImport.update({
+    id: '/admin-reposicao',
+    path: '/admin-reposicao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -168,32 +168,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/carrinho': {
-      id: '/carrinho'
-      path: '/carrinho'
-      fullPath: '/carrinho'
-      preLoaderRoute: typeof CarrinhoRouteImport
+    '/trocas-e-cancelamento': {
+      id: '/trocas-e-cancelamento'
+      path: '/trocas-e-cancelamento'
+      fullPath: '/trocas-e-cancelamento'
+      preLoaderRoute: typeof TrocasECancelamentoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/politica-de-privacidade': {
@@ -203,33 +182,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/trocas-e-cancelamento': {
-      id: '/trocas-e-cancelamento'
-      path: '/trocas-e-cancelamento'
-      fullPath: '/trocas-e-cancelamento'
-      preLoaderRoute: typeof TrocasECancelamentoRouteImport
+    '/carrinho': {
+      id: '/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof CarrinhoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin-reposicao': {
-      id: '/_authenticated/admin-reposicao'
-      path: '/admin-reposicao'
-      fullPath: '/admin-reposicao'
-      preLoaderRoute: typeof AuthenticatedAdminReposicaoRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/conta': {
-      id: '/_authenticated/conta'
-      path: '/conta'
-      fullPath: '/conta'
-      preLoaderRoute: typeof AuthenticatedContaRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/catalogo/': {
       id: '/catalogo/'
@@ -244,6 +223,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/catalogo/$linha'
       preLoaderRoute: typeof CatalogoLinhaRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin-reposicao': {
+      id: '/_authenticated/admin-reposicao'
+      path: '/admin-reposicao'
+      fullPath: '/admin-reposicao'
+      preLoaderRoute: typeof AuthenticatedAdminReposicaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
