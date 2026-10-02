@@ -23,11 +23,21 @@ export const Route = createFileRoute("/carrinho")({
   ] }),
   component: CartPage,
 });
+type PedidoEnviado = {
+  nome: string;
+  endereco: string;
+  itens: { nome: string; quantidade: number; precoCentavos?: number }[];
+  subtotal: number;
+  entrega: number | null;
+  total: number | null;
+  cidade: string;
+};
 function CartPage() {
-  const { quantities, set, ready } = useCart();
+  const { quantities, set, ready, clear } = useCart();
   const { estoque } = useEstoque();
   const registrar = useServerFn(criarPedido);
   const [region, setRegion] = useState<DeliveryRegion>({ city: "", state: "" });
+  const [enviado, setEnviado] = useState<PedidoEnviado | null>(null);
   const produtos = useMemo(() => cartProducts.map(p => ({ ...p, precoCentavos: precoDe(p.slug, p.precoCentavos, estoque) })), [estoque]);
   const { items, total, pending } = orderSummary(produtos, quantities);
   const fee = deliveryFee(total, region);
